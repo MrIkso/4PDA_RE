@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView
+        android:id="@id/bc_line_img"
+        android:layout_width="16.0dip"
+        android:layout_height="40.0dip"
+        android:layout_marginLeft="-5.0dip"
+        android:scaleType="center"
+        android:layout_weight="0.0" />
+    <TextView
+        android:textSize="16.0sp"
+        android:textColor="@color/link_color"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:id="@id/bc_line_text"
+        android:background="@drawable/border_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="40.0dip"
+        android:singleLine="true"
+        android:layout_weight="1.0" />
+</LinearLayout>

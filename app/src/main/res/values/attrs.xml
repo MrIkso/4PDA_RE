@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="box_align">
+        <enum name="left" value="0" />
+        <enum name="none" value="2" />
+        <enum name="right" value="1" />
+    </attr>
+    <attr name="radius" format="integer" />
+    <attr name="sub_text" format="string" />
+</resources>

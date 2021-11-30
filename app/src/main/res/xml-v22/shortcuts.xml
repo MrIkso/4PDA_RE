@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:icon="@mipmap/ic_launcher_site"
+        android:enabled="true"
+        android:shortcutId="site"
+        android:shortcutShortLabel="@string/shortcut_site"
+        android:shortcutLongLabel="@string/shortcut_site"
+        android:shortcutDisabledMessage="@string/shortcut_site">
+        <intent
+            android:targetPackage="ru.fourpda.client"
+            android:action="android.intent.action.VIEW"
+            android:data="http://4pda.ru/page/1"
+            android:targetClass="ru.fourpda.client.MainActivity" />
+    </shortcut>
+    <shortcut
+        android:icon="@mipmap/ic_launcher_forum"
+        android:enabled="true"
+        android:shortcutId="forum"
+        android:shortcutShortLabel="@string/shortcut_forum"
+        android:shortcutLongLabel="@string/shortcut_forum"
+        android:shortcutDisabledMessage="@string/shortcut_forum">
+        <intent
+            android:targetPackage="ru.fourpda.client"
+            android:action="android.intent.action.VIEW"
+            android:data="http://4pda.ru/forum/index.php?act=idx"
+            android:targetClass="ru.fourpda.client.MainActivity" />
+    </shortcut>
+    <shortcut
+        android:icon="@mipmap/ic_launcher_fav"
+        android:enabled="true"
+        android:shortcutId="fav"
+        android:shortcutShortLabel="@string/shortcut_fav"
+        android:shortcutLongLabel="@string/shortcut_fav"
+        android:shortcutDisabledMessage="@string/shortcut_fav">
+        <intent
+            android:targetPackage="ru.fourpda.client"
+            android:action="android.intent.action.VIEW"
+            android:data="http://4pda.ru/forum/index.php?act=fav"
+            android:targetClass="ru.fourpda.client.MainActivity" />
+    </shortcut>
+    <shortcut
+        android:icon="@mipmap/ic_launcher_qms"
+        android:enabled="true"
+        android:shortcutId="qms"
+        android:shortcutShortLabel="@string/shortcut_qms"
+        android:shortcutLongLabel="@string/shortcut_qms"
+        android:shortcutDisabledMessage="@string/shortcut_qms">
+        <intent
+            android:targetPackage="ru.fourpda.client"
+            android:action="android.intent.action.VIEW"
+            android:data="http://4pda.ru/forum/index.php?act=qms"
+            android:targetClass="ru.fourpda.client.MainActivity" />
+    </shortcut>
+</shortcuts>

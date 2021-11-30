@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <view
+        android:id="@id/bbCode"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        class="ru.fourpda.client.BBDisplay" />
+    <view
+        android:id="@id/bbOverlay"
+        android:layout_width="0.0dip"
+        android:layout_height="0.0dip"
+        android:layout_alignLeft="@id/bbCode"
+        android:layout_alignTop="@id/bbCode"
+        android:layout_alignRight="@id/bbCode"
+        android:layout_alignBottom="@id/bbCode"
+        class="ru.fourpda.client.BBOverlay" />
+</RelativeLayout>

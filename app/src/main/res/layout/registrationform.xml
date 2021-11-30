@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view
+    android:background="@color/brend"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    class="ru.fourpda.client.Widgets$GestureDisablingScrollView"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:padding="24.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <View
+            android:id="@id/regLogo"
+            android:background="@drawable/logo"
+            android:layout_width="fill_parent"
+            android:layout_height="45.0dip"
+            android:layout_alignParentTop="true" />
+        <TextView
+            android:textSize="26.0sp"
+            android:textColor="#ff4ebaf6"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="45.0dip"
+            android:text="@string/page_reg_title"
+            android:includeFontPadding="false"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true" />
+        <TextView
+            android:textSize="16.0sp"
+            android:textColor="#ffffffff"
+            android:gravity="center"
+            android:id="@id/regLogin"
+            android:background="@drawable/button_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="42.0dip"
+            android:layout_marginTop="8.0dip"
+            android:layout_marginBottom="8.0dip"
+            android:text="@string/page_login_enter"
+            android:includeFontPadding="false"
+            android:layout_below="@id/regLogo"
+            android:layout_alignParentLeft="true" />
+        <TextView
+            android:textSize="16.0sp"
+            android:textColor="#ffffffff"
+            android:gravity="center"
+            android:id="@id/regForgot"
+            android:background="@drawable/button_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="42.0dip"
+            android:layout_marginTop="8.0dip"
+            android:layout_marginBottom="8.0dip"
+            android:text="@string/page_login_forgot"
+            android:includeFontPadding="false"
+            android:layout_below="@id/regLogo"
+            android:layout_alignParentRight="true" />
+        <EditText
+            android:textSize="22.0sp"
+            android:textColor="#ff000000"
+            android:gravity="center"
+            android:id="@id/regName"
+            android:background="#ffffffff"
+            android:layout_width="fill_parent"
+            android:layout_height="42.0dip"
+            android:hint="@string/page_login_login"
+            android:singleLine="true"
+            android:includeFontPadding="false"
+            android:layout_below="@id/regLogin"
+            android:inputType="textCapSentences">
+            <requestFocus />
+        </EditText>
+        <EditText
+            android:textSize="22.0sp"
+            android:textColor="#ff000000"
+            android:gravity="center"
+            android:id="@id/regPass"
+            android:background="#ffffffff"
+            android:layout_width="fill_parent"
+            android:layout_height="42.0dip"
+            android:layout_marginTop="24.0dip"
+            android:hint="@string/page_login_pass"
+            android:singleLine="true"
+            android:includeFontPadding="false"
+            android:layout_below="@id/regName"
+            android:inputType="textPassword" />
+        <EditText
+            android:textSize="22.0sp"
+            android:textColor="#ff000000"
+            android:gravity="center"
+            android:id="@id/regPassPass"
+            android:background="#ffffffff"
+            android:layout_width="fill_parent"
+            android:layout_height="42.0dip"
+            android:layout_marginTop="24.0dip"
+            android:hint="@string/page_reg_pass_pass"
+            android:singleLine="true"
+            android:includeFontPadding="false"
+            android:layout_below="@id/regPass"
+            android:inputType="textPassword" />
+        <EditText
+            android:textSize="22.0sp"
+            android:textColor="#ff000000"
+            android:gravity="center"
+            android:id="@id/regEmail"
+            android:background="#ffffffff"
+            android:layout_width="fill_parent"
+            android:layout_height="42.0dip"
+            android:layout_marginTop="24.0dip"
+            android:hint="@string/page_reg_email"
+            android:singleLine="true"
+            android:includeFontPadding="false"
+            android:layout_below="@id/regPassPass"
+            android:inputType="text" />
+        <TextView
+            android:textSize="22.0sp"
+            android:textColor="#ffffffff"
+            android:gravity="center"
+            android:id="@id/regBtn"
+            android:background="#ff4ebaf6"
+            android:layout_width="fill_parent"
+            android:layout_height="42.0dip"
+            android:layout_marginTop="42.0dip"
+            android:text="@string/page_login_reg"
+            android:singleLine="true"
+            android:includeFontPadding="false"
+            android:layout_below="@id/regEmail" />
+    </RelativeLayout>
+</view>

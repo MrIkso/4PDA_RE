@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:state_pressed="false">
+        <layer-list>
+            <item>
+                <shape
+                    android:shape="rectangle">
+                    <solid
+                        android:color="@color/zn_brend" />
+                </shape>
+            </item>
+            <item
+                android:left="8.0dip"
+                android:top="8.0dip"
+                android:right="8.0dip"
+                android:bottom="8.0dip">
+                <shape
+                    android:dither="true"
+                    android:shape="rectangle">
+                    <corners
+                        android:radius="3.0dip" />
+                    <solid
+                        android:color="@color/zn_start_button_bg" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item
+        android:state_pressed="true">
+        <layer-list>
+            <item>
+                <shape
+                    android:shape="rectangle">
+                    <solid
+                        android:color="@color/zn_brend" />
+                </shape>
+            </item>
+            <item
+                android:left="8.0dip"
+                android:top="8.0dip"
+                android:right="8.0dip"
+                android:bottom="8.0dip">
+                <shape
+                    android:dither="true"
+                    android:shape="rectangle">
+                    <corners
+                        android:radius="3.0dip" />
+                    <solid
+                        android:color="@color/zn_pressed" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

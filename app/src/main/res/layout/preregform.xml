@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view
+    android:background="@color/brend"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    class="ru.fourpda.client.Widgets$GestureDisablingScrollView"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout
+        android:id="@id/bar_caption"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <RelativeLayout
+            android:id="@id/preregLayout"
+            android:padding="24.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <View
+                android:id="@id/preregLogo"
+                android:background="@drawable/logo"
+                android:layout_width="fill_parent"
+                android:layout_height="45.0dip"
+                android:layout_alignParentTop="true" />
+            <TextView
+                android:textSize="26.0sp"
+                android:textColor="#ff4ebaf6"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="45.0dip"
+                android:text="@string/page_reg_title"
+                android:includeFontPadding="false"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true" />
+            <TextView
+                android:textSize="16.0sp"
+                android:textColor="#ffffffff"
+                android:gravity="center"
+                android:id="@id/preregLogin"
+                android:background="@drawable/button_bg"
+                android:layout_width="wrap_content"
+                android:layout_height="42.0dip"
+                android:layout_marginTop="8.0dip"
+                android:layout_marginBottom="8.0dip"
+                android:text="@string/page_login_enter"
+                android:includeFontPadding="false"
+                android:layout_below="@id/preregLogo"
+                android:layout_alignParentLeft="true" />
+            <TextView
+                android:textSize="16.0sp"
+                android:textColor="#ffffffff"
+                android:gravity="center"
+                android:id="@id/preregForgot"
+                android:background="@drawable/button_bg"
+                android:layout_width="wrap_content"
+                android:layout_height="42.0dip"
+                android:layout_marginTop="8.0dip"
+                android:layout_marginBottom="8.0dip"
+                android:text="@string/page_login_forgot"
+                android:includeFontPadding="false"
+                android:layout_below="@id/preregLogo"
+                android:layout_alignParentRight="true" />
+            <TextView
+                android:textSize="16.0sp"
+                android:textColor="#ffffffff"
+                android:id="@id/preregText"
+                android:paddingTop="8.0dip"
+                android:paddingBottom="24.0dip"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/page_prereg_text"
+                android:layout_below="@id/preregLogin" />
+            <TextView
+                android:textSize="22.0sp"
+                android:textColor="#ffffffff"
+                android:gravity="center"
+                android:id="@id/preregRulesBtn"
+                android:background="#fff7941d"
+                android:layout_width="fill_parent"
+                android:layout_height="42.0dip"
+                android:layout_marginBottom="42.0dip"
+                android:text="@string/page_prereg_rules"
+                android:singleLine="true"
+                android:includeFontPadding="false"
+                android:layout_below="@id/preregText" />
+            <view
+                android:textSize="16.0sp"
+                android:textColor="#ffffffff"
+                android:gravity="center|left"
+                android:id="@id/preregRulesReaded"
+                android:background="@drawable/login_checkbox"
+                android:layout_width="fill_parent"
+                android:layout_height="36.0dip"
+                android:layout_marginBottom="8.0dip"
+                android:text="@string/page_prereg_rules_readed"
+                android:layout_below="@id/preregRulesBtn"
+                android:layout_alignParentLeft="true"
+                class="ru.fourpda.client.Widgets$CheckboxTextView" />
+            <view
+                android:textSize="16.0sp"
+                android:textColor="#ffffffff"
+                android:gravity="center|left"
+                android:id="@id/preregRulesAgree"
+                android:background="@drawable/login_checkbox"
+                android:layout_width="fill_parent"
+                android:layout_height="36.0dip"
+                android:layout_marginTop="8.0dip"
+                android:text="@string/page_prereg_rules_agree"
+                android:layout_below="@id/preregRulesReaded"
+                android:layout_alignParentLeft="true"
+                class="ru.fourpda.client.Widgets$CheckboxTextView" />
+            <TextView
+                android:textSize="22.0sp"
+                android:textColor="#ffffffff"
+                android:gravity="center"
+                android:id="@id/preregNextBtn"
+                android:background="#ff808080"
+                android:layout_width="fill_parent"
+                android:layout_height="42.0dip"
+                android:layout_marginTop="42.0dip"
+                android:text="@string/page_prereg_next"
+                android:singleLine="true"
+                android:includeFontPadding="false"
+                android:layout_below="@id/preregRulesAgree" />
+        </RelativeLayout>
+        <view
+            android:id="@id/preregRules"
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            class="ru.fourpda.client.BBDisplay" />
+    </FrameLayout>
+</view>

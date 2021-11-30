@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    android:textSize="14.0sp"
+    android:textColor="@color/label_text_csl"
+    android:gravity="center|left"
+    android:id="@id/forumName"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android" />

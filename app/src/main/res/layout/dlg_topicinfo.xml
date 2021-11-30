@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:padding="24.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="20.0sp"
+            android:textStyle="bold"
+            android:textColor="@color/main_text"
+            android:id="@id/topicName"
+            android:background="@drawable/border_bottom"
+            android:paddingRight="20.0dip"
+            android:paddingBottom="5.0dip"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" />
+        <View
+            android:id="@id/topicShare"
+            android:background="@drawable/button_share"
+            android:layout_width="36.0dip"
+            android:layout_height="fill_parent"
+            android:layout_alignBottom="@id/topicName"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true" />
+        <TextView
+            android:textSize="16.0sp"
+            android:textColor="@color/main_text"
+            android:id="@id/topicDesc"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5.0dip"
+            android:layout_below="@id/topicName" />
+        <TextView
+            android:textSize="16.0sp"
+            android:textColor="@color/label_text_csl"
+            android:id="@id/topicCreatedLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20.0dip"
+            android:layout_marginRight="16.0dip"
+            android:text="@string/dlg_topicinfo_data"
+            android:singleLine="true"
+            android:layout_below="@id/topicDesc"
+            android:layout_alignParentLeft="true" />
+        <TextView
+            android:textSize="16.0sp"
+            android:textStyle="bold"
+            android:textColor="@color/main_text"
+            android:id="@id/topicCreated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/topicCreatedLabel"
+            android:layout_alignTop="@id/topicCreatedLabel"
+            android:layout_alignParentRight="true" />
+        <TextView
+            android:textSize="16.0sp"
+            android:textColor="@color/label_text_csl"
+            android:id="@id/topicAuthorLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16.0dip"
+            android:text="@string/dlg_topicinfo_author"
+            android:singleLine="true"
+            android:layout_below="@id/topicCreatedLabel"
+            android:layout_alignParentLeft="true" />
+        <TextView
+            android:textSize="16.0sp"
+            android:textStyle="bold"
+            android:textColor="@color/link_color"
+            android:id="@id/topicAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:layout_toRightOf="@id/topicCreatedLabel"
+            android:layout_alignTop="@id/topicAuthorLabel"
+            android:layout_alignParentRight="true" />
+        <TextView
+            android:textSize="16.0sp"
+            android:textColor="@color/label_text_csl"
+            android:id="@id/topicCuratorLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16.0dip"
+            android:text="@string/dlg_topicinfo_cur"
+            android:singleLine="true"
+            android:layout_below="@id/topicAuthorLabel"
+            android:layout_alignParentLeft="true" />
+        <TextView
+            android:textSize="16.0sp"
+            android:textStyle="bold"
+            android:textColor="@color/link_color"
+            android:id="@id/topicCurator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/topicCreatedLabel"
+            android:layout_alignTop="@id/topicCuratorLabel"
+            android:layout_alignParentRight="true" />
+        <TextView
+            android:textSize="16.0sp"
+            android:textColor="@color/label_text_csl"
+            android:id="@id/topicStatusLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16.0dip"
+            android:text="@string/dlg_topicinfo_status"
+            android:singleLine="true"
+            android:layout_below="@id/topicCuratorLabel"
+            android:layout_alignParentLeft="true" />
+        <TextView
+            android:textSize="16.0sp"
+            android:textStyle="bold"
+            android:textColor="@color/main_text"
+            android:id="@id/topicStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/topicCreatedLabel"
+            android:layout_alignTop="@id/topicStatusLabel"
+            android:layout_alignParentRight="true" />
+        <TextView
+            android:textSize="12.0sp"
+            android:textStyle="bold"
+            android:textColor="@color/link_color"
+            android:id="@id/topicLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20.0dip"
+            android:text="123456"
+            android:layout_below="@id/topicStatusLabel" />
+        <view
+            android:id="@id/topic_info_sessions"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16.0dip"
+            android:layout_below="@id/topicLink"
+            class="ru.fourpda.client.BBDisplay" />
+        <TextView
+            android:textSize="16.0sp"
+            android:textStyle="bold"
+            android:textColor="@color/button_flat_text"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:id="@id/topic_info_load_history"
+            android:background="@drawable/button_flat"
+            android:paddingLeft="16.0dip"
+            android:paddingTop="6.0dip"
+            android:paddingRight="16.0dip"
+            android:paddingBottom="6.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Загрузить историю"
+            android:singleLine="true"
+            android:layout_below="@id/topic_info_sessions" />
+        <view
+            android:id="@id/topic_info_history"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/topic_info_load_history"
+            class="ru.fourpda.client.BBDisplay" />
+    </RelativeLayout>
+</ScrollView>

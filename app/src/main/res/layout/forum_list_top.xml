@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:textSize="16.0sp"
+        android:textColor="@color/link_color"
+        android:id="@id/topicName"
+        android:paddingTop="12.0dip"
+        android:paddingRight="16.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16.0dip"
+        android:layout_toLeftOf="@id/topicGoUnread"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
+    <TextView
+        android:textSize="12.0sp"
+        android:textColor="@color/label_text_csl"
+        android:id="@id/topicLastDate"
+        android:paddingBottom="13.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/topicName"
+        android:layout_alignBottom="@id/topicLastUser" />
+    <TextView
+        android:textSize="14.0sp"
+        android:textColor="@color/label_text_csl"
+        android:id="@id/topicLastUser"
+        android:paddingBottom="12.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5.0dip"
+        android:singleLine="true"
+        android:drawableLeft="@drawable/ic_user"
+        android:drawablePadding="1.0dip"
+        android:layout_toRightOf="@id/topicLastDate"
+        android:layout_below="@id/topicName" />
+    <View
+        android:id="@id/topicGoUnread"
+        android:background="@drawable/unread"
+        android:layout_width="50.0dip"
+        android:layout_height="fill_parent"
+        android:layout_alignTop="@id/topicName"
+        android:layout_alignBottom="@id/topicLastDate"
+        android:layout_alignParentRight="true" />
+</RelativeLayout>

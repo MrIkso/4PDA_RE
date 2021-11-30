@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <view
+        android:id="@id/globalMsg"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        class="ru.fourpda.client.BBDisplay" />
+    <View
+        android:id="@id/globalClose"
+        android:background="@drawable/button_close"
+        android:layout_width="36.0dip"
+        android:layout_height="36.0dip"
+        android:layout_marginTop="0.0dip"
+        android:layout_marginRight="0.0dip"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true" />
+    <View
+        android:id="@id/sepBottom"
+        android:background="@drawable/card_sep"
+        android:layout_width="fill_parent"
+        android:layout_height="16.0dip"
+        android:layout_below="@id/globalMsg" />
+</RelativeLayout>

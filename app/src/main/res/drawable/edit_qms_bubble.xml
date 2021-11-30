@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset
+    android:insetLeft="0.0dip"
+    android:insetRight="0.0dip"
+    android:insetTop="0.0dip"
+    android:insetBottom="0.0dip"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <selector>
+        <item
+            android:state_focused="false">
+            <shape
+                android:shape="rectangle">
+                <padding
+                    android:left="8.0dip"
+                    android:top="8.0dip"
+                    android:right="8.0dip"
+                    android:bottom="8.0dip" />
+                <corners
+                    android:radius="5.0dip" />
+                <solid
+                    android:color="@color/edit_nofocus_bg" />
+            </shape>
+        </item>
+        <item
+            android:state_enabled="false">
+            <shape
+                android:shape="rectangle">
+                <padding
+                    android:left="8.0dip"
+                    android:top="8.0dip"
+                    android:right="8.0dip"
+                    android:bottom="8.0dip" />
+                <corners
+                    android:radius="5.0dip" />
+                <solid
+                    android:color="@color/edit_nofocus_bg" />
+            </shape>
+        </item>
+        <item>
+            <shape
+                android:shape="rectangle">
+                <padding
+                    android:left="8.0dip"
+                    android:top="8.0dip"
+                    android:right="8.0dip"
+                    android:bottom="8.0dip" />
+                <corners
+                    android:radius="5.0dip" />
+                <solid
+                    android:color="@color/edit_bg" />
+            </shape>
+        </item>
+    </selector>
+</inset>

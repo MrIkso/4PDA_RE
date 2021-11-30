@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:padding="24.0dip"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:pda="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:textSize="22.0sp"
+        android:textStyle="bold"
+        android:textColor="@color/main_text"
+        android:paddingBottom="20.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dlg_search_title" />
+    <TextView
+        android:textSize="16.0sp"
+        android:textColor="@color/label_text_csl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dlg_search_term" />
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:textColor="@color/main_text"
+            android:ellipsize="end"
+            android:id="@id/dlg_search_term"
+            android:background="@drawable/edit_text_material"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:inputType="textCapSentences">
+            <requestFocus />
+        </EditText>
+        <View
+            android:layout_gravity="center|right"
+            android:id="@id/dlg_search_term_clear"
+            android:background="@drawable/button_clear"
+            android:layout_width="28.0dip"
+            android:layout_height="28.0dip"
+            android:layout_marginRight="0.0dip"
+            android:layout_marginBottom="0.0dip" />
+    </FrameLayout>
+    <TextView
+        android:textSize="16.0sp"
+        android:textColor="@color/label_text_csl"
+        android:paddingTop="16.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dlg_search_where_label" />
+    <TextView
+        android:textSize="18.0sp"
+        android:textColor="@color/main_text"
+        android:id="@id/dlg_search_where"
+        android:background="@drawable/edit_text_material"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:drawableRight="@drawable/ic_spinner_drop_down"
+        android:drawablePadding="6.0dip" />
+    <TextView
+        android:textSize="16.0sp"
+        android:textColor="@color/label_text_csl"
+        android:id="@id/dlg_search_member_label"
+        android:paddingTop="16.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dlg_search_member" />
+    <include
+        layout="@layout/member_editor" />
+    <TextView
+        android:textSize="16.0sp"
+        android:textColor="@color/label_text_csl"
+        android:id="@id/dlg_search_sort_label"
+        android:paddingTop="16.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dlg_search_sort_label" />
+    <TextView
+        android:textSize="18.0sp"
+        android:textColor="@color/main_text"
+        android:id="@id/dlg_search_sort"
+        android:background="@drawable/edit_text_material"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:drawableRight="@drawable/ic_spinner_drop_down"
+        android:drawablePadding="6.0dip" />
+    <view
+        android:textSize="18.0sp"
+        android:textColor="@color/main_text"
+        android:gravity="center_vertical"
+        android:id="@id/dlg_search_themes"
+        android:background="@drawable/checkbox_right"
+        android:paddingTop="8.0dip"
+        android:paddingBottom="8.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16.0dip"
+        android:text="@string/dlg_search_themes"
+        android:includeFontPadding="false"
+        pda:box_align="right"
+        class="ru.fourpda.client.Widgets$CheckboxTextView" />
+    <TextView
+        android:textSize="16.0sp"
+        android:textColor="@color/label_text_csl"
+        android:id="@id/dlg_search_forum_label"
+        android:paddingTop="16.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dlg_search_forum_label" />
+    <TextView
+        android:textSize="18.0sp"
+        android:textColor="@color/main_text"
+        android:id="@id/dlg_search_forum"
+        android:background="@drawable/edit_text_material"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:drawableRight="@drawable/ic_spinner_drop_down"
+        android:drawablePadding="6.0dip" />
+</LinearLayout>

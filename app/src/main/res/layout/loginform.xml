@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view
+    android:background="@color/brend"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    class="ru.fourpda.client.Widgets$GestureDisablingScrollView"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:padding="24.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <View
+            android:id="@id/loginLogo"
+            android:background="@drawable/logo"
+            android:layout_width="fill_parent"
+            android:layout_height="45.0dip"
+            android:layout_alignParentTop="true" />
+        <TextView
+            android:textSize="26.0sp"
+            android:textColor="#ff4ebaf6"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="45.0dip"
+            android:text="@string/page_login_title"
+            android:includeFontPadding="false"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true" />
+        <TextView
+            android:textSize="16.0sp"
+            android:textColor="#ffffffff"
+            android:gravity="center"
+            android:id="@id/loginReg"
+            android:background="@drawable/button_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="42.0dip"
+            android:layout_marginTop="8.0dip"
+            android:layout_marginBottom="8.0dip"
+            android:text="@string/page_login_reg"
+            android:includeFontPadding="false"
+            android:layout_below="@id/loginLogo"
+            android:layout_alignParentLeft="true" />
+        <TextView
+            android:textSize="16.0sp"
+            android:textColor="#ffffffff"
+            android:gravity="center"
+            android:id="@id/loginForgot"
+            android:background="@drawable/button_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="42.0dip"
+            android:layout_marginTop="8.0dip"
+            android:layout_marginBottom="8.0dip"
+            android:text="@string/page_login_forgot"
+            android:includeFontPadding="false"
+            android:layout_below="@id/loginLogo"
+            android:layout_alignParentRight="true" />
+        <EditText
+            android:textSize="22.0sp"
+            android:textColor="#ff000000"
+            android:gravity="center"
+            android:id="@id/loginName"
+            android:background="#ffffffff"
+            android:layout_width="fill_parent"
+            android:layout_height="42.0dip"
+            android:hint="@string/page_login_login"
+            android:singleLine="true"
+            android:includeFontPadding="false"
+            android:layout_below="@id/loginReg"
+            android:inputType="textCapSentences">
+            <requestFocus />
+        </EditText>
+        <EditText
+            android:textSize="22.0sp"
+            android:textColor="#ff000000"
+            android:gravity="center"
+            android:id="@id/loginPass"
+            android:background="#ffffffff"
+            android:layout_width="fill_parent"
+            android:layout_height="42.0dip"
+            android:layout_marginTop="24.0dip"
+            android:hint="@string/page_login_pass"
+            android:singleLine="true"
+            android:includeFontPadding="false"
+            android:layout_below="@id/loginName"
+            android:inputType="textPassword"
+            android:imeOptions="actionDone" />
+        <view
+            android:textSize="16.0sp"
+            android:textColor="#ffffffff"
+            android:gravity="center|left"
+            android:id="@id/loginHide"
+            android:background="@drawable/login_checkbox"
+            android:padding="0.0dip"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="42.0dip"
+            android:layout_marginTop="8.0dip"
+            android:layout_marginBottom="8.0dip"
+            android:text="@string/page_login_hide"
+            android:layout_below="@id/loginPass"
+            android:layout_alignParentRight="true"
+            class="ru.fourpda.client.Widgets$CheckboxTextView" />
+        <TextView
+            android:textSize="22.0sp"
+            android:textColor="#ffffffff"
+            android:gravity="center"
+            android:id="@id/loginBtn"
+            android:background="#ff4ebaf6"
+            android:layout_width="fill_parent"
+            android:layout_height="42.0dip"
+            android:layout_marginTop="8.0dip"
+            android:text="@string/page_login_enter"
+            android:singleLine="true"
+            android:includeFontPadding="false"
+            android:layout_below="@id/loginHide" />
+        <TextView
+            android:textSize="22.0sp"
+            android:textColor="#ffffffff"
+            android:gravity="center"
+            android:id="@id/loginBtnFree"
+            android:background="#ff4ebaf6"
+            android:layout_width="fill_parent"
+            android:layout_height="42.0dip"
+            android:layout_marginTop="16.0dip"
+            android:text="@string/page_login_enter_free"
+            android:singleLine="true"
+            android:includeFontPadding="false"
+            android:layout_below="@id/loginBtn" />
+    </RelativeLayout>
+</view>

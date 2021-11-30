@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:padding="24.0dip"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:textSize="22.0sp"
+        android:textStyle="bold"
+        android:textColor="@color/main_text"
+        android:gravity="center_vertical"
+        android:id="@id/option_caption"
+        android:paddingBottom="8.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
+    <TextView
+        android:textSize="16.0sp"
+        android:textColor="@color/label_text_csl"
+        android:gravity="center_vertical"
+        android:id="@id/option_label"
+        android:paddingBottom="8.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/option_caption" />
+    <View
+        android:id="@id/option_down"
+        android:background="@drawable/button_box_minus"
+        android:layout_width="36.0dip"
+        android:layout_height="36.0dip"
+        android:layout_toLeftOf="@id/option_value"
+        android:layout_below="@id/option_label" />
+    <TextView
+        android:textSize="18.0sp"
+        android:textColor="@color/main_text"
+        android:gravity="center"
+        android:id="@id/option_value"
+        android:paddingLeft="32.0dip"
+        android:paddingRight="32.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="36.0dip"
+        android:layout_below="@id/option_label"
+        android:layout_centerHorizontal="true"
+        android:lineSpacingExtra="1.0dip" />
+    <View
+        android:id="@id/option_up"
+        android:background="@drawable/button_box_plus"
+        android:layout_width="36.0dip"
+        android:layout_height="36.0dip"
+        android:layout_toRightOf="@id/option_value"
+        android:layout_below="@id/option_label" />
+    <TextView
+        android:textSize="16.0sp"
+        android:textStyle="bold"
+        android:textColor="@color/button_flat_text"
+        android:gravity="center"
+        android:id="@id/option_button"
+        android:background="@drawable/button_flat"
+        android:paddingLeft="32.0dip"
+        android:paddingRight="32.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="36.0dip"
+        android:layout_marginTop="6.0dip"
+        android:singleLine="true"
+        android:layout_below="@id/option_up"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

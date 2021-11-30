@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="article_commentsheader_height">72.0dip</dimen>
+    <dimen name="article_date_height">30.0dip</dimen>
+    <dimen name="article_more_height">70.0dip</dimen>
+    <dimen name="article_picture_250">250.0dip</dimen>
+    <dimen name="article_picture_400">400.0dip</dimen>
+    <dimen name="article_tags_height">40.0dip</dimen>
+    <dimen name="article_title_padding">16.0dip</dimen>
+    <dimen name="article_title_textsize">22.0sp</dimen>
+    <dimen name="color_dialog_button_side">48.0dip</dimen>
+    <dimen name="fastscroll_thumb_height">52.0dip</dimen>
+    <dimen name="fastscroll_thumb_width">48.0dip</dimen>
+    <dimen name="message_avatar_width">40.0dip</dimen>
+    <dimen name="message_side_padding">16.0dip</dimen>
+    <dimen name="pager_height">40.0dip</dimen>
+    <dimen name="post_header_height">66.0dip</dimen>
+    <dimen name="post_title_padding_height">12.0dip</dimen>
+    <dimen name="post_title_padding_width">32.0dip</dimen>
+    <dimen name="post_title_textsize">14.0sp</dimen>
+    <dimen name="separator_height">16.0dip</dimen>
+    <dimen name="topic_hat_height">70.0dip</dimen>
+    <dimen name="topic_lastuser_textsize">14.0sp</dimen>
+    <dimen name="topic_name_textsize">16.0sp</dimen>
+    <dimen name="topic_padding_height">24.0dip</dimen>
+    <dimen name="topic_padding_width">32.0dip</dimen>
+</resources>

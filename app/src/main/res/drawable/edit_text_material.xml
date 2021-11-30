@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset
+    android:insetLeft="0.0dip"
+    android:insetRight="0.0dip"
+    android:insetTop="0.0dip"
+    android:insetBottom="0.0dip"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <selector>
+        <item
+            android:state_focused="true"
+            android:state_enabled="true">
+            <nine-patch
+                android:src="@drawable/textfield_activated" />
+        </item>
+        <item>
+            <nine-patch
+                android:src="@drawable/textfield_default" />
+        </item>
+    </selector>
+</inset>

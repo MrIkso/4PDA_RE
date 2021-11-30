@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:padding="0.0dip"
+    android:clickable="false"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@id/postTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/search_post_title"
+        android:gravity="center_vertical"
+        android:paddingLeft="16.0dip"
+        android:paddingTop="5.0dip"
+        android:paddingRight="16.0dip"
+        android:paddingBottom="7.0dip"
+        android:textColor="@color/link_color"
+        android:textSize="14.0sp" />
+
+    <view
+        android:id="@id/authorImage"
+        class="ru.fourpda.client.Widgets$AvatarView"
+        android:layout_width="50.0dip"
+        android:layout_height="50.0dip"
+        android:layout_below="@id/postTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="16.0dip"
+        android:layout_marginTop="16.0dip"
+        android:layout_marginRight="0.0dip"
+        android:src="@drawable/ic_avatar" />
+    <TextView
+        android:textSize="20.0sp"
+        android:textStyle="bold"
+        android:textColor="@color/link_color"
+        android:id="@id/authorName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16.0dip"
+        android:singleLine="true"
+        android:layout_toRightOf="@id/authorImage"
+        android:layout_below="@id/postTitle" />
+    <TextView
+        android:textSize="14.0sp"
+        android:textColor="@color/label_text_csl"
+        android:id="@id/authorGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16.0dip"
+        android:singleLine="true"
+        android:layout_toRightOf="@id/authorImage"
+        android:layout_alignBottom="@id/authorImage" />
+    <TextView
+        android:textSize="11.0sp"
+        android:textColor="@color/label_text"
+        android:id="@id/postDate"
+        android:clickable="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16.0dip"
+        android:layout_alignBottom="@id/authorImage"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:id="@id/postKarma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/postTitle"
+        android:layout_marginTop="8.0dip"
+        android:layout_toLeftOf="@id/postCheckbox"
+        android:clickable="false"
+        android:includeFontPadding="false"
+        android:paddingLeft="8.0dip"
+        android:paddingTop="8.0dip"
+        android:paddingRight="8.0dip"
+        android:paddingBottom="8.0dip"
+        android:singleLine="true"
+        android:text="12"
+        android:textColor="@color/main_text"
+        android:textSize="14.0sp" />
+
+    <view
+        android:id="@id/postCheckbox"
+        class="ru.fourpda.client.Widgets$CheckboxView"
+        android:layout_width="36.0dip"
+        android:layout_height="36.0dip"
+        android:layout_below="@id/postTitle"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="6.0dip"
+        android:layout_marginRight="6.0dip"
+        android:background="@drawable/card_checkbox" />
+
+    <TextView
+        android:id="@id/postAuthorRep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/postTitle"
+        android:layout_marginTop="9.0dip"
+        android:layout_marginRight="16.0dip"
+        android:layout_toRightOf="@id/authorName"
+        android:includeFontPadding="false"
+        android:paddingLeft="4.0dip"
+        android:paddingTop="8.0dip"
+        android:paddingRight="12.0dip"
+        android:paddingBottom="8.0dip"
+        android:singleLine="true"
+        android:text="1234"
+        android:textColor="@color/label_text_csl"
+        android:textSize="12.0sp" />
+    <ru.fourpda.client.BBDisplay
+        android:id="@id/PostCode"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/authorImage"
+        android:layout_alignParentLeft="true"
+       />
+
+    <View
+        android:id="@id/postSepBottom"
+        android:layout_width="fill_parent"
+        android:layout_height="16.0dip"
+        android:layout_below="@id/PostCode"
+        android:background="@drawable/card_sep" />
+    <view
+        android:id="@id/PostCodeOverlay"
+        android:layout_width="0.0dip"
+        android:layout_height="0.0dip"
+        android:layout_alignLeft="@id/PostCode"
+        android:layout_alignTop="@id/PostCode"
+        android:layout_alignRight="@id/PostCode"
+        android:layout_alignBottom="@id/postSepBottom"
+        class="ru.fourpda.client.BBOverlay" />
+</RelativeLayout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:textSize="20.0sp"
+        android:textStyle="bold"
+        android:textColor="@color/link_color"
+        android:id="@id/title"
+        android:padding="16.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" />
+    <ImageView
+        android:id="@id/deviceImage"
+        android:layout_width="100.0dip"
+        android:layout_height="200.0dip"
+        android:layout_marginLeft="16.0dip"
+        android:layout_marginBottom="16.0dip"
+        android:layout_below="@id/title"
+        android:layout_alignParentLeft="true" />
+    <view
+        android:id="@id/deviceBrief"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_toRightOf="@id/deviceImage"
+        android:layout_alignTop="@id/deviceImage"
+        android:layout_alignBottom="@id/deviceImage"
+        android:layout_alignParentRight="true"
+        class="ru.fourpda.client.BBDisplay" />
+    <View
+        android:id="@id/sepBottom"
+        android:background="@drawable/card_sep"
+        android:layout_width="fill_parent"
+        android:layout_height="16.0dip"
+        android:layout_below="@id/deviceImage" />
+</RelativeLayout>

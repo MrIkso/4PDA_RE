@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:padding="24.0dip"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:pda="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:textSize="22.0sp"
+        android:textStyle="bold"
+        android:textColor="@color/main_text"
+        android:gravity="center_vertical"
+        android:id="@id/option_caption"
+        android:paddingBottom="8.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
+    <TextView
+        android:textSize="16.0sp"
+        android:textColor="@color/label_text_csl"
+        android:gravity="center_vertical"
+        android:id="@id/option_label"
+        android:paddingBottom="8.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/option_caption" />
+    <view
+        android:textSize="18.0sp"
+        android:textColor="@color/main_text"
+        android:gravity="center_vertical"
+        android:id="@id/option_checkbox_1"
+        android:background="@drawable/checkbox_right"
+        android:paddingTop="8.0dip"
+        android:paddingBottom="8.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:layout_below="@id/option_label"
+        pda:box_align="right"
+        class="ru.fourpda.client.Widgets$CheckboxTextView" />
+    <view
+        android:textSize="18.0sp"
+        android:textColor="@color/main_text"
+        android:gravity="center_vertical"
+        android:id="@id/option_checkbox_2"
+        android:background="@drawable/checkbox_right"
+        android:paddingTop="8.0dip"
+        android:paddingBottom="8.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:layout_below="@id/option_checkbox_1"
+        pda:box_align="right"
+        class="ru.fourpda.client.Widgets$CheckboxTextView" />
+    <view
+        android:textSize="18.0sp"
+        android:textColor="@color/main_text"
+        android:gravity="center_vertical"
+        android:id="@id/option_checkbox_3"
+        android:background="@drawable/checkbox_right"
+        android:paddingTop="8.0dip"
+        android:paddingBottom="8.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:layout_below="@id/option_checkbox_2"
+        pda:box_align="right"
+        class="ru.fourpda.client.Widgets$CheckboxTextView" />
+    <view
+        android:textSize="18.0sp"
+        android:textColor="@color/main_text"
+        android:gravity="center_vertical"
+        android:id="@id/option_checkbox_4"
+        android:background="@drawable/checkbox_right"
+        android:paddingTop="8.0dip"
+        android:paddingBottom="8.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:layout_below="@id/option_checkbox_3"
+        pda:box_align="right"
+        class="ru.fourpda.client.Widgets$CheckboxTextView" />
+</RelativeLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="@drawable/border_top"
+    android:paddingTop="16.0dip"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:textSize="18.0sp"
+        android:textColor="@color/main_text"
+        android:gravity="center"
+        android:id="@id/commentsHeaderCount"
+        android:layout_width="wrap_content"
+        android:layout_height="36.0dip"
+        android:layout_marginLeft="16.0dip"
+        android:singleLine="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:lineSpacingExtra="3.0sp" />
+    <TextView
+        android:textSize="16.0sp"
+        android:textStyle="bold"
+        android:textColor="@color/button_flat_text"
+        android:gravity="center"
+        android:id="@id/commentsHeaderBtn"
+        android:background="@drawable/button_flat"
+        android:paddingLeft="8.0dip"
+        android:paddingRight="8.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="36.0dip"
+        android:layout_marginRight="16.0dip"
+        android:text="@string/comment_header_btn"
+        android:singleLine="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true" />
+    <View
+        android:background="@drawable/card_sep"
+        android:layout_width="fill_parent"
+        android:layout_height="16.0dip"
+        android:layout_marginTop="16.0dip"
+        android:layout_below="@id/commentsHeaderBtn" />
+</RelativeLayout>

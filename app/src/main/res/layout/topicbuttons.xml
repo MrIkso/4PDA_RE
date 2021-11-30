@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@id/topicButtonsPlane"
+        android:layout_width="fill_parent"
+        android:layout_height="52.0dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true">
+        <TextView
+            android:textSize="16.0sp"
+            android:textStyle="bold"
+            android:textColor="@color/btn_text_color"
+            android:gravity="center"
+            android:id="@id/topicButtonsPoll"
+            android:background="@drawable/button_bg"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:text="@string/topic_buttons_poll"
+            android:singleLine="true"
+            android:layout_weight="0.5" />
+        <TextView
+            android:textSize="16.0sp"
+            android:textStyle="bold"
+            android:textColor="@color/btn_text_color"
+            android:gravity="center"
+            android:id="@id/topicButtonsHat"
+            android:background="@drawable/button_bg"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:text="@string/topic_buttons_hat"
+            android:singleLine="true"
+            android:layout_weight="0.5" />
+    </LinearLayout>
+    <View
+        android:background="@drawable/card_sep"
+        android:layout_width="fill_parent"
+        android:layout_height="16.0dip"
+        android:layout_below="@id/topicButtonsPlane" />
+</RelativeLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <View
+        android:id="@id/deviceSepTop"
+        android:background="@color/cardlist_bg"
+        android:layout_width="fill_parent"
+        android:layout_height="16.0dip"
+        android:layout_alignParentTop="true" />
+    <TextView
+        android:textSize="22.0sp"
+        android:textStyle="bold"
+        android:textColor="@color/main_text"
+        android:id="@id/deviceTitle"
+        android:padding="16.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/deviceSepTop" />
+    <HorizontalScrollView
+        android:id="@id/deviceImagesScroll"
+        android:scrollbars="none"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16.0dip"
+        android:layout_marginRight="16.0dip"
+        android:layout_below="@id/deviceTitle">
+        <LinearLayout
+            android:id="@id/deviceImages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </HorizontalScrollView>
+    <HorizontalScrollView
+        android:id="@id/deviceEditionsScroll"
+        android:visibility="gone"
+        android:scrollbars="none"
+        android:layout_width="fill_parent"
+        android:layout_height="30.0dip"
+        android:layout_marginLeft="16.0dip"
+        android:layout_marginTop="16.0dip"
+        android:layout_marginRight="16.0dip"
+        android:layout_below="@id/deviceImagesScroll">
+        <LinearLayout
+            android:id="@id/deviceEditions"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" />
+    </HorizontalScrollView>
+</RelativeLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="horizontal"
+    android:background="@color/cardlist_bg"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:textSize="14.0sp"
+        android:textColor="@color/bookmarks_header_csl"
+        android:gravity="center|left"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16.0dip"
+        android:layout_marginBottom="8.0dip"
+        android:text="@string/start_bookmarks_title"
+        android:layout_weight="1.0" />
+    <ImageView
+        android:id="@id/startAddFolder"
+        android:background="@drawable/button_bg"
+        android:layout_width="24.0dip"
+        android:layout_height="24.0dip"
+        android:layout_marginRight="14.0dip"
+        android:layout_marginBottom="6.0dip"
+        android:src="@drawable/ic_add_folder"
+        android:scaleType="center"
+        android:layout_weight="0.0" />
+</LinearLayout>

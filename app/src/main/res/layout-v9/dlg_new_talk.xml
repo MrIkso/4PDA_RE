@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="24.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="22.0sp"
+            android:textStyle="bold"
+            android:textColor="@color/main_text"
+            android:paddingBottom="20.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dlg_new_talk_caption" />
+        <TextView
+            android:textSize="16.0sp"
+            android:textColor="@color/label_text_csl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dlg_new_talk_opponent" />
+        <include
+            layout="@layout/member_editor" />
+        <TextView
+            android:textSize="16.0sp"
+            android:textColor="@color/label_text_csl"
+            android:paddingTop="16.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dlg_new_talk_topic" />
+        <EditText
+            android:textColor="@color/main_text"
+            android:id="@id/dlg_new_talk_title"
+            android:background="@drawable/edit_text_material"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:inputType="textCapSentences" />
+        <TextView
+            android:textSize="16.0sp"
+            android:textColor="@color/label_text_csl"
+            android:paddingTop="16.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dlg_new_talk_msg" />
+        <EditText
+            android:scrollbarStyle="insideInset"
+            android:textColor="@color/main_text"
+            android:id="@id/dlg_new_talk_msg"
+            android:background="@drawable/edit_text_material"
+            android:scrollbars="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="5"
+            android:minLines="1"
+            android:singleLine="false"
+            android:inputType="textCapSentences|textMultiLine"
+            android:overScrollMode="always">
+            <requestFocus />
+        </EditText>
+    </LinearLayout>
+</ScrollView>

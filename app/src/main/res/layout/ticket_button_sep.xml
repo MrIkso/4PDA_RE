@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="@drawable/border_top"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:textSize="16.0sp"
+        android:textStyle="bold"
+        android:textColor="@color/button_flat_text"
+        android:gravity="center"
+        android:id="@id/ticket_comment_button"
+        android:background="@drawable/button_flat"
+        android:layout_width="220.0dip"
+        android:layout_height="36.0dip"
+        android:layout_marginTop="16.0dip"
+        android:layout_marginBottom="16.0dip"
+        android:text="КОММЕНТИРОВАТЬ"
+        android:singleLine="true"
+        android:layout_centerHorizontal="true" />
+    <View
+        android:background="@drawable/card_sep"
+        android:layout_width="fill_parent"
+        android:layout_height="16.0dip"
+        android:layout_below="@id/ticket_comment_button"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

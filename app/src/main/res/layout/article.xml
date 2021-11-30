@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    class="ru.fourpda.client.ArticleLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView
+        android:id="@id/articlePicture"
+        android:padding="0.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true" />
+    <View
+        android:id="@id/articleBackground"
+        android:background="@color/cardlist_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/articleCode"
+        android:layout_alignLeft="@id/articleTitle"
+        android:layout_alignTop="@id/articleTitle"
+        android:layout_alignParentRight="true" />
+    <TextView
+        android:textSize="22.0sp"
+        android:textStyle="bold"
+        android:textColor="@color/link_color"
+        android:id="@id/articleTitle"
+        android:padding="16.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/articlePicture"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true" />
+    <TextView
+        android:textSize="14.0sp"
+        android:textColor="@color/main_text"
+        android:gravity="center"
+        android:id="@id/articleDate"
+        android:paddingLeft="16.0dip"
+        android:paddingRight="16.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="30.0dip"
+        android:layout_below="@id/articleTitle"
+        android:layout_alignLeft="@id/articleTitle" />
+    <TextView
+        android:textSize="14.0sp"
+        android:textColor="@color/link_color"
+        android:gravity="center_vertical"
+        android:id="@id/articleAuthorName"
+        android:paddingLeft="16.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="30.0dip"
+        android:layout_toRightOf="@id/articleDate"
+        android:layout_alignBottom="@id/articleDate" />
+    <HorizontalScrollView
+        android:id="@id/articleTagsScroll"
+        android:scrollbars="none"
+        android:layout_width="fill_parent"
+        android:layout_height="30.0dip"
+        android:layout_marginLeft="10.0dip"
+        android:layout_marginRight="10.0dip"
+        android:layout_marginBottom="10.0dip"
+        android:layout_toLeftOf="@id/articleCommentsCount"
+        android:layout_below="@id/articleDate"
+        android:layout_alignLeft="@id/articleTitle">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@id/articleTags"
+            android:layout_width="wrap_content"
+            android:layout_height="30.0dip" />
+    </HorizontalScrollView>
+    <TextView
+        android:textSize="16.0sp"
+        android:textColor="@color/alter_text"
+        android:gravity="center"
+        android:id="@id/articleCommentsCount"
+        android:background="@color/comments_count_bg"
+        android:layout_width="60.0dip"
+        android:layout_height="30.0dip"
+        android:layout_alignBottom="@id/articleTagsScroll"
+        android:layout_alignParentRight="true" />
+    <view
+        android:id="@id/articleCode"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="15.0dip"
+        android:layout_below="@id/articleTagsScroll"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        class="ru.fourpda.client.BBDisplay" />
+    <View
+        android:id="@id/articleSepBottom"
+        android:background="@drawable/card_sep"
+        android:layout_width="fill_parent"
+        android:layout_height="16.0dip"
+        android:layout_below="@id/articleCode"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true" />
+    <view
+        android:id="@id/articleOverlay"
+        android:layout_width="0.0dip"
+        android:layout_height="0.0dip"
+        android:layout_alignLeft="@id/articleCode"
+        android:layout_alignTop="@id/articleCode"
+        android:layout_alignRight="@id/articleCode"
+        android:layout_alignBottom="@id/articleCode"
+        class="ru.fourpda.client.BBOverlay" />
+    <RelativeLayout
+        android:id="@id/articlePolls"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/articleSepBottom" />
+</view>

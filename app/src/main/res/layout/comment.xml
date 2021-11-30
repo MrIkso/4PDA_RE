@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:padding="10.0dip"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:textSize="18.0sp"
+        android:textStyle="bold"
+        android:textColor="@color/link_color"
+        android:gravity="bottom"
+        android:id="@id/commentAuthor"
+        android:paddingTop="5.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/commentKarma"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
+    <TextView
+        android:textSize="12.0sp"
+        android:textColor="@color/main_text"
+        android:gravity="bottom"
+        android:id="@id/commentKarma"
+        android:paddingLeft="5.0dip"
+        android:paddingRight="5.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:layout_toLeftOf="@id/commentDate"
+        android:layout_alignBottom="@id/commentAuthor" />
+    <TextView
+        android:textSize="12.0sp"
+        android:textColor="@color/label_text_csl"
+        android:gravity="bottom"
+        android:id="@id/commentDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:layout_alignBottom="@id/commentAuthor"
+        android:layout_alignParentRight="true" />
+    <View
+        android:id="@id/commentSeparator"
+        android:background="@color/border_line"
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:layout_below="@id/commentAuthor" />
+    <TextView
+        android:textColor="@color/main_text"
+        android:id="@id/commentText"
+        android:paddingTop="4.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/commentSeparator"
+        android:layout_alignParentLeft="true" />
+</RelativeLayout>

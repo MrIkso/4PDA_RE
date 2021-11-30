@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="@color/qmslist_bg"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <view
+        android:id="@id/messageCode"
+        android:background="@drawable/bubble_my"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/messageAvatar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        class="ru.fourpda.client.BBDisplay" />
+    <view
+        android:id="@id/messageAvatar"
+        android:layout_width="32.0dip"
+        android:layout_height="32.0dip"
+        android:layout_marginLeft="8.0dip"
+        android:src="@drawable/ic_avatar"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        class="ru.fourpda.client.Widgets$AvatarView" />
+    <TextView
+        android:textSize="12.0sp"
+        android:textColor="@color/label_text_csl"
+        android:id="@id/messageDate"
+        android:paddingRight="12.0dip"
+        android:paddingBottom="12.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="5.0dip"
+        android:layout_alignRight="@id/messageCode"
+        android:layout_alignBottom="@id/messageCode" />
+    <view
+        android:id="@id/messageOverlay"
+        android:layout_width="0.0dip"
+        android:layout_height="0.0dip"
+        android:layout_alignLeft="@id/messageCode"
+        android:layout_alignTop="@id/messageCode"
+        android:layout_alignRight="@id/messageCode"
+        android:layout_alignBottom="@id/messageCode"
+        class="ru.fourpda.client.BBOverlay" />
+</RelativeLayout>

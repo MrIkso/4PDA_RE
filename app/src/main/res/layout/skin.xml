@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <View
+        android:id="@id/skinSepTop"
+        android:background="@color/cardlist_bg"
+        android:layout_width="fill_parent"
+        android:layout_height="16.0dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
+    <TextView
+        android:textSize="22.0sp"
+        android:textStyle="bold"
+        android:textColor="@color/link_color"
+        android:gravity="center"
+        android:id="@id/skinTitle"
+        android:paddingLeft="16.0dip"
+        android:paddingTop="16.0dip"
+        android:paddingRight="16.0dip"
+        android:paddingBottom="0.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/skinSepTop"
+        android:layout_centerHorizontal="true" />
+    <TextView
+        android:textSize="20.0sp"
+        android:textStyle="bold"
+        android:textColor="@color/link_color"
+        android:gravity="center"
+        android:id="@id/skinAuthor"
+        android:paddingLeft="16.0dip"
+        android:paddingTop="0.0dip"
+        android:paddingRight="16.0dip"
+        android:paddingBottom="0.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/skinTitle" />
+    <view
+        android:id="@id/skinImage"
+        android:layout_width="fill_parent"
+        android:layout_height="300.0dip"
+        android:layout_marginTop="16.0dip"
+        android:layout_below="@id/skinAuthor"
+        class="ru.fourpda.client.Widgets$AvatarView" />
+    <TextView
+        android:textSize="16.0sp"
+        android:textColor="@color/main_text"
+        android:id="@id/skinDesc"
+        android:padding="16.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="desc"
+        android:layout_below="@id/skinImage" />
+    <TextView
+        android:textSize="16.0sp"
+        android:textStyle="bold"
+        android:textColor="@color/button_flat_text"
+        android:gravity="center"
+        android:id="@id/skinEnable"
+        android:background="@drawable/button_flat"
+        android:paddingLeft="16.0dip"
+        android:paddingRight="16.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="36.0dip"
+        android:layout_marginBottom="16.0dip"
+        android:text="@string/skin_enable"
+        android:singleLine="true"
+        android:layout_below="@id/skinDesc"
+        android:layout_centerHorizontal="true" />
+    <TextView
+        android:textSize="16.0sp"
+        android:textColor="@color/main_text"
+        android:id="@id/skinVersion"
+        android:paddingLeft="16.0dip"
+        android:paddingTop="0.0dip"
+        android:paddingRight="16.0dip"
+        android:paddingBottom="16.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/skinEnable" />
+    <TextView
+        android:textSize="16.0sp"
+        android:textColor="@color/main_text"
+        android:id="@id/skinInstalledVersion"
+        android:paddingLeft="16.0dip"
+        android:paddingTop="0.0dip"
+        android:paddingRight="16.0dip"
+        android:paddingBottom="16.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/skinVersion" />
+    <TextView
+        android:textSize="16.0sp"
+        android:textStyle="bold"
+        android:textColor="@color/button_flat_text"
+        android:gravity="center"
+        android:id="@id/skinDownload"
+        android:background="@drawable/button_flat"
+        android:paddingLeft="16.0dip"
+        android:paddingRight="16.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="36.0dip"
+        android:layout_marginBottom="16.0dip"
+        android:text="@string/skin_download"
+        android:singleLine="true"
+        android:layout_below="@id/skinInstalledVersion"
+        android:layout_centerHorizontal="true" />
+    <View
+        android:background="@drawable/card_sep"
+        android:layout_width="fill_parent"
+        android:layout_height="16.0dip"
+        android:layout_marginTop="0.0dip"
+        android:layout_below="@id/skinDownload" />
+</RelativeLayout>

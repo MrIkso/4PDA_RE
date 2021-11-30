@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    class="ru.fourpda.client.ImageDialog$ImageDialogLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView
+        android:id="@id/imagesView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="matrix" />
+    <View
+        android:id="@id/guide_close"
+        android:background="@drawable/button_close_guide"
+        android:layout_width="50.0dip"
+        android:layout_height="50.0dip"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true" />
+    <TextView
+        android:textSize="28.0sp"
+        android:textColor="#ffffffff"
+        android:gravity="center"
+        android:id="@id/guide_beats"
+        android:layout_width="wrap_content"
+        android:layout_height="42.0dip"
+        android:text="Картинка "
+        android:includeFontPadding="false"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+    <TextView
+        android:textSize="28.0sp"
+        android:textStyle="bold"
+        android:textColor="#ffffffff"
+        android:gravity="center"
+        android:id="@id/guide_prev"
+        android:background="@drawable/button_bg"
+        android:paddingLeft="16.0dip"
+        android:paddingRight="16.0dip"
+        android:clickable="true"
+        android:layout_width="60.0dip"
+        android:layout_height="48.0dip"
+        android:text="&lt;"
+        android:includeFontPadding="false"
+        android:layout_alignBottom="@id/imagesCaption"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true" />
+    <TextView
+        android:textSize="28.0sp"
+        android:textStyle="bold"
+        android:textColor="#ffffffff"
+        android:gravity="center"
+        android:id="@id/guide_next"
+        android:background="@drawable/button_bg"
+        android:paddingLeft="16.0dip"
+        android:paddingRight="16.0dip"
+        android:clickable="true"
+        android:layout_width="60.0dip"
+        android:layout_height="48.0dip"
+        android:text=">"
+        android:includeFontPadding="false"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true" />
+    <view
+        android:id="@id/imagesPrev"
+        android:visibility="gone"
+        android:layout_width="40.0dip"
+        android:layout_height="40.0dip"
+        android:src="@drawable/ic_prev"
+        android:scaleType="centerInside"
+        class="ru.fourpda.client.Widgets$CircleImageView" />
+    <view
+        android:id="@id/imagesNext"
+        android:visibility="gone"
+        android:layout_width="40.0dip"
+        android:layout_height="40.0dip"
+        android:src="@drawable/ic_next"
+        android:scaleType="centerInside"
+        class="ru.fourpda.client.Widgets$CircleImageView" />
+</view>

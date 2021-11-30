@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="100.0dip"
+    android:layout_marginTop="5.0dip"
+    android:layout_marginBottom="5.0dip"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView
+        android:id="@id/reward_image"
+        android:layout_width="100.0dip"
+        android:layout_height="100.0dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
+    <TextView
+        android:textSize="14.0sp"
+        android:textColor="@color/unread_text"
+        android:gravity="center"
+        android:id="@id/reward_count"
+        android:background="@drawable/unread_bg_nav"
+        android:layout_width="36.0dip"
+        android:layout_height="40.0dip"
+        android:layout_marginRight="-3.0dip"
+        android:layout_marginBottom="-5.0dip"
+        android:singleLine="true"
+        android:layout_alignRight="@id/reward_image"
+        android:layout_alignBottom="@id/reward_image"
+        android:lineSpacingExtra="1.0dip" />
+    <TextView
+        android:textSize="20.0sp"
+        android:gravity="center"
+        android:id="@id/reward_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/reward_image"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true" />
+    <TextView
+        android:gravity="center"
+        android:id="@id/reward_desc"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/reward_image"
+        android:layout_below="@id/reward_name" />
+    <TextView
+        android:textSize="12.0sp"
+        android:textColor="@color/label_text"
+        android:gravity="center"
+        android:id="@id/reward_date"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/reward_image"
+        android:layout_below="@id/reward_desc" />
+</RelativeLayout>

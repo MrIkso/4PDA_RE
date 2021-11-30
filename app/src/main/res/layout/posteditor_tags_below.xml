@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:id="@id/editorBar"
+        android:background="@color/brend"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+        <View
+            android:gravity="center"
+            android:id="@id/editorPanel"
+            android:background="@drawable/bar_nav"
+            android:clickable="true"
+            android:layout_width="42.0dip"
+            android:layout_height="42.0dip"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" />
+        <TextView
+            android:textSize="12.0sp"
+            android:textStyle="bold"
+            android:textColor="@color/alter_text"
+            android:gravity="center_vertical"
+            android:id="@id/editorTitle"
+            android:paddingLeft="0.0dip"
+            android:paddingRight="8.0dip"
+            android:clickable="true"
+            android:layout_width="fill_parent"
+            android:layout_height="42.0dip"
+            android:text="@string/post_editor_title"
+            android:maxLines="2"
+            android:layout_toLeftOf="@id/editorSmiles"
+            android:layout_toRightOf="@id/editorPanel"
+            android:layout_alignParentTop="true" />
+        <Button
+            android:id="@id/editorSmiles"
+            android:background="@drawable/bar_smiles"
+            android:layout_width="42.0dip"
+            android:layout_height="42.0dip"
+            android:layout_toLeftOf="@id/editorAttach"
+            android:layout_alignParentTop="true" />
+        <Button
+            android:id="@id/editorAttach"
+            android:background="@drawable/bar_attach"
+            android:layout_width="42.0dip"
+            android:layout_height="42.0dip"
+            android:layout_toLeftOf="@id/editorPreview"
+            android:layout_alignParentTop="true" />
+        <TextView
+            android:textSize="12.0sp"
+            android:textColor="@color/alter_text"
+            android:gravity="center"
+            android:id="@id/editorAttachCount"
+            android:background="@drawable/attach_oval"
+            android:layout_width="22.0dip"
+            android:layout_height="22.0dip"
+            android:text="0"
+            android:singleLine="true"
+            android:layout_alignRight="@id/editorAttach"
+            android:layout_alignBottom="@id/editorAttach" />
+        <ToggleButton
+            android:id="@id/editorPreview"
+            android:background="@drawable/bar_preview"
+            android:layout_width="42.0dip"
+            android:layout_height="42.0dip"
+            android:textOn=""
+            android:textOff=""
+            android:layout_toLeftOf="@id/editorSend"
+            android:layout_alignParentTop="true" />
+        <Button
+            android:id="@id/editorSend"
+            android:background="@drawable/bar_send"
+            android:layout_width="42.0dip"
+            android:layout_height="42.0dip"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+    <view
+        android:id="@id/editorEdit"
+        class="ru.fourpda.client.Widgets$ScrollingEditText"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/editorButtons"
+        android:layout_below="@id/editorBar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="16.0dip"
+        android:background="@drawable/edit_post_bubble"
+        android:gravity="top"
+        android:inputType="textCapSentences|textMultiLine"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical"
+        android:textColor="@color/main_text" />
+    <FrameLayout
+        android:id="@id/editorButtons"
+        android:paddingLeft="16.0dip"
+        android:paddingRight="16.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+        <include
+            layout="@layout/tags_bar" />
+    </FrameLayout>
+    <ScrollView
+        android:id="@id/previewScroll"
+        android:background="@drawable/preview_background"
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/editorBar">
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <view
+                android:id="@id/previewCode"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                class="ru.fourpda.client.BBDisplay" />
+            <view
+                android:id="@id/previewOverlay"
+                android:layout_width="0.0dip"
+                android:layout_height="0.0dip"
+                android:layout_alignLeft="@id/previewCode"
+                android:layout_alignTop="@id/previewCode"
+                android:layout_alignRight="@id/previewCode"
+                android:layout_alignBottom="@id/previewCode"
+                class="ru.fourpda.client.BBOverlay" />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

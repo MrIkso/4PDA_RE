@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:state_selected="false">
+        <layer-list>
+            <item>
+                <bitmap
+                    android:gravity="center"
+                    android:src="@drawable/zn_ic_expand_close" />
+            </item>
+        </layer-list>
+    </item>
+    <item
+        android:state_selected="true">
+        <layer-list>
+            <item>
+                <bitmap
+                    android:gravity="center"
+                    android:src="@drawable/zn_ic_expand_open" />
+            </item>
+        </layer-list>
+    </item>
+</selector>

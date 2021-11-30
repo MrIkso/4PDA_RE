@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView
+    android:id="@id/tagsBarScroll"
+    android:scrollbars="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="42.0dip">
+        <Button
+            android:id="@id/editor_B"
+            android:background="@drawable/tag_b"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_I"
+            android:background="@drawable/tag_i"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_U"
+            android:background="@drawable/tag_u"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_Strike"
+            android:background="@drawable/tag_strike"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_Size"
+            android:background="@drawable/tag_size"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_Color"
+            android:background="@drawable/tag_color"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_Link"
+            android:background="@drawable/tag_link"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_List"
+            android:background="@drawable/tag_list"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_ListNumder"
+            android:background="@drawable/tag_list_number"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_Quote"
+            android:background="@drawable/tag_quote"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_Spoiler"
+            android:background="@drawable/tag_spoiler"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_SpoilerNamed"
+            android:background="@drawable/tag_spoiler_named"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_Code"
+            android:background="@drawable/tag_code"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_Left"
+            android:background="@drawable/tag_left"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_Center"
+            android:background="@drawable/tag_center"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_Right"
+            android:background="@drawable/tag_right"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_Sub"
+            android:background="@drawable/tag_sub"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_Sup"
+            android:background="@drawable/tag_sup"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_Offtop"
+            android:background="@drawable/tag_offtop"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_Hide"
+            android:background="@drawable/tag_hide"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_ModKur"
+            android:background="@drawable/tag_mod_kur"
+            android:visibility="gone"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_ModMod"
+            android:background="@drawable/tag_mod_mod"
+            android:visibility="gone"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_ModAdmin"
+            android:background="@drawable/tag_mod_admin"
+            android:visibility="gone"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+        <Button
+            android:id="@id/editor_Clear"
+            android:background="@drawable/tag_clear"
+            android:layout_width="42.0dip"
+            android:layout_height="fill_parent" />
+    </LinearLayout>
+</HorizontalScrollView>

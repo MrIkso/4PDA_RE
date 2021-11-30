@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <View
+        android:id="@id/vendorSepTop"
+        android:background="@color/cardlist_bg"
+        android:layout_width="fill_parent"
+        android:layout_height="16.0dip"
+        android:layout_alignParentTop="true" />
+    <TextView
+        android:textSize="22.0sp"
+        android:textStyle="bold"
+        android:textColor="@color/main_text"
+        android:id="@id/vendorTitle"
+        android:padding="16.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/vendorSepTop"
+        android:layout_alignParentLeft="true" />
+    <TextView
+        android:textSize="18.0sp"
+        android:textColor="@color/main_text"
+        android:id="@id/vendorActual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16.0dip"
+        android:layout_marginRight="16.0dip"
+        android:layout_marginBottom="1.0dip"
+        android:text="5"
+        android:layout_below="@id/vendorTitle"
+        android:layout_alignParentLeft="true" />
+    <TextView
+        android:textSize="18.0sp"
+        android:textColor="@color/main_text"
+        android:id="@id/vendorAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16.0dip"
+        android:layout_marginRight="16.0dip"
+        android:layout_marginBottom="1.0dip"
+        android:text="10"
+        android:layout_below="@id/vendorActual"
+        android:layout_alignParentLeft="true" />
+    <TextView
+        android:textSize="16.0sp"
+        android:textStyle="bold"
+        android:textColor="@color/button_flat_text"
+        android:gravity="center"
+        android:id="@id/vendorButton"
+        android:background="@drawable/button_flat"
+        android:layout_width="220.0dip"
+        android:layout_height="36.0dip"
+        android:layout_marginTop="16.0dip"
+        android:text="@string/vendor_main_show_all"
+        android:singleLine="true"
+        android:layout_below="@id/vendorAll"
+        android:layout_centerHorizontal="true" />
+    <View
+        android:id="@id/sepBottom"
+        android:background="@drawable/card_sep"
+        android:layout_width="fill_parent"
+        android:layout_height="16.0dip"
+        android:layout_marginTop="16.0dip"
+        android:layout_below="@id/vendorButton" />
+</RelativeLayout>
