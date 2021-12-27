@@ -47,7 +47,7 @@ public class DocumentManager extends Network {
     static Util.C0422d<Integer, Integer, Object> f2752I = new Util.C0422d<>();
     final SparseArray<IGenerateRequest> requestSparseArray = new SparseArray<>(50);
     Context context;
-    MessageHandler handler;
+    MessageHandler messageHandler;
     MemberInfoModel memberInfoModel;
     Unread2 unread2;
     BroadcastReceiver broadcastReceiver;
@@ -61,7 +61,7 @@ public class DocumentManager extends Network {
 
     private DocumentManager(Context context) {
         this.context = context;
-        this.handler = new MessageHandler(this.context.getMainLooper());
+        this.messageHandler = new MessageHandler(this.context.getMainLooper());
         MyBrodcastReceiver cVar = new MyBrodcastReceiver(this);
         this.broadcastReceiver = cVar;
         this.context.registerReceiver(cVar, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
@@ -322,8 +322,8 @@ public class DocumentManager extends Network {
             if (i <= 0) {
                 return;
             }
-            if (documentManager.isConnected2()) {
-                documentManager.closeNet2();
+            if (documentManager.isWebSocketConnected()) {
+                documentManager.closeSocketConnection();
                 f2746C.m655c(null);
                 return;
             }
@@ -374,13 +374,13 @@ public class DocumentManager extends Network {
         getResultRequest((documentManager).new AuthRequest(0, "", false));
         DataDB.clearBookmarks(false);
         syncBookmarks(true);
-        documentManager.handler.sendEmptyMessage(9);
+        documentManager.messageHandler.sendEmptyMessage(9);
     }
 
     public static void syncBookmarks(boolean z) {
         if (isLoggined() || DataDB.m363n(3, 0) == 0) {
-            documentManager.handler.removeMessages(13);
-            documentManager.handler.sendEmptyMessageDelayed(13, z ? 100 : 10000);
+            documentManager.messageHandler.removeMessages(13);
+            documentManager.messageHandler.sendEmptyMessageDelayed(13, z ? 100 : 10000);
         }
     }
 
@@ -393,7 +393,7 @@ public class DocumentManager extends Network {
 
     static void closeConnection() {
         if (documentManager.getConnectTime() > 100) {
-            documentManager.closeNet();
+            documentManager.closeWebSocketConnection();
         }
     }
 
@@ -412,7 +412,7 @@ public class DocumentManager extends Network {
         if (documentManager.isConnected() && (request.isAuth || documentManager.conStatus >= 3)) {
             documentManager.sendRequest(request);
         }
-        documentManager.handler.sendEmptyMessageDelayed(2, 4000);
+        documentManager.messageHandler.sendEmptyMessageDelayed(2, 4000);
         return request.result;
     }
 
@@ -425,7 +425,7 @@ public class DocumentManager extends Network {
             if (Build.VERSION.SDK_INT >= 21 && i == 1) {
                 ((JobScheduler) documentManager.context.getSystemService(Context.JOB_SCHEDULER_SERVICE)).cancelAll();
             }
-            if (!documentManager.isConnected2()) {
+            if (!documentManager.isWebSocketConnected()) {
                 documentManager.initConnection();
                 return;
             }
@@ -439,7 +439,7 @@ public class DocumentManager extends Network {
                 isMemberValid();
             }
         } else if (i2 != 1 || !isLoggined() || Prefs.f1169g == 0) {
-            documentManager.closeNet2();
+            documentManager.closeSocketConnection();
             f2746C.m655c(null);
         } else {
             getResultRequest(documentManager.new SendLoginedData());
@@ -451,7 +451,7 @@ public class DocumentManager extends Network {
         if (4 == this.conStatus) {
             setConnectionStatus(this.conStatus1);
         }
-        this.handler.removeMessages(2);
+        this.messageHandler.removeMessages(2);
     }
 
     public void loadServerData() {
@@ -472,7 +472,7 @@ public class DocumentManager extends Network {
 
     public void setConnectionStatus(int connectionStatus) {
         this.conStatus = connectionStatus;
-        this.handler.sendEmptyMessage(1);
+        this.messageHandler.sendEmptyMessage(1);
     }
 
     @Override
@@ -492,7 +492,7 @@ public class DocumentManager extends Network {
     }
 
     @Override
-    protected void mo91E() {
+    protected void resetConnection() {
         int i = 0;
         setConnectionStatus(0);
         synchronized (this.requestSparseArray) {
@@ -508,13 +508,13 @@ public class DocumentManager extends Network {
     }
 
     @Override
-    protected void HandleDocument(Document document) {
+    protected void handleDocument(Document document) {
         Log.d("DocumentManager", "handling document");
      //   Log.d("DocumentManager", document.toString());
         int i;
         updateConnectionStatus();
         if (document.getInt(0) == null || document.getInt(1) == null) {
-            this.handler.sendEmptyMessage(6);
+            this.messageHandler.sendEmptyMessage(6);
             Log.e("DocumentManager", "Handler: Invalid Document header");
             //ACRA.getErrorReporter().handleSilentException(new IOException("Handler: Invalid Document header"));
         }
@@ -525,12 +525,12 @@ public class DocumentManager extends Network {
         if (intValue == 0) {
             synchronized (this.requestSparseArray) {
                 for (int i2 = 0; i2 < this.requestSparseArray.size(); i2++) {
-                    handler.sendMessage(handler.obtainMessage(3, this.requestSparseArray.keyAt(i2), intValue2, document));
+                    messageHandler.sendMessage(messageHandler.obtainMessage(3, this.requestSparseArray.keyAt(i2), intValue2, document));
                 }
                 this.requestSparseArray.clear();
             }
         } else if (30309 == intValue && intValue2 == 0) {
-            this.handler.sendMessage(this.handler.obtainMessage(12, 0, 0, document));
+            this.messageHandler.sendMessage(this.messageHandler.obtainMessage(12, 0, 0, document));
         } else {
             IGenerateRequest request = this.requestSparseArray.get(intValue);
             if (request != null) {
@@ -555,14 +555,14 @@ public class DocumentManager extends Network {
                     e.printStackTrace();
                     //ACRA.getErrorReporter().handleSilentException(new Exception("Handler:Async", e));
                 }
-                this.handler.sendMessage(this.handler.obtainMessage(3, intValue, intValue2, document));
+                this.messageHandler.sendMessage(this.messageHandler.obtainMessage(3, intValue, intValue2, document));
             }
         }
     }
 
     @Override
     protected void parseDocumentError() {
-        this.handler.sendEmptyMessage(4);
+        this.messageHandler.sendEmptyMessage(4);
     }
 
     @Override
@@ -577,7 +577,7 @@ public class DocumentManager extends Network {
 
     @Override
     protected void mo86J() {
-        this.handler.sendEmptyMessage(5);
+        this.messageHandler.sendEmptyMessage(5);
     }
 
     public void saveUnreadData(Bundle bundle) {
@@ -814,23 +814,23 @@ public class DocumentManager extends Network {
                         return;
                     case 2:
                         //      Log.d("DocumentMamager","message 2 callsed");
-                        DocumentManager.this.handler.removeMessages(2);
+                        DocumentManager.this.messageHandler.removeMessages(2);
                         DocumentManager vVar = DocumentManager.this;
                         int i = vVar.conStatus;
                         if (!(i == 3 || i == 2)) {
                             if (i == 4) {
-                                vVar.closeNet();
+                                vVar.closeWebSocketConnection();
                                 return;
                             }
                             return;
                         }
-                        if ((DocumentManager.documentManager.getConnectTime() > 120000 && DocumentManager.documentManager.m63w() > 3000) || DocumentManager.documentManager.m63w() > 7000) {
+                        if ((DocumentManager.documentManager.getConnectTime() > 120000 && DocumentManager.documentManager.getSleepTime() > 3000) || DocumentManager.documentManager.getSleepTime() > 7000) {
                             DocumentManager vVar2 = DocumentManager.this;
                             vVar2.conStatus1 = vVar2.conStatus;
                             vVar2.setConnectionStatus(4);
                             DocumentManager.this.isDataSent();
                         }
-                        DocumentManager.this.handler.sendEmptyMessageDelayed(2, 4000);
+                        DocumentManager.this.messageHandler.sendEmptyMessageDelayed(2, 4000);
                         return;
                     case 3:
                         int messageId = message.arg1;
@@ -889,7 +889,7 @@ public class DocumentManager extends Network {
                         DocumentManager.f2755z.m655c(-1);
                         return;
                     case 7:
-                        DocumentManager.this.closeNet2();
+                        DocumentManager.this.closeSocketConnection();
                         DocumentManager.f2749F.m655c(null);
                         return;
                     case 8:
@@ -929,11 +929,11 @@ public class DocumentManager extends Network {
                                         }
                                         return;
                                     } else if (101 == intValue) {
-                                        MessageHandler dVar = DocumentManager.this.handler;
+                                        MessageHandler dVar = DocumentManager.this.messageHandler;
                                         dVar.sendMessage(dVar.obtainMessage(10, parseInt, intValue2));
                                         return;
                                     } else if (102 == intValue) {
-                                        MessageHandler dVar2 = DocumentManager.this.handler;
+                                        MessageHandler dVar2 = DocumentManager.this.messageHandler;
                                         dVar2.sendMessage(dVar2.obtainMessage(11, parseInt, intValue2));
                                         return;
                                     } else {
@@ -1180,7 +1180,7 @@ public class DocumentManager extends Network {
                 }
                 DocumentManager vVar = DocumentManager.this;
                 vVar.memberId = 0;
-                vVar.handler.sendEmptyMessage(8);
+                vVar.messageHandler.sendEmptyMessage(8);
             }
         }
 
@@ -1205,7 +1205,7 @@ public class DocumentManager extends Network {
         void prepareResult(int status, Document uVar) {
             Log.d("DocumnetManager", "send handshake");
             if (status == 3) {
-                DocumentManager.this.handler.sendEmptyMessage(7);
+                DocumentManager.this.messageHandler.sendEmptyMessage(7);
             } else if (status != 0) {
                 if (1 == DocumentManager.this.errorStatusCode) {
                     Toast.makeText(DocumentManager.this.context, "Ошибка сервера!", Toast.LENGTH_LONG).show();
@@ -1299,7 +1299,7 @@ public class DocumentManager extends Network {
             if (status == 0) {
                 DocumentManager.this.memberInfoModel = new MemberInfoModel(document);
                 MemberInfoModel.parseMemberSummaryDocument(DocumentManager.this.context, document);
-                DocumentManager.this.handler.sendEmptyMessage(9);
+                DocumentManager.this.messageHandler.sendEmptyMessage(9);
                 if (unread2 == null) {
                     unread2 = new Unread2(DocumentManager.this.context);
                 }

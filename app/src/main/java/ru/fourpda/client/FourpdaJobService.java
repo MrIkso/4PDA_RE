@@ -49,7 +49,7 @@ public class FourpdaJobService extends JobService {
     public boolean onStartJob(JobParameters jobParameters) {
         if (DocumentManager.isLoggined() && DocumentManager.getErrorStatusCode() == 0) {
             DocumentManager.restartConnection1(jobParameters.getJobId() + 1);
-            if (DocumentManager.documentManager.isConnected2()) {
+            if (DocumentManager.documentManager.isWebSocketConnected()) {
                 Handler handler = new Handler();
                 C0155a aVar = new C0155a(jobParameters, handler);
                 DocumentManager.f2746C.m657a(aVar);

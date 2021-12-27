@@ -1276,7 +1276,7 @@ public class MainLayout extends ViewGroup implements Animation.AnimationListener
                 }
                 if (i > 0) {
                     int U = DocumentManager.getErrorStatusCode();
-                    if (DocumentManager.documentManager.isConnected2()) {
+                    if (DocumentManager.documentManager.isWebSocketConnected()) {
                         U |= 4;
                     }
                     if (DocumentManager.documentManager.isConnected()) {

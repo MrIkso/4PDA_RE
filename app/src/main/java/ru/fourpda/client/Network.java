@@ -22,7 +22,7 @@ import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
 public abstract class Network {
-    private volatile boolean isConnected2;
+    private volatile boolean isWebSocketConnected;
     private volatile boolean isConnected;
     private volatile boolean altPath;
     private volatile Thread connectionThread;
@@ -30,7 +30,7 @@ public abstract class Network {
     private volatile OutputStream outputStream;
     private long connStart;
     private long connTime;
-    private long f3182j;
+    private long sleepTime;
     private final Object locker = new Object();
     private final Runnable connectionRunnable = new Runnable(){
         @Override
@@ -44,32 +44,32 @@ public abstract class Network {
             byte[] headerBytes = new byte[10];
             byte[] receivedBytes = new byte[65536];
             Inflater decompressor = new Inflater(true);
-            boolean z;
-            boolean z2 = false;
+            boolean isDocumentParsed;
+            boolean isParsedSocket = false;
             while (true) {
                 Thread.interrupted();
-                if (z2 || !Network.this.isConnected2) {
+                if (isParsedSocket || !isWebSocketConnected) {
                     Log.d("NETWORK", "close connection");
-                    boolean z3 = Network.this.isConnected;
-                    Network.this.isConnected = false;
-                    if (z3) {
+                    //boolean z3 = Network.this.isConnected;
+                    isConnected = false;
+                    if (isConnected) {
                         decompressor.reset();
-                        Network.this.mo91E();
+                        resetConnection();
                     }
                     dataInputStream = null;
-                    Network.this.outputStream = null;
-                    if (Network.this.tcpSocket != null) {
+                    outputStream = null;
+                    if (tcpSocket != null) {
                         try {
-                            Network.this.tcpSocket.close();
+                            tcpSocket.close();
                         } catch (Throwable th) {
                             th.printStackTrace();
                         }
                     }
-                    Network.this.tcpSocket = null;
+                    tcpSocket = null;
                 } else {
                     dataInputStream = resultStream;
                 }
-                while (!Network.this.isConnected2) {
+                while (!isWebSocketConnected) {
                     try {
                         synchronized (this) {
                             Log.d("NETWORK", "wait");
@@ -79,112 +79,114 @@ public abstract class Network {
                         e.printStackTrace();
                     }
                 }
-                boolean z4 = false;
+                boolean parsedSocket = false;
                 long elapsedRealtime = SystemClock.elapsedRealtime();
-                if (!Network.this.isConnected && elapsedRealtime - Network.this.f3182j < 1000) {
+                if (!isConnected && elapsedRealtime - sleepTime < 1000) {
                     try {
                         Log.d("NETWORK", "Thread.sleep" + elapsedRealtime);
-                        Thread.sleep((Network.this.f3182j + 1000) - elapsedRealtime);
+                        Thread.sleep((sleepTime + 1000) - elapsedRealtime);
                     } catch (InterruptedException e2) {
                         e2.printStackTrace();
                     }
                 }
-                Network.this.f3182j = elapsedRealtime;
-                if (!Network.this.isConnected2 || Network.this.tcpSocket != null) {
+                sleepTime = elapsedRealtime;
+                if (!isWebSocketConnected || tcpSocket != null) {
                     resultStream = dataInputStream;
                 } else
 
                 // create connection to app.4pda.to
                 {
-                    Network.this.isConnected = false;
-                    Network.this.altPath = false;
-                    Network.this.connectedServer();
+                    isConnected = false;
+                    altPath = false;
+                    connectedServer();
                     try {
-                        Network.this.tcpSocket = new Socket();
-                        Network.this.tcpSocket.setKeepAlive(true);
-                        if (262144 < Network.this.tcpSocket.getSendBufferSize()) {
-                            Network.this.tcpSocket.setSendBufferSize(262144);
+                        tcpSocket = new Socket();
+                        tcpSocket.setKeepAlive(true);
+                        if (262144 < tcpSocket.getSendBufferSize()) {
+                            tcpSocket.setSendBufferSize(262144);
                         }
-                        Network.this.tcpSocket.connect(new InetSocketAddress("app.4pda.to", 993), 10000);
-                        Network.this.outputStream = Network.this.tcpSocket.getOutputStream();
-                        tcpSocketStream = new DataInputStream(Network.this.tcpSocket.getInputStream());
+                        tcpSocket.connect(new InetSocketAddress("app.4pda.to", 993), 10000);
+                        outputStream = tcpSocket.getOutputStream();
+                        tcpSocketStream = new DataInputStream(tcpSocket.getInputStream());
                         Log.d("NETWORK", "getting input stream");
                     } catch (Throwable th2) {
                         try {
-                            Network.this.tcpSocket.close();
-                        } catch (Throwable th3) {
-                            th3.printStackTrace();
+                            tcpSocket.close();
+                        } catch (Throwable th) {
+                            th.printStackTrace();
                         }
-                        Network.this.tcpSocket = null;
+                        tcpSocket = null;
                         tcpSocketStream = null;
                     }
-                   if (Network.this.isConnected2 && Network.this.tcpSocket == null) {
+					
+					// create websocket connection
+                   if (isWebSocketConnected && tcpSocket == null) {
                         Log.d("NETWORK", "try another connection!");
-                        Network.this.altPath = true;
+                        altPath = true;
                         try {
-                            Network.this.tcpSocket = new Socket();
-                            Network.this.tcpSocket.setKeepAlive(true);
-                            if (262144 < Network.this.tcpSocket.getSendBufferSize()) {
-                                Network.this.tcpSocket.setSendBufferSize(262144);
+                            tcpSocket = new Socket();
+                            tcpSocket.setKeepAlive(true);
+                            if (262144 < tcpSocket.getSendBufferSize()) {
+                                tcpSocket.setSendBufferSize(262144);
                             }
-                            Network.this.tcpSocket.connect(new InetSocketAddress("app.4pda.ru", 80), 10000);
-                            Network.this.tcpSocket.setSoTimeout(5000);
-                            Network.this.outputStream = Network.this.tcpSocket.getOutputStream();
-                            webSocketStream = new DataInputStream(Network.this.tcpSocket.getInputStream());
+                            tcpSocket.connect(new InetSocketAddress("app.4pda.ru", 80), 10000);
+                            tcpSocket.setSoTimeout(5000);
+                            outputStream = tcpSocket.getOutputStream();
+                            webSocketStream = new DataInputStream(tcpSocket.getInputStream());
 
-                            byte[] bArr4 = new byte[16];
-                            new Random().nextBytes(bArr4);
-                            Network.this.outputStream.write(("GET /ws/ HTTP/1.1\r\nHost: app.4pda.ru\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Key: " + Base64.encodeToString(bArr4, 2) + "\r\nSec-WebSocket-Protocol: app\r\nSec-WebSocket-Version: 13\r\n\r\n").getBytes());
-                            byte[] bArr5 = new byte[1024];
+                            byte[] webSocketHeader = new byte[16];
+                            new Random().nextBytes(webSocketHeader);
+                            outputStream.write(("GET /ws/ HTTP/1.1\r\nHost: app.4pda.ru\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Key: " + Base64.encodeToString(webSocketHeader, 2) + "\r\nSec-WebSocket-Protocol: app\r\nSec-WebSocket-Version: 13\r\n\r\n").getBytes());
+                            byte[] webSocketData = new byte[1024];
                             int i = 0;
                             while (true) {
-                                int read = webSocketStream.read(bArr5, i, bArr5.length - i);
-                                if (read <= 0 || (i = i + read) > 1000 || (i >= 10 && bArr5[i - 1] == 10 && bArr5[i - 2] == 13 && bArr5[i - 3] == 10 && bArr5[i - 4] == 13)) {
+                                int read = webSocketStream.read(webSocketData, i, webSocketData.length - i);
+                                if (read <= 0 || (i = i + read) > 1000 || (i >= 10 && webSocketData[i - 1] == 10 && webSocketData[i - 2] == 13 && webSocketData[i - 3] == 10 && webSocketData[i - 4] == 13)) {
                                     break;
                                 }
                             }
-                            if (!new String(bArr5, 0, i).contains("101 Switching Protocols")) {
+                            if (!new String(webSocketData, 0, i).contains("101 Switching Protocols")) {
                                 throw new IOException("Bad WS reply");
                             }
                             tcpSocketStream = webSocketStream;
                         } catch (Throwable th5) {
                             tcpSocketStream = webSocketStream;
-                            if (Network.this.tcpSocket != null) {
+                            if (tcpSocket != null) {
                                 try {
-                                    Network.this.tcpSocket.close();
+                                    tcpSocket.close();
                                 } catch (Throwable th6) {
                                     th6.printStackTrace();
                                 }
-                                Network.this.tcpSocket = null;
+                                tcpSocket = null;
                             }
-                            if (Network.this.tcpSocket != null) {
-                            }
+                           // if (Network.this.tcpSocket != null) {
+                         //   }
                             resultStream = tcpSocketStream;
-                            if (!Network.this.isConnected2) {
-                            }
-                            z2 = z4;
+                           // if (!Network.this.isWebSocketConnected) {
+                        //    }
+                            isParsedSocket = parsedSocket;
                             th5.printStackTrace();
                         }
                     }
-                    if (Network.this.tcpSocket != null) {
+                    if (tcpSocket != null) {
                         try {
-                            Network.this.tcpSocket.setSoTimeout(90000);
+                            tcpSocket.setSoTimeout(90000);
                         } catch (SocketException e3) {
                             e3.printStackTrace();
                         }
                         Log.d("NETWORK", "connected!");
-                        Network.this.isConnected = true;
-                        Network.this.connTime = SystemClock.elapsedRealtime();
-                        Network.this.connectedForum();
+                        isConnected = true;
+                        connTime = SystemClock.elapsedRealtime();
+                        connectedForum();
                     }
                     resultStream = tcpSocketStream;
                 }
                 // parsing socket
-                if (true) {
+                if (isConnected) {
                     Log.d("NETWORK", "socket start parse");
-                    if (Network.this.tcpSocket == null) {
+                    if (tcpSocket == null) {
                         Log.d("NETWORK", "tcp socket null");
-                        z2 = false;
+                        isParsedSocket = false;
                     } else {
                         try {
                             resultStream.readFully(headerBytes, 0, 2);
@@ -220,13 +222,13 @@ public abstract class Network {
                             Log.d("NETWORK", String.format("header %s", new String(Base64.encode(headerBytes, 0, 10, 2))));
                             resultStream.readFully(contentBytes, 0, dataSize);
                             if (8 == (cmd & 15)) {
-                                Network.this.sendDocument(8, true, false, contentBytes, dataSize);
-                                Network.this.mo86J();
+                                sendDocument(8, true, false, contentBytes, dataSize);
+                                mo86J();
                             } else if (9 == (cmd & 15)) {
-                                Network.this.sendDocument(10, true, false, contentBytes, dataSize);
-                                Network.this.mo88H();
+                                sendDocument(10, true, false, contentBytes, dataSize);
+                                mo88H();
                             } else if (10 == (cmd & 15)) {
-                                Network.this.mo87I();
+                                mo87I();
                             } else if (1 == (cmd & 15) || 2 == (cmd & 15)) {
                                 if ((cmd & 64) != 0) {
                                     try {
@@ -254,28 +256,28 @@ public abstract class Network {
                                 }
                                 Log.d("NETWORK","start parsing bytearray");
                                 Document document = new Document();
-                                Exception e6 = null;
+                             //   Exception e6 = null;
                                 try {
-                                    z = document.fromStream(byteArrayInputStream);
-                                    Log.d("NETWORK","parse: "+ z);
+                                    isDocumentParsed = document.fromStream(byteArrayInputStream);
+                                    Log.d("NETWORK","parse: "+ isDocumentParsed);
                                 } catch (Exception e7) {
-                                    e6 = e7;
-                                    z = false;
+                                   // e6 = e7;
+                                    isDocumentParsed = false;
                                 }
-                                if (!z) {
-                                    Network.this.parseDocumentError();
+                                if (!isDocumentParsed) {
+                                    parseDocumentError();
                                     throw new Exception("Document Parse Error Occurred: level=" + Document.Debug_fromStream_level + " step=" + Document.Debug_fromStream_step + " " + byteArrayInputStream.toString(), e6);
                                 }
-                                Network.this.HandleDocument(document);
+                                handleDocument(document);
                             } else {
                                 throw new IOException();
                             }
-                            if (!Network.this.isConnected2) {
+                            if (!Network.this.isWebSocketConnected) {
                                 throw new IOException();
                             }
-                            z2 = false;
+                            isParsedSocket = false;
                         } catch (Throwable th7) {
-                            z4 = true;
+                            parsedSocket = true;
                             if (!(th7 instanceof IOException)) {
                                 th7.printStackTrace();
                                /* C0636ACRA.getErrorReporter().putCustomData("altpath", Network.this.f3175c ? "true" : "false");
@@ -287,7 +289,7 @@ public abstract class Network {
                         }
                     }
                 }
-               z2 = z4;
+               isParsedSocket = parsedSocket;
             }
         }
     };
@@ -397,8 +399,8 @@ public abstract class Network {
             if (!sendDocument(1, request.isFileSize() == 0, true, byteArrayOutputStream.toByteArray(), byteArrayOutputStream.size())) {
                 return false;
             }
-            int m = request.isFileSize();
-            if (m <= 0) {
+            int fileSize = request.isFileSize();
+            if (fileSize <= 0) {
                 return true;
             }
             WifiManager.WifiLock wifiLock = null;
@@ -416,15 +418,15 @@ public abstract class Network {
                 wifiLock.acquire();
             } catch (Exception unused3) {
             }
-            int len = Math.min(131072, Math.max(4096, m / 4));
+            int len = Math.min(131072, Math.max(4096, fileSize / 4));
             byte[] fileBytes = new byte[len];
-            boolean z = true;
+            boolean sendetDocument = true;
             while (request.isFileSize() > 0) {
-                z = sendDocument(0, request.isFileSize() == 0, true, fileBytes, request.onUploadFile(fileBytes, len));
-                if (!z) {
+                sendetDocument = sendDocument(0, request.isFileSize() == 0, true, fileBytes, request.onUploadFile(fileBytes, len));
+                if (!sendetDocument) {
                     break;
                 }
-                this.f3182j = SystemClock.elapsedRealtime();
+                this.sleepTime = SystemClock.elapsedRealtime();
             }
             if (wifiLock != null) {
                 try {
@@ -440,7 +442,7 @@ public abstract class Network {
                     unused5.printStackTrace();
                 }
             }
-            return z;
+            return sendetDocument;
         }
     }
 
@@ -456,9 +458,9 @@ public abstract class Network {
 
     protected abstract void connectedForum();
 
-    protected abstract void mo91E();
+    protected abstract void resetConnection();
 
-    protected abstract void HandleDocument(Document document);
+    protected abstract void handleDocument(Document document);
 
     protected abstract void parseDocumentError();
 
@@ -469,7 +471,7 @@ public abstract class Network {
     protected abstract void mo86J();
 
     public long getStartNETtime() {
-        if (this.isConnected2) {
+        if (this.isWebSocketConnected) {
             return SystemClock.elapsedRealtime() - this.connStart;
         }
         return 0;
@@ -490,7 +492,7 @@ public abstract class Network {
             new SendDocumentTask(this).execute();
             return true;
         }
-        DocumentManager.documentManager.handler.post(new Runnable() {
+        DocumentManager.documentManager.messageHandler.post(new Runnable() {
             @Override
             public void run() {
                 new SendDocumentTask(Network.this).execute();
@@ -499,13 +501,13 @@ public abstract class Network {
         return true;
     }
 
-    public synchronized void closeNet() {
-        if (this.isConnected2) {
-            Socket socket = this.tcpSocket;
-            if (socket != null) {
+    public synchronized void closeWebSocketConnection() {
+        if (this.isWebSocketConnected) {
+            if (tcpSocket != null) {
                 try {
-                    socket.close();
-                } catch (Exception unused) {
+                    tcpSocket.close();
+                } catch (Exception ex) {
+					ex.printStackTrace();
                 }
             }
             if (this.connectionThread != null) {
@@ -514,39 +516,39 @@ public abstract class Network {
         }
     }
 
-    public boolean sendRequest(DocumentManager.IGenerateRequest jVar) {
+    public boolean sendRequest(final DocumentManager.IGenerateRequest request) {
         if (!isConnected()) {
             return false;
         }
-        if (SystemClock.elapsedRealtime() - this.f3182j > 100000) {
-            closeNet();
+        if (SystemClock.elapsedRealtime() - this.sleepTime > 100000) {
+            closeWebSocketConnection();
             return false;
         }
         if (Looper.getMainLooper().equals(Looper.myLooper())) {
-            new SendDocumentRequestTask(this).execute(jVar);
+            new SendDocumentRequestTask(this).execute(request);
         } else {
-            DocumentManager.documentManager.handler.post(new Runnable() {
+            DocumentManager.documentManager.messageHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    new SendDocumentRequestTask(Network.this).execute(jVar);
+                    new SendDocumentRequestTask(Network.this).execute(request);
                 }
             });
         }
         return true;
     }
 
-    public long m63w() {
+    public long getSleepTime() {
         if (this.isConnected) {
-            return SystemClock.elapsedRealtime() - this.f3182j;
+            return SystemClock.elapsedRealtime() - this.sleepTime;
         }
         return 0;
     }
 
     public synchronized boolean initConnection() {
-        if (this.isConnected2) {
+        if (this.isWebSocketConnected) {
             return false;
         }
-        this.isConnected2 = true;
+        this.isWebSocketConnected = true;
         if (this.connectionThread == null) {
             this.connectionThread = new Thread(this.connectionRunnable);
             try {
@@ -555,22 +557,22 @@ public abstract class Network {
                 this.connectionThread = null;
             }
         } else {
-            closeNet();
+            closeWebSocketConnection();
         }
         if (this.connectionThread == null) {
-            this.isConnected2 = false;
+            this.isWebSocketConnected = false;
         }
-        if (this.isConnected2) {
+        if (this.isWebSocketConnected) {
             this.connStart = SystemClock.elapsedRealtime();
         }
-        return this.isConnected2;
+        return this.isWebSocketConnected;
     }
 
-    public synchronized boolean closeNet2() {
-        if (!this.isConnected2) {
+    public synchronized boolean closeSocketConnection() {
+        if (!this.isWebSocketConnected) {
             return false;
         }
-        this.isConnected2 = false;
+        this.isWebSocketConnected = false;
         Socket socket = this.tcpSocket;
         if (socket != null) {
             try {
@@ -584,7 +586,7 @@ public abstract class Network {
         return true;
     }
 
-    public boolean isConnected2() {
-        return this.isConnected2;
+    public boolean isWebSocketConnected() {
+        return this.isWebSocketConnected;
     }
 }
