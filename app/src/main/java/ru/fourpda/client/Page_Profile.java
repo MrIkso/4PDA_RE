@@ -213,7 +213,7 @@ public class Page_Profile extends Page implements BBDisplay.IBBDisplayCallback, 
             if (TextUtils.isEmpty(this.f1916a.getText().toString()) || TextUtils.isEmpty(this.f1917b.getText().toString())) {
                 Toast.makeText(Page_Profile.this.mainActivity, "Введите логин", 0).show();
             } else {
-                DocumentManager.getResultRequest(new MainActivity.C0187e0(Page_Profile.this.mainActivity, 7, 0, 0, this.f1917b.getText().toString(), this.f1916a.getText().toString()));
+                DocumentManager.getResultRequest(new MainActivity.MemberAuthorizationRequest(Page_Profile.this.mainActivity, 7, 0, 0, this.f1917b.getText().toString(), this.f1916a.getText().toString()));
             }
         }
     }
@@ -236,7 +236,7 @@ public class Page_Profile extends Page implements BBDisplay.IBBDisplayCallback, 
                 Toast.makeText(Page_Profile.this.mainActivity, "Некорректный email", 0).show();
                 this.f1922a.requestFocus();
             } else {
-                DocumentManager.getResultRequest(new MainActivity.C0187e0(Page_Profile.this.mainActivity, 2, 0, 0, this.f1923b.getText().toString(), this.f1922a.getText().toString()));
+                DocumentManager.getResultRequest(new MainActivity.MemberAuthorizationRequest(Page_Profile.this.mainActivity, 2, 0, 0, this.f1923b.getText().toString(), this.f1922a.getText().toString()));
             }
         }
     }
@@ -258,7 +258,7 @@ public class Page_Profile extends Page implements BBDisplay.IBBDisplayCallback, 
             if (TextUtils.isEmpty(this.f1929a.getText().toString()) || TextUtils.isEmpty(this.f1930b.getText().toString()) || TextUtils.isEmpty(this.f1931c.getText().toString())) {
                 Toast.makeText(Page_Profile.this.mainActivity, "Введите пароль", 0).show();
             } else if (this.f1930b.getText().toString().equals(this.f1931c.getText().toString())) {
-                DocumentManager.getResultRequest(new MainActivity.C0187e0(Page_Profile.this.mainActivity, 4, 0, 0, this.f1929a.getText().toString(), this.f1930b.getText().toString()));
+                DocumentManager.getResultRequest(new MainActivity.MemberAuthorizationRequest(Page_Profile.this.mainActivity, 4, 0, 0, this.f1929a.getText().toString(), this.f1930b.getText().toString()));
             } else {
                 Toast.makeText(Page_Profile.this.mainActivity, "Новые пароли не совпадают", 0).show();
             }
@@ -394,7 +394,7 @@ public class Page_Profile extends Page implements BBDisplay.IBBDisplayCallback, 
             q1Var.editText.addTextChangedListener(new C0581a(this, q1Var));
             q1Var.m620f(new View$OnClickListenerC0582b(q1Var), true);
             q1Var.show(true, true, true);
-            Page_Profile.this.mainActivity.mainLayout.m859w(q1Var.editText);
+            Page_Profile.this.mainActivity.mainLayout.hideKeyboard(q1Var.editText);
         }
     }
 
@@ -459,7 +459,7 @@ public class Page_Profile extends Page implements BBDisplay.IBBDisplayCallback, 
             q1Var.editText.addTextChangedListener(new C0585a(this, q1Var));
             q1Var.m620f(new View$OnClickListenerC0586b(q1Var), true);
             q1Var.show(true, true, true);
-            Page_Profile.this.mainActivity.mainLayout.m859w(q1Var.editText);
+            Page_Profile.this.mainActivity.mainLayout.hideKeyboard(q1Var.editText);
         }
     }
 
@@ -523,11 +523,11 @@ public class Page_Profile extends Page implements BBDisplay.IBBDisplayCallback, 
         }
 
         @Override
-        public void prepareResult(int status, Document uVar) {
+        public void prepareResult(int status, Document document) {
             Page_Profile n0Var = Page_Profile.this;
             if (!n0Var.isLoading) {
                 if (status == 0) {
-                    String n = uVar.getString(0);
+                    String n = document.getString(0);
                     if (n != null) {
                         Page_Profile.this.currentDocument.addString(2, n);
                     }
@@ -535,12 +535,12 @@ public class Page_Profile extends Page implements BBDisplay.IBBDisplayCallback, 
                         Toast.makeText(Page_Profile.this.mainActivity, "Аватар изменен", 0).show();
                         PicoImgRequest l = PicoImg.loadUrl(Page_Profile.this.mainActivity, n);
                         l.to(Page_Profile.this.avatarView);
-                        l.disableAnimation(!Prefs.f1146G);
+                        l.disableAnimation(!Prefs.animAvatars);
                         l.runAsync();
                     } else {
                         Toast.makeText(Page_Profile.this.mainActivity, "Аватар удален", 0).show();
                         Page_Profile n0Var2 = Page_Profile.this;
-                        n0Var2.avatarView.setImageDrawable(n0Var2.mainActivity.skin.m736f(R.drawable.ic_avatar));
+                        n0Var2.avatarView.setImageDrawable(n0Var2.mainActivity.skin.getSkinDrawable(R.drawable.ic_avatar));
                     }
                     DocumentManager.MemberInfoModel L = DocumentManager.getMemberInfoModel();
                     if (L != null && Page_Profile.this.userId == L.memberId) {
@@ -765,10 +765,10 @@ public class Page_Profile extends Page implements BBDisplay.IBBDisplayCallback, 
             spannableStringBuilder.setSpan(new StyleSpan(3), length, n.length() + length, 33);
             TextView textView = new TextView(this.activity);
             textView.setId(R.id.titleId);
-            textView.setTextColor(Skin.C0353a.f1365U);
+            textView.setTextColor(Skin.SkinColorModel.mainTextColor);
             textView.setText(spannableStringBuilder);
             textView.setTextSize(18.0f);
-            textView.setBackgroundDrawable(this.tab1.f1443a.skin.m736f(R.drawable.border_bottom));
+            textView.setBackgroundDrawable(this.tab1.f1443a.skin.getSkinDrawable(R.drawable.border_bottom));
             int i2 = (int) (24.0f * f);
             int i3 = (int) (8.0f * f);
             textView.setPadding(i2, i3, i2, (int) (10.0f * f));
@@ -791,7 +791,7 @@ public class Page_Profile extends Page implements BBDisplay.IBBDisplayCallback, 
             if (!TextUtils.isEmpty(n2)) {
                 PicoImgRequest l = PicoImg.loadUrl(this.activity, n2);
                 l.to((Widgets$AvatarView) inflate.findViewById(R.id.prf_edt_ava));
-                l.disableAnimation(!Prefs.f1146G);
+                l.disableAnimation(!Prefs.animAvatars);
                 l.runAsync();
             } else {
                 textView2.setEnabled(false);
@@ -901,7 +901,7 @@ public class Page_Profile extends Page implements BBDisplay.IBBDisplayCallback, 
 
         public void m570a() {
             this.tab1.m714l(null, false);
-            this.tab1.mainLayout.m859w(null);
+            this.tab1.mainLayout.hideKeyboard(null);
             this.tab1.mainLayout.m868n(true);
         }
 
@@ -910,18 +910,18 @@ public class Page_Profile extends Page implements BBDisplay.IBBDisplayCallback, 
             this.tab1.mainLayout.m868n(false);
         }
 
-        public void m568c(String str) {
+        public void m568c(String avatarUrl) {
             if (this.relativeLayout != null) {
-                if (!TextUtils.isEmpty(str)) {
-                    PicoImgRequest l = PicoImg.loadUrl(this.activity, str);
+                if (!TextUtils.isEmpty(avatarUrl)) {
+                    PicoImgRequest l = PicoImg.loadUrl(this.activity, avatarUrl);
                     l.to((Widgets$AvatarView) this.relativeLayout.findViewById(R.id.prf_edt_ava));
-                    l.disableAnimation(!Prefs.f1146G);
+                    l.disableAnimation(!Prefs.animAvatars);
                     l.runAsync();
                 } else {
-                    ((Widgets$AvatarView) this.relativeLayout.findViewById(R.id.prf_edt_ava)).setImageDrawable(this.tab1.f1443a.skin.m736f(R.drawable.ic_avatar));
+                    ((Widgets$AvatarView) this.relativeLayout.findViewById(R.id.prf_edt_ava)).setImageDrawable(this.tab1.f1443a.skin.getSkinDrawable(R.drawable.ic_avatar));
                 }
                 TextView textView = (TextView) this.relativeLayout.findViewById(R.id.prf_edt_ava_delete);
-                textView.setEnabled(TextUtils.isEmpty(str) | textView.isEnabled());
+                textView.setEnabled(TextUtils.isEmpty(avatarUrl) | textView.isEnabled());
             }
         }
 
@@ -932,9 +932,9 @@ public class Page_Profile extends Page implements BBDisplay.IBBDisplayCallback, 
             try {
                 InputStream openInputStream = this.activity.getContentResolver().openInputStream(uri);
                 if (openInputStream != null) {
-                    byte[] bArr = new byte[4096];
+                    byte[] buffer = new byte[4096];
                     while (true) {
-                        int read = openInputStream.read(bArr, 0, 4096);
+                        int read = openInputStream.read(buffer, 0, 4096);
                         if (read <= 0) {
                             break;
                         }
@@ -1290,12 +1290,12 @@ public class Page_Profile extends Page implements BBDisplay.IBBDisplayCallback, 
         if (num != null) {
             TextView textView = (TextView) view.findViewById(num.intValue());
             textView.setClickable(false);
-            textView.setTextColor(Skin.C0353a.f1365U);
+            textView.setTextColor(Skin.SkinColorModel.mainTextColor);
             textView.getLayoutParams().height = -2;
         }
         TextView textView2 = (TextView) view.findViewById(i);
         if (colorStateList == null) {
-            textView2.setTextColor(Skin.C0353a.f1365U);
+            textView2.setTextColor(Skin.SkinColorModel.mainTextColor);
         } else {
             textView2.setTextColor(colorStateList);
         }
@@ -1331,7 +1331,7 @@ public class Page_Profile extends Page implements BBDisplay.IBBDisplayCallback, 
             Util.copyToClipboard(mainActivity, "https://4pda.ru/" + getLink(), "Ссылка скопирована");
         } else if (statusCode == 2) {
             MainActivity mainActivity2 = this.mainActivity;
-            Urls2.m676g(mainActivity2, "https://4pda.ru/" + getLink());
+            Urls2.visitPage(mainActivity2, "https://4pda.ru/" + getLink());
         } else if (statusCode == 3) {
             if (this.editProfilePage == null) {
                 this.editProfilePage = new EditProfilePage(this.tab, this.currentDocument, this.f1905T, this.f1906U, this.f1907V);
@@ -1454,7 +1454,7 @@ public class Page_Profile extends Page implements BBDisplay.IBBDisplayCallback, 
             if (itemViewType == 2) {
                 RelativeLayout relativeLayout2 = new RelativeLayout(this.mainActivity);
                 View view2 = new View(this.mainActivity);
-                view2.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.card_sep));
+                view2.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.card_sep));
                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(-1, (int) (this.mainActivity.f731b * 16.0f));
                 layoutParams.topMargin = (int) (this.mainActivity.f731b * 16.0f);
                 view2.setLayoutParams(layoutParams);
@@ -1472,11 +1472,11 @@ public class Page_Profile extends Page implements BBDisplay.IBBDisplayCallback, 
                     this.avatarView = (Widgets$AvatarView) inflate2.findViewById(R.id.profileAvatar);
                     String n2 = this.currentDocument.getString(2);
                     if (this.userId == 17927) {
-                        this.avatarView.setImageDrawable(this.mainActivity.skin.m736f(R.drawable.ic_launcher));
+                        this.avatarView.setImageDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.ic_launcher));
                     } else if (!TextUtils.isEmpty(n2)) {
                         PicoImgRequest picoImgRequest = PicoImg.loadUrl(this.mainActivity, n2);
                         picoImgRequest.to(this.avatarView);
-                        picoImgRequest.disableAnimation(!Prefs.f1146G);
+                        picoImgRequest.disableAnimation(!Prefs.animAvatars);
                         picoImgRequest.sizeToView();
                         picoImgRequest.runAsync();
                         this.avatarView.setOnClickListener(new View$OnClickListenerC0571k(n2));
@@ -1485,15 +1485,15 @@ public class Page_Profile extends Page implements BBDisplay.IBBDisplayCallback, 
                     textView.setText(this.title);
                     textView.setOnLongClickListener(new View$OnLongClickListenerC0576p());
                     int intValue = this.currentDocument.getInt(8);
-                    textView.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.m736f((System.currentTimeMillis() / 1000) - ((long) intValue) < 900 ? R.drawable.ic_online : R.drawable.ic_offline), (Drawable) null, (Drawable) null, (Drawable) null);
+                    textView.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.getSkinDrawable((System.currentTimeMillis() / 1000) - ((long) intValue) < 900 ? R.drawable.ic_online : R.drawable.ic_offline), (Drawable) null, (Drawable) null, (Drawable) null);
                     if (intValue > 0) {
                         addTextColored(Util.formatDate(intValue), inflate2, (int) R.id.profileLastLabel, R.id.profileLast);
                     }
                     ((TextView) inflate2.findViewById(R.id.profileGroup)).
                             setText(API.userGroups.get(this.currentDocument.getInt(3)));
                     ((TextView) inflate2.findViewById(R.id.profileGroup)).
-                            setTextColor(Util.C0424f.m646c(Skin.C0353a.f1398n0[this.currentDocument.getInt(3)],
-                                    Skin.C0353a.f1370Z));
+                            setTextColor(Util.C0424f.m646c(Skin.SkinColorModel.f1398n0[this.currentDocument.getInt(3)],
+                                    Skin.SkinColorModel.f1370Z));
                     addTextView(4, inflate2, (int) R.id.profileTitleLabel, R.id.profileTitle);
                     addTextColored(Util.formatDate(this.currentDocument.getInt(7), true, false),
                             inflate2, (int) R.id.profileRegLabel, R.id.profileReg);
@@ -1644,7 +1644,7 @@ public class Page_Profile extends Page implements BBDisplay.IBBDisplayCallback, 
                                 View inflate3 = this.mainActivity.getLayoutInflater().inflate(R.layout.profile_reward, (ViewGroup) linearLayout, false);
                                 PicoImgRequest l4 = PicoImg.loadUrl(this.mainActivity, rewardDocument.getString(0));
                                 l4.to((ImageView) inflate3.findViewById(R.id.reward_image));
-                                l4.disableAnimation(!Prefs.f1148I);
+                                l4.disableAnimation(!Prefs.animImages);
                                 l4.runAsync();
                                 ((TextView) inflate3.findViewById(R.id.reward_name)).setText(rewardDocument.getString(1));
                                 ((TextView) inflate3.findViewById(R.id.reward_date)).setText(Util.formatDate(rewardDocument.getInt(4), true, false));
@@ -1747,13 +1747,13 @@ public class Page_Profile extends Page implements BBDisplay.IBBDisplayCallback, 
             }
             if (num != null) {
                 view.findViewById(num).getLayoutParams().height = -2;
-                ((TextView) view.findViewById(num)).setTextColor(Skin.C0353a.f1365U);
+                ((TextView) view.findViewById(num)).setTextColor(Skin.SkinColorModel.mainTextColor);
             }
             if (z) {
                 n = Util.C0427h.UnEscapeString(n);
             }
             TextView textView = (TextView) view.findViewById(i2);
-            textView.setTextColor(Skin.C0353a.f1365U);
+            textView.setTextColor(Skin.SkinColorModel.mainTextColor);
             textView.getLayoutParams().height = -2;
             textView.setText(n);
             return true;

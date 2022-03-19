@@ -317,7 +317,7 @@ public class Page_DevType extends Page {
             TextView textView = (TextView) view.findViewById(R.id.devtypeTitle);
             textView.setText(fVar.f1291e);
             textView.setTag(fVar);
-            textView.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.m736f(fVar.f1287a == 0 ? R.drawable.ic_expand_close : R.drawable.ic_expand_open), (Drawable) null, (Drawable) null, (Drawable) null);
+            textView.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.getSkinDrawable(fVar.f1287a == 0 ? R.drawable.ic_expand_close : R.drawable.ic_expand_open), (Drawable) null, (Drawable) null, (Drawable) null);
             TextView textView2 = (TextView) view.findViewById(R.id.devtypeActual);
             textView2.setText("Актуальные: " + fVar.f1289c.size());
             textView2.setVisibility(fVar.f1287a == 0 ? 8 : 0);
@@ -352,7 +352,7 @@ public class Page_DevType extends Page {
                     view.setPadding(0, 0, 0, (int) (this.mainActivity.f731b * 16.0f));
                 }
             } else {
-                textView5.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.border_bottom));
+                textView5.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.border_bottom));
                 float f2 = this.mainActivity.f731b;
                 textView5.setPadding(0, (int) (f2 * 12.0f), (int) (16.0f * f2), (int) (f2 * 12.0f));
                 view.setPadding(0, 0, 0, 0);

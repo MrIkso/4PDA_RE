@@ -189,7 +189,7 @@ public class Page_QMS_Talk extends Page implements BBDisplay.IBBDisplayCallback,
                 }
                 bBOverlay2.m950j(z);
             } else if (i3 == 27) {
-                Urls2.m676g(Page_QMS_Talk.this.mainActivity, this.f2399b.f2202I.get(this.f2400c.f543a).link);
+                Urls2.visitPage(Page_QMS_Talk.this.mainActivity, this.f2399b.f2202I.get(this.f2400c.f543a).link);
             } else if (i3 == 24) {
                 this.f2398a.m977d(this.f2400c.f545c, true);
             } else if (i3 == 1) {
@@ -889,8 +889,8 @@ public class Page_QMS_Talk extends Page implements BBDisplay.IBBDisplayCallback,
     public static class QmsSearchRequest extends API.QmsThreadRequest {
         Page_QMS_Talk f2449j;
 
-        QmsSearchRequest(Page_QMS_Talk p0Var, int i) {
-            super(p0Var.dialogId, i, -1);
+        QmsSearchRequest(Page_QMS_Talk p0Var, int messageId) {
+            super(p0Var.dialogId, messageId, -1);
             this.f2449j = p0Var;
             this.statusMessage = "Поиск сообщения";
         }
@@ -1061,9 +1061,9 @@ public class Page_QMS_Talk extends Page implements BBDisplay.IBBDisplayCallback,
         }
         super.mo142J(z);
         if (isCurrentTab()) {
-            this.tab.forumsListView.f1474b.setBackgroundDrawable(Skin.C0353a.f1390j0.getConstantState().newDrawable());
+            this.tab.forumsListView.f1474b.setBackgroundDrawable(Skin.SkinColorModel.f1390j0.getConstantState().newDrawable());
             if (Build.VERSION.SDK_INT > 9) {
-                this.tab.forumsListView.setOverscrollHeader(Skin.C0353a.f1390j0);
+                this.tab.forumsListView.setOverscrollHeader(Skin.SkinColorModel.f1390j0);
             }
             if (this.f2362F >= 0) {
                 this.tab.forumsListView.post(new RunnableC0706l());
@@ -1094,7 +1094,7 @@ public class Page_QMS_Talk extends Page implements BBDisplay.IBBDisplayCallback,
         q1Var.editText.setText(this.f2361E);
         q1Var.m625a(!TextUtils.isEmpty(this.f2361E) && this.f2361E.length() >= 3);
         q1Var.editText.addTextChangedListener(new C0707m(this, q1Var));
-        this.mainActivity.mainLayout.m859w(q1Var.editText);
+        this.mainActivity.mainLayout.hideKeyboard(q1Var.editText);
         q1Var.m620f(new View$OnClickListenerC0708n(q1Var), true);
         q1Var.m621e(new View$OnClickListenerC0709o(), true);
         q1Var.show(true, true, true);
@@ -1114,14 +1114,14 @@ public class Page_QMS_Talk extends Page implements BBDisplay.IBBDisplayCallback,
             this.tab.forumsListView.setTranscriptMode(2);
             this.tab.forumsListView.setStackFromBottom(true);
             if (isUnsucces()) {
-                this.tab.forumsListView.f1474b.setBackgroundDrawable(Skin.C0353a.f1390j0.getConstantState().newDrawable());
-                this.tab.forumsListView.setOverscrollHeader(Skin.C0353a.f1390j0);
+                this.tab.forumsListView.f1474b.setBackgroundDrawable(Skin.SkinColorModel.f1390j0.getConstantState().newDrawable());
+                this.tab.forumsListView.setOverscrollHeader(Skin.SkinColorModel.f1390j0);
             } else {
                 this.tab.forumsListView.f1474b.setBackgroundDrawable(null);
             }
             if (this.f2370N != null) {
-                ((RelativeLayout.LayoutParams) this.f2364H.getLayoutParams()).topMargin = Prefs.f1177o ? 0 : (int) (this.mainActivity.f731b * 16.0f);
-                this.f2370N.findViewById(R.id.qmsTagsBar).setVisibility(Prefs.f1177o ? 0 : 8);
+                ((RelativeLayout.LayoutParams) this.f2364H.getLayoutParams()).topMargin = Prefs.qmsHideTags ? 0 : (int) (this.mainActivity.f731b * 16.0f);
+                this.f2370N.findViewById(R.id.qmsTagsBar).setVisibility(Prefs.qmsHideTags ? 0 : 8);
             }
             this.tab.mainLayout.f801I = false;
             this.mainActivity.m898h(this);
@@ -1195,7 +1195,7 @@ public class Page_QMS_Talk extends Page implements BBDisplay.IBBDisplayCallback,
         if (-1 != i3) {
             String str = pVar.f2202I.get(i3).link;
             i = 0;
-            o1Var.addMenuItem(0, intValue, 0, Util.C0427h.m640d(str), true, false);
+            o1Var.addMenuItem(0, intValue, 0, Util.C0427h.urlDecode(str), true, false);
             o1Var.addMenuItem(0, intValue, 26, "Копировать ссылку");
             if (Urls2.is4pdaHost(str)) {
                 o1Var.addMenuItem(0, intValue, 21, "Открыть в новой вкладке");
@@ -1343,7 +1343,7 @@ public class Page_QMS_Talk extends Page implements BBDisplay.IBBDisplayCallback,
                 view = this.mainActivity.getLayoutInflater().inflate(valueAt.opponentId == this.myId ? R.layout.qmsoppomessage : R.layout.qmsmymessage, viewGroup, false);
                 BBDisplay bBDisplay = view.findViewById(R.id.messageCode);
                 BBOverlay bBOverlay = view.findViewById(R.id.messageOverlay);
-                bBDisplay.setBackgroundDrawable(this.mainActivity.skin.m736f(valueAt.opponentId == this.myId ? R.drawable.bubble_oppo : R.drawable.bubble_my));
+                bBDisplay.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(valueAt.opponentId == this.myId ? R.drawable.bubble_oppo : R.drawable.bubble_my));
                 bBDisplay.setOverlay(bBOverlay);
                 bBDisplay.setCallback(this);
             }
@@ -1360,14 +1360,14 @@ public class Page_QMS_Talk extends Page implements BBDisplay.IBBDisplayCallback,
             if (!TextUtils.isEmpty(str)) {
                 PicoImgRequest l = PicoImg.loadUrl(this.mainActivity, str);
                 l.to(avatarView);
-                l.disableAnimation(!Prefs.f1146G);
-                l.placeholder(this.mainActivity.skin.m736f(R.drawable.ic_avatar));
+                l.disableAnimation(!Prefs.animAvatars);
+                l.placeholder(this.mainActivity.skin.getSkinDrawable(R.drawable.ic_avatar));
                 l.fade(4, 200, false);
                 l.runAsync();
             }
             TextView textView = view.findViewById(R.id.messageDate);
             textView.setText(valueAt.f2444e);
-            textView.setCompoundDrawablesWithIntrinsicBounds(!valueAt.f2447h ? this.mainActivity.skin.m736f(R.drawable.ic_qms_unread) : null, null, null, null);
+            textView.setCompoundDrawablesWithIntrinsicBounds(!valueAt.f2447h ? this.mainActivity.skin.getSkinDrawable(R.drawable.ic_qms_unread) : null, null, null, null);
             view.setPadding(QmsMessage.f2438k, i != 0 ? QmsMessage.f2437j : QmsMessage.f2437j / 2, QmsMessage.f2438k, i != this.qmsMessageSparseArray.size() - 1 ? QmsMessage.f2437j : QmsMessage.f2437j / 2);
             if (i >= 30 && !this.f2376T && !this.f2378V) {
                 DocumentManager.getResultRequest(new QmsLoadMessages(this, this.qmsMessageSparseArray.valueAt(0).messageId, -60, false));
@@ -1377,10 +1377,10 @@ public class Page_QMS_Talk extends Page implements BBDisplay.IBBDisplayCallback,
             }
             return view;
         }
-        avatarView.setImageDrawable(this.mainActivity.skin.m736f(R.drawable.ic_launcher));
+        avatarView.setImageDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.ic_launcher));
         TextView textView2 = view.findViewById(R.id.messageDate);
         textView2.setText(valueAt.f2444e);
-        textView2.setCompoundDrawablesWithIntrinsicBounds(!valueAt.f2447h ? this.mainActivity.skin.m736f(R.drawable.ic_qms_unread) : null, null, null, null);
+        textView2.setCompoundDrawablesWithIntrinsicBounds(!valueAt.f2447h ? this.mainActivity.skin.getSkinDrawable(R.drawable.ic_qms_unread) : null, null, null, null);
         view.setPadding(QmsMessage.f2438k, i != 0 ? QmsMessage.f2437j : QmsMessage.f2437j / 2, QmsMessage.f2438k, i != this.qmsMessageSparseArray.size() - 1 ? QmsMessage.f2437j : QmsMessage.f2437j / 2);
         if (i >= 30) {
         }

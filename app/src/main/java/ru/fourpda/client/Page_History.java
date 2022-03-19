@@ -86,7 +86,7 @@ public class Page_History extends Page {
     }
 
     public Page_History(MainActivity mainActivity, int page) {
-        super(mainActivity, 26733, new Document(page, Prefs.f1181s));
+        super(mainActivity, 26733, new Document(page, Prefs.memberTopicsPerPage));
         this.iconId = R.drawable.ic_nav_fav;
         this.title = "История";
         this.statusMessage = "Загрузка истории";
@@ -140,19 +140,19 @@ public class Page_History extends Page {
     @Override
     int mo141P() {
         int i = this.f1616H;
-        int i2 = Prefs.f1181s;
+        int i2 = Prefs.memberTopicsPerPage;
         int i3 = (i / i2) + (i % i2 != 0 ? 1 : 0);
         return i3 == 0 ? i3 + 1 : i3;
     }
 
     @Override
     int mo140Q() {
-        return (this.f1615G / Prefs.f1181s) + 1;
+        return (this.f1615G / Prefs.memberTopicsPerPage) + 1;
     }
 
     @Override
     Page mo139R(int i) {
-        return new Page_History(this.mainActivity, (i - 1) * Prefs.f1181s);
+        return new Page_History(this.mainActivity, (i - 1) * Prefs.memberTopicsPerPage);
     }
 
     @Override
@@ -212,7 +212,7 @@ public class Page_History extends Page {
         if (itemViewType == 1) {
             MainActivity mainActivity = this.mainActivity;
             float f = mainActivity.f731b;
-            view.setBackgroundDrawable(mainActivity.skin.m736f(i2 > 0 ? R.drawable.card_sep : R.color.cardlist_bg));
+            view.setBackgroundDrawable(mainActivity.skin.getSkinDrawable(i2 > 0 ? R.drawable.card_sep : R.color.cardlist_bg));
             int i3 = (int) (16.0f * f);
             view.setPadding(i3, i3, i3, (int) (f * 8.0f));
             ((TextView) view).setText(this.f1617I.get(i2));
@@ -247,9 +247,9 @@ public class Page_History extends Page {
             textView.setEnabled(z);
             int itemViewType2 = getItemViewType((m816T() ? 1 : 0) + i2 + 1);
             if ((l.getInt(3) & 2) > 0) {
-                viewGroup2.setBackgroundColor(Skin.C0353a.f1366V);
+                viewGroup2.setBackgroundColor(Skin.SkinColorModel.f1366V);
             } else {
-                viewGroup2.setBackgroundDrawable(itemViewType2 == 2 ? this.mainActivity.skin.m736f(R.drawable.border_bottom) : null);
+                viewGroup2.setBackgroundDrawable(itemViewType2 == 2 ? this.mainActivity.skin.getSkinDrawable(R.drawable.border_bottom) : null);
             }
         }
         if (itemViewType == 3) {
@@ -270,7 +270,7 @@ public class Page_History extends Page {
 
     @Override
     public void tabReload() {
-        this.rootDocument = new Document(this.f1615G, Prefs.f1181s);
+        this.rootDocument = new Document(this.f1615G, Prefs.memberTopicsPerPage);
         super.tabReload();
     }
 }

@@ -82,7 +82,7 @@ public class FastScrollBar {
     }
 
     private void m615e(Context context) {
-        m605o(context, context instanceof MainActivity ? ((MainActivity) context).skin.m736f(R.drawable.scrollbar_handle_accelerated_anim2) : context.getResources().getDrawable(R.drawable.scrollbar_handle_accelerated_anim2));
+        m605o(context, context instanceof MainActivity ? ((MainActivity) context).skin.getSkinDrawable(R.drawable.scrollbar_handle_accelerated_anim2) : context.getResources().getDrawable(R.drawable.scrollbar_handle_accelerated_anim2));
         this.f1844j = new RunnableC0547b();
         Paint paint = new Paint();
         this.f1841g = paint;

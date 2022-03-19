@@ -8,3 +8,4 @@
     <attr name="radius" format="integer" />
     <attr name="sub_text" format="string" />
 </resources>
+

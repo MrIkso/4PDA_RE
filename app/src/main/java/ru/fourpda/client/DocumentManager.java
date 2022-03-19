@@ -25,12 +25,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
-
-import org.json.JSONObject;
-
 import java.util.List;
 import java.util.Vector;
 import java.util.zip.ZipFile;
+import org.json.JSONObject;
 
 public class DocumentManager extends Network {
     static DocumentManager documentManager;
@@ -55,16 +53,17 @@ public class DocumentManager extends Network {
     int conStatus1 = 3;
     int memberId = 0;
 
-    int f2766v = 0;
+    int conNumber = 0;
     private int errorStatusCode = 0;
-    private int f2767w = 0;
+    private int sendLoginDataErrorCode = 0;
 
     private DocumentManager(Context context) {
         this.context = context;
         this.messageHandler = new MessageHandler(this.context.getMainLooper());
-        MyBrodcastReceiver cVar = new MyBrodcastReceiver(this);
-        this.broadcastReceiver = cVar;
-        this.context.registerReceiver(cVar, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
+        broadcastReceiver = new MyBrodcastReceiver(this);
+
+        this.context.registerReceiver(
+                broadcastReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
         initUnread();
     }
 
@@ -89,9 +88,10 @@ public class DocumentManager extends Network {
         String str7;
         String str8;
         String str9;
-        DocumentManager vVar = new DocumentManager(context);
-        documentManager = vVar;
-        SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(vVar.context);
+        documentManager = new DocumentManager(context);
+
+        SharedPreferences defaultSharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(context);
         String str10 = "_param3";
         String str11 = "_param2";
         int i = 0;
@@ -233,57 +233,57 @@ public class DocumentManager extends Network {
                 i = 0;
             }
         }
-        int i7 = defaultSharedPreferences.getInt("links_count", 0);
-        if (i7 > 0) {
-            SharedPreferences.Editor edit2 = defaultSharedPreferences.edit();
-            for (int i8 = 0; i8 < i7; i8++) {
-                edit2.remove("link_" + i8 + "_type");
-                edit2.remove("link_" + i8 + "_name");
-                edit2.remove("link_" + i8 + "_param1");
-                edit2.remove("link_" + i8 + str11);
-                edit2.remove("link_" + i8 + str10);
+        int linkCount = defaultSharedPreferences.getInt("links_count", 0);
+        if (linkCount > 0) {
+            SharedPreferences.Editor linkEdit = defaultSharedPreferences.edit();
+            for (int i8 = 0; i8 < linkCount; i8++) {
+                linkEdit.remove("link_" + i8 + "_type");
+                linkEdit.remove("link_" + i8 + "_name");
+                linkEdit.remove("link_" + i8 + "_param1");
+                linkEdit.remove("link_" + i8 + str11);
+                linkEdit.remove("link_" + i8 + str10);
             }
-            edit2.remove("links_count");
-            edit2.commit();
+            linkEdit.remove("links_count");
+            linkEdit.commit();
         }
-        int i9 = defaultSharedPreferences.getInt("unread_qms_count", 0);
-        if (i9 > 0) {
-            SharedPreferences.Editor edit3 = defaultSharedPreferences.edit();
-            for (int i10 = 0; i10 < i9; i10++) {
-                edit3.remove("unread_qms_id_" + i10);
-                edit3.remove("unread_qms_msg_" + i10);
-                edit3.remove("unread_qms_reset_" + i10);
-                edit3.remove("unread_qms_signal_" + i10);
-                edit3.remove("unread_qms_count_" + i10);
+        int unreadQmsCount = defaultSharedPreferences.getInt("unread_qms_count", 0);
+        if (unreadQmsCount > 0) {
+            SharedPreferences.Editor unreadQmsEdit = defaultSharedPreferences.edit();
+            for (int i10 = 0; i10 < unreadQmsCount; i10++) {
+                unreadQmsEdit.remove("unread_qms_id_" + i10);
+                unreadQmsEdit.remove("unread_qms_msg_" + i10);
+                unreadQmsEdit.remove("unread_qms_reset_" + i10);
+                unreadQmsEdit.remove("unread_qms_signal_" + i10);
+                unreadQmsEdit.remove("unread_qms_count_" + i10);
             }
-            edit3.remove("unread_qms_count");
-            edit3.commit();
+            unreadQmsEdit.remove("unread_qms_count");
+            unreadQmsEdit.commit();
         }
-        int i11 = defaultSharedPreferences.getInt("unread_fav_count", 0);
-        if (i11 > 0) {
-            SharedPreferences.Editor edit4 = defaultSharedPreferences.edit();
-            for (int i12 = 0; i12 < i11; i12++) {
-                edit4.remove("unread_fav_id_" + i12);
-                edit4.remove("unread_fav_time_" + i12);
-                edit4.remove("unread_fav_type_" + i12);
-                edit4.remove("unread_fav_reset_" + i12);
-                edit4.remove("unread_fav_signal_" + i12);
+        int unreadFavCount = defaultSharedPreferences.getInt("unread_fav_count", 0);
+        if (unreadFavCount > 0) {
+            SharedPreferences.Editor unreadFavEdit = defaultSharedPreferences.edit();
+            for (int i12 = 0; i12 < unreadFavCount; i12++) {
+                unreadFavEdit.remove("unread_fav_id_" + i12);
+                unreadFavEdit.remove("unread_fav_time_" + i12);
+                unreadFavEdit.remove("unread_fav_type_" + i12);
+                unreadFavEdit.remove("unread_fav_reset_" + i12);
+                unreadFavEdit.remove("unread_fav_signal_" + i12);
             }
-            edit4.remove("unread_fav_count");
-            edit4.commit();
+            unreadFavEdit.remove("unread_fav_count");
+            unreadFavEdit.commit();
         }
-        int i13 = defaultSharedPreferences.getInt("unread_men_count", 0);
-        if (i13 > 0) {
-            SharedPreferences.Editor edit5 = defaultSharedPreferences.edit();
-            for (int i14 = 0; i14 < i13; i14++) {
-                edit5.remove("unread_men_id_" + i14);
-                edit5.remove("unread_men_time_" + i14);
-                edit5.remove("unread_men_type_" + i14);
-                edit5.remove("unread_men_reset_" + i14);
-                edit5.remove("unread_men_signal_" + i14);
+        int unreadMenCount = defaultSharedPreferences.getInt("unread_men_count", 0);
+        if (unreadMenCount > 0) {
+            SharedPreferences.Editor unreadMenEdit = defaultSharedPreferences.edit();
+            for (int i14 = 0; i14 < unreadFavCount; i14++) {
+                unreadMenEdit.remove("unread_men_id_" + i14);
+                unreadMenEdit.remove("unread_men_time_" + i14);
+                unreadMenEdit.remove("unread_men_type_" + i14);
+                unreadMenEdit.remove("unread_men_reset_" + i14);
+                unreadMenEdit.remove("unread_men_signal_" + i14);
             }
-            edit5.remove("unread_men_count");
-            edit5.commit();
+            unreadMenEdit.remove("unread_men_count");
+            unreadMenEdit.commit();
         }
     }
 
@@ -293,20 +293,35 @@ public class DocumentManager extends Network {
         if (documentManager.errorStatusCode != 1) {
             int i2 = 60000;
             if (i != 0) {
-                int i3 = Prefs.f1169g;
-                if (i3 == 4 || i3 == 5 || i3 == 6) {
+                int backgroundMode = Prefs.backgroundMode;
+                if (backgroundMode == 4 || backgroundMode == 5 || backgroundMode == 6) {
                     i2 = 3600000;
-                } else if (i3 == 2) {
+                } else if (backgroundMode == 2) {
                     i2 = Math.min(600000, Math.min(Math.max(i, 1), 100) * 60000);
                 } else {
-                    i2 = i3 == 3 ? Math.min(1200000, Math.min(Math.max(i, 1), 100) * 240000) : i3 == 1 ? Math.min(2400000, Math.min(Math.max(i, 1), 100) * 600000) : 0;
+                    i2 =
+                            backgroundMode == 3
+                                    ? Math.min(1200000, Math.min(Math.max(i, 1), 100) * 240000)
+                                    : backgroundMode == 1
+                                            ? Math.min(
+                                                    2400000, Math.min(Math.max(i, 1), 100) * 600000)
+                                            : 0;
                 }
             }
 
             if (i2 > 0) {
                 if (Build.VERSION.SDK_INT >= 21) {
                     try {
-                        ((JobScheduler) documentManager.context.getSystemService("jobscheduler")).schedule(new JobInfo.Builder(i, new ComponentName(documentManager.context, FourpdaJobService.class)).setMinimumLatency((long) i2).setRequiredNetworkType(1).build());
+                        ((JobScheduler) documentManager.context.getSystemService("jobscheduler"))
+                                .schedule(
+                                        new JobInfo.Builder(
+                                                        i,
+                                                        new ComponentName(
+                                                                documentManager.context,
+                                                                FourpdaJobService.class))
+                                                .setMinimumLatency((long) i2)
+                                                .setRequiredNetworkType(1)
+                                                .build());
                     } catch (Throwable th) {
                         th.printStackTrace();
                         z = false;
@@ -314,10 +329,14 @@ public class DocumentManager extends Network {
                     if (!z) {
                         Intent intent = new Intent(documentManager.context.getPackageName());
                         intent.putExtra("count", i);
-                        ((AlarmManager) documentManager.context.getSystemService("alarm")).set(2, SystemClock.elapsedRealtime() + ((long) i2), PendingIntent.getService(documentManager.context, 0, intent, 268435456));
+                        ((AlarmManager) documentManager.context.getSystemService("alarm"))
+                                .set(
+                                        2,
+                                        SystemClock.elapsedRealtime() + ((long) i2),
+                                        PendingIntent.getService(
+                                                documentManager.context, 0, intent, 268435456));
                     }
                 }
-
             }
             if (i <= 0) {
                 return;
@@ -357,18 +376,20 @@ public class DocumentManager extends Network {
             documentManager.unread2 = null;
         }
         try {
-            ((NotificationManager) documentManager.context.getSystemService("notification")).cancelAll();
+            ((NotificationManager) documentManager.context.getSystemService("notification"))
+                    .cancelAll();
         } catch (Exception unused) {
             unused.printStackTrace();
         }
-        SharedPreferences.Editor edit = PreferenceManager.getDefaultSharedPreferences(documentManager.context).edit();
+        SharedPreferences.Editor edit =
+                PreferenceManager.getDefaultSharedPreferences(documentManager.context).edit();
         edit.remove("member_id");
         edit.remove("login_key");
         edit.commit();
         getResultRequest(new SendLoginIdRequest(false, documentManager.memberId));
-        int i = Prefs.f1169g;
-        if (4 == i || i == 5 || i == 6) {
-            MainActivity.m900f(documentManager.context);
+        int backgroundMode = Prefs.backgroundMode;
+        if (backgroundMode == 4 || backgroundMode == 5 || backgroundMode == 6) {
+            MainActivity.initNotify(documentManager.context);
         }
 
         getResultRequest((documentManager).new AuthRequest(0, "", false));
@@ -378,7 +399,7 @@ public class DocumentManager extends Network {
     }
 
     public static void syncBookmarks(boolean z) {
-        if (isLoggined() || DataDB.m363n(3, 0) == 0) {
+        if (isLoggined() || DataDB.getPropsId(3, 0) == 0) {
             documentManager.messageHandler.removeMessages(13);
             documentManager.messageHandler.sendEmptyMessageDelayed(13, z ? 100 : 10000);
         }
@@ -403,7 +424,7 @@ public class DocumentManager extends Network {
         }
         request.f2797d = true;
         if (!request.isAuth || request.result == 0) {
-            request.result = Util.m671c();
+            request.result = Util.getAndIncrement();
         }
         synchronized (documentManager.requestSparseArray) {
             documentManager.requestSparseArray.put(request.result, request);
@@ -417,19 +438,22 @@ public class DocumentManager extends Network {
     }
 
     @SuppressLint({"NewApi"})
-    public static void restartConnection(int i) {
-        int i2 = documentManager.errorStatusCode;
-        documentManager.errorStatusCode = i;
-        if (i != 0) {
-            documentManager.f2766v = 0;
-            if (Build.VERSION.SDK_INT >= 21 && i == 1) {
-                ((JobScheduler) documentManager.context.getSystemService(Context.JOB_SCHEDULER_SERVICE)).cancelAll();
+    public static void restartConnection(int statusCode) {
+        int errorStatusCode = documentManager.errorStatusCode;
+        documentManager.errorStatusCode = statusCode;
+        if (statusCode != 0) {
+            documentManager.conNumber = 0;
+            if (Build.VERSION.SDK_INT >= 21 && statusCode == 1) {
+                ((JobScheduler)
+                                documentManager.context.getSystemService(
+                                        Context.JOB_SCHEDULER_SERVICE))
+                        .cancelAll();
             }
             if (!documentManager.isWebSocketConnected()) {
                 documentManager.initConnection();
                 return;
             }
-            if (i2 == 2) {
+            if (errorStatusCode == 2) {
                 if (documentManager.conStatus >= 3) {
                     getResultRequest(documentManager.new SendHandshake());
                     return;
@@ -438,7 +462,7 @@ public class DocumentManager extends Network {
             if (isLoggined()) {
                 isMemberValid();
             }
-        } else if (i2 != 1 || !isLoggined() || Prefs.f1169g == 0) {
+        } else if (errorStatusCode != 1 || !isLoggined() || Prefs.backgroundMode == 0) {
             documentManager.closeSocketConnection();
             f2746C.m655c(null);
         } else {
@@ -477,9 +501,9 @@ public class DocumentManager extends Network {
 
     @Override
     protected void connectedServer() {
-        int i = this.f2766v + 1;
-        this.f2766v = i;
-        if (this.errorStatusCode == 2 && i > 3) {
+        conNumber = this.conNumber + 1;
+
+        if (this.errorStatusCode == 2 && conNumber > 3) {
             restartConnection(0);
         }
         setConnectionStatus(1);
@@ -510,13 +534,14 @@ public class DocumentManager extends Network {
     @Override
     protected void handleDocument(Document document) {
         Log.d("DocumentManager", "handling document");
-     //   Log.d("DocumentManager", document.toString());
+        //   Log.d("DocumentManager", document.toString());
         int i;
         updateConnectionStatus();
         if (document.getInt(0) == null || document.getInt(1) == null) {
             this.messageHandler.sendEmptyMessage(6);
             Log.e("DocumentManager", "Handler: Invalid Document header");
-            //ACRA.getErrorReporter().handleSilentException(new IOException("Handler: Invalid Document header"));
+            // ACRA.getErrorReporter().handleSilentException(new IOException("Handler: Invalid
+            // Document header"));
         }
         int intValue = document.getInt(0) & 0xfffffff;
         int intValue2 = document.getInt(1);
@@ -525,7 +550,9 @@ public class DocumentManager extends Network {
         if (intValue == 0) {
             synchronized (this.requestSparseArray) {
                 for (int i2 = 0; i2 < this.requestSparseArray.size(); i2++) {
-                    messageHandler.sendMessage(messageHandler.obtainMessage(3, this.requestSparseArray.keyAt(i2), intValue2, document));
+                    messageHandler.sendMessage(
+                            messageHandler.obtainMessage(
+                                    3, this.requestSparseArray.keyAt(i2), intValue2, document));
                 }
                 this.requestSparseArray.clear();
             }
@@ -536,7 +563,8 @@ public class DocumentManager extends Network {
             if (request != null) {
                 request.f2797d = false;
                 if (intValue2 == 0 && (27757 == (i = request.cmd) || 25453 == i)) {
-                    SharedPreferences.Editor edit = PreferenceManager.getDefaultSharedPreferences(this.context).edit();
+                    SharedPreferences.Editor edit =
+                            PreferenceManager.getDefaultSharedPreferences(this.context).edit();
                     int intValue3 = document.getInt(0);
                     this.memberId = intValue3;
                     edit.putInt("member_id", intValue3);
@@ -553,9 +581,11 @@ public class DocumentManager extends Network {
                     request.getResult(intValue2, document);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    //ACRA.getErrorReporter().handleSilentException(new Exception("Handler:Async", e));
+                    // ACRA.getErrorReporter().handleSilentException(new Exception("Handler:Async",
+                    // e));
                 }
-                this.messageHandler.sendMessage(this.messageHandler.obtainMessage(3, intValue, intValue2, document));
+                this.messageHandler.sendMessage(
+                        this.messageHandler.obtainMessage(3, intValue, intValue2, document));
             }
         }
     }
@@ -608,7 +638,19 @@ public class DocumentManager extends Network {
             String string10 = bundle.getString("e3");
             int parseInt8 = TextUtils.isEmpty(string10) ? 0 : Integer.parseInt(string10);
             String string11 = bundle.getString("e4");
-            this.unread2.m688j(parseInt, parseInt2, str2, parseInt3, str, parseInt4, parseInt5, parseInt6, parseInt7, parseInt8, TextUtils.isEmpty(string11) ? 0 : Integer.parseInt(string11), false);
+            this.unread2.m688j(
+                    parseInt,
+                    parseInt2,
+                    str2,
+                    parseInt3,
+                    str,
+                    parseInt4,
+                    parseInt5,
+                    parseInt6,
+                    parseInt7,
+                    parseInt8,
+                    TextUtils.isEmpty(string11) ? 0 : Integer.parseInt(string11),
+                    false);
         }
     }
 
@@ -630,18 +672,31 @@ public class DocumentManager extends Network {
                 } else {
                     str2 = string2;
                 }
-                this.unread2.m688j(i, i2, string, i3, str2, jSONObject.getInt("v"), jSONObject.has("vd") ? jSONObject.getInt("vd") : 0, jSONObject.has("e1") ? jSONObject.getInt("e1") : 0, jSONObject.has("e2") ? jSONObject.getInt("e2") : 0, jSONObject.has("e3") ? jSONObject.getInt("e3") : 0, jSONObject.has("e4") ? jSONObject.getInt("e4") : 0, false);
+                this.unread2.m688j(
+                        i,
+                        i2,
+                        string,
+                        i3,
+                        str2,
+                        jSONObject.getInt("v"),
+                        jSONObject.has("vd") ? jSONObject.getInt("vd") : 0,
+                        jSONObject.has("e1") ? jSONObject.getInt("e1") : 0,
+                        jSONObject.has("e2") ? jSONObject.getInt("e2") : 0,
+                        jSONObject.has("e3") ? jSONObject.getInt("e3") : 0,
+                        jSONObject.has("e4") ? jSONObject.getInt("e4") : 0,
+                        false);
             } catch (Exception e) {
                 e.printStackTrace();
-                //ACRA.getErrorReporter().handleSilentException(e);
+                // ACRA.getErrorReporter().handleSilentException(e);
             }
         }
     }
 
     public void initUnread() {
-        int i = PreferenceManager.getDefaultSharedPreferences(this.context).getInt("member_id", 0);
-        this.memberId = i;
-        if (i > 0) {
+        memberId =
+                PreferenceManager.getDefaultSharedPreferences(this.context).getInt("member_id", 0);
+
+        if (memberId > 0) {
             this.memberInfoModel = MemberInfoModel.getMemeberSummaryData(this.context);
         }
         this.unread2 = this.memberInfoModel == null ? null : new Unread2(this.context);
@@ -696,13 +751,15 @@ public class DocumentManager extends Network {
         }
 
         public static MemberInfoModel getMemeberSummaryData(Context context) {
-            SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-            int i = defaultSharedPreferences.getInt("member_info_id", -1);
-            if (i == -1) {
+            SharedPreferences defaultSharedPreferences =
+                    PreferenceManager.getDefaultSharedPreferences(context);
+            int memberInfoId = defaultSharedPreferences.getInt("member_info_id", -1);
+            if (memberInfoId == -1) {
                 return null;
             }
-            Document document = new Document(i);
-            document.append(defaultSharedPreferences.getString("member_info_name", "green elefant"));
+            Document document = new Document(memberInfoId);
+            document.append(
+                    defaultSharedPreferences.getString("member_info_name", "green elefant"));
             document.append(defaultSharedPreferences.getInt("member_info_group", 0));
             document.append(defaultSharedPreferences.getInt("member_info_posts_count", 0));
             document.append(defaultSharedPreferences.getString("member_info_avatar", ""));
@@ -711,19 +768,25 @@ public class DocumentManager extends Network {
             document.append(defaultSharedPreferences.getInt("member_info_premod", 0));
             document.append(defaultSharedPreferences.getInt("member_info_readonly", 0));
             document.append(defaultSharedPreferences.getInt("member_info_ban", 0));
-            document.append(defaultSharedPreferences.getBoolean("member_info_tickets", false) ? 1 : 0);
+            document.append(
+                    defaultSharedPreferences.getBoolean("member_info_tickets", false) ? 1 : 0);
             document.append(0);
             document.append(0);
-            int i2 = defaultSharedPreferences.getInt("member_info_msg_count", 0);
-            if (i2 > 0) {
-                Document uVar2 = new Document();
-                for (int i3 = 0; i3 < i2; i3++) {
-                    uVar2.append(new Document(defaultSharedPreferences.getInt("member_info_msg_type_" + i3, 0),
-                            defaultSharedPreferences.getString("member_info_msg_text_" + i3, ""),
-                            defaultSharedPreferences.getInt("member_info_msg_color_" + i3, 0),
-                            defaultSharedPreferences.getInt("member_info_msg_created_" + i3, 0)));
+            int memberInfoMsgCount = defaultSharedPreferences.getInt("member_info_msg_count", 0);
+            if (memberInfoMsgCount > 0) {
+                Document messagesDocument = new Document();
+                for (int i = 0; i < memberInfoMsgCount; i++) {
+                    messagesDocument.append(
+                            new Document(
+                                    defaultSharedPreferences.getInt("member_info_msg_type_" + i, 0),
+                                    defaultSharedPreferences.getString(
+                                            "member_info_msg_text_" + i, ""),
+                                    defaultSharedPreferences.getInt(
+                                            "member_info_msg_color_" + i, 0),
+                                    defaultSharedPreferences.getInt(
+                                            "member_info_msg_created_" + i, 0)));
                 }
-                document.append(uVar2);
+                document.append(messagesDocument);
             } else {
                 document.append(0);
             }
@@ -732,7 +795,8 @@ public class DocumentManager extends Network {
         }
 
         public static void parseMemberSummaryDocument(Context context, Document document) {
-            SharedPreferences.Editor edit = PreferenceManager.getDefaultSharedPreferences(context).edit();
+            SharedPreferences.Editor edit =
+                    PreferenceManager.getDefaultSharedPreferences(context).edit();
             edit.putInt("member_info_id", document.getInt(0));
             edit.putString("member_info_name", Util.C0427h.UnEscapeString(document.getString(1)));
             edit.putInt("member_info_group", document.getInt(2));
@@ -774,7 +838,7 @@ public class DocumentManager extends Network {
     private class MyBrodcastReceiver extends BroadcastReceiver {
         int networkType;
 
-        private MyBrodcastReceiver(DocumentManager vVar) {
+        private MyBrodcastReceiver(DocumentManager documentManager) {
             this.networkType = -1;
         }
 
@@ -782,10 +846,15 @@ public class DocumentManager extends Network {
         public void onReceive(Context context, Intent intent) {
             int type;
             String action = intent.getAction();
-            if (!TextUtils.isEmpty(action) && action.equals("android.net.conn.CONNECTIVITY_CHANGE")) {
-                @SuppressLint("WrongConstant") NetworkInfo activeNetworkInfo = ((ConnectivityManager) context.getSystemService("connectivity")).getActiveNetworkInfo();
+            if (!TextUtils.isEmpty(action)
+                    && action.equals("android.net.conn.CONNECTIVITY_CHANGE")) {
+                @SuppressLint("WrongConstant")
+                NetworkInfo activeNetworkInfo =
+                        ((ConnectivityManager) context.getSystemService("connectivity"))
+                                .getActiveNetworkInfo();
                 int i = -1;
-                if (activeNetworkInfo != null && ((type = activeNetworkInfo.getType()) == 1 || type == 0)) {
+                if (activeNetworkInfo != null
+                        && ((type = activeNetworkInfo.getType()) == 1 || type == 0)) {
                     i = type;
                 }
                 if (this.networkType != i) {
@@ -810,51 +879,58 @@ public class DocumentManager extends Network {
             try {
                 switch (message.what) {
                     case 1:
-                        DocumentManager.f2754y.m655c(DocumentManager.this.conStatus);
+                        f2754y.m655c(conStatus);
                         return;
                     case 2:
                         //      Log.d("DocumentMamager","message 2 callsed");
-                        DocumentManager.this.messageHandler.removeMessages(2);
-                        DocumentManager vVar = DocumentManager.this;
-                        int i = vVar.conStatus;
+                        messageHandler.removeMessages(2);
+
+                        int i = conStatus;
                         if (!(i == 3 || i == 2)) {
                             if (i == 4) {
-                                vVar.closeWebSocketConnection();
+                                closeWebSocketConnection();
                                 return;
                             }
                             return;
                         }
-                        if ((DocumentManager.documentManager.getConnectTime() > 120000 && DocumentManager.documentManager.getSleepTime() > 3000) || DocumentManager.documentManager.getSleepTime() > 7000) {
-                            DocumentManager vVar2 = DocumentManager.this;
-                            vVar2.conStatus1 = vVar2.conStatus;
-                            vVar2.setConnectionStatus(4);
-                            DocumentManager.this.isDataSent();
+                        if ((getConnectTime() > 120000 && getSleepTime() > 3000)
+                                || getSleepTime() > 7000) {
+
+                            conStatus1 = conStatus;
+                            setConnectionStatus(4);
+                            isDataSent();
                         }
-                        DocumentManager.this.messageHandler.sendEmptyMessageDelayed(2, 4000);
+                        messageHandler.sendEmptyMessageDelayed(2, 4000);
                         return;
                     case 3:
                         int messageId = message.arg1;
-                        IGenerateRequest request = DocumentManager.this.requestSparseArray.get(messageId);
+                        IGenerateRequest request = requestSparseArray.get(messageId);
                         if (request != null) {
                             int index = message.arg2;
                             Document document = (Document) message.obj;
                             if (index == 0 && (unread2 = DocumentManager.this.unread2) != null) {
-                                int i4 = request.cmd;
-                                if (29809 == i4) {
+                                int cmd = request.cmd;
+                                if (29809 == cmd) {
                                     unread2.m691g(1, document.getInt(0), 0);
-                                } else if (29542 == i4) {
+                                } else if (29542 == cmd) {
                                     unread2.m691g(2, document.getInt(1), 0);
-                                } else if (29286 == i4) {
+                                } else if (29286 == cmd) {
                                     Document subDoc = document.getDocument(12);
-                                    DocumentManager.this.unread2.m691g(3, document.getInt(1), (subDoc == null || subDoc.count() <= 0) ? 0 : subDoc.getDocument(subDoc.count() - 1).getInt(7));
+                                    DocumentManager.this.unread2.m691g(
+                                            3,
+                                            document.getInt(1),
+                                            (subDoc == null || subDoc.count() <= 0)
+                                                    ? 0
+                                                    : subDoc.getDocument(subDoc.count() - 1)
+                                                            .getInt(7));
                                     int[] iArr = new int[subDoc.count()];
                                     for (int i5 = 0; i5 < subDoc.count(); i5++) {
                                         iArr[i5] = subDoc.getDocument(i5).getInt(0);
                                     }
                                     DocumentManager.this.unread2.m690h(4, iArr, 0);
-                                } else if (24947 == i4) {
+                                } else if (24947 == cmd) {
                                     unread2.m691g(5, 0, document.getInt(0));
-                                } else if (28013 == i4) {
+                                } else if (28013 == cmd) {
                                     unread2.m691g(4, 0, 0);
                                     DocumentManager.this.unread2.m691g(5, 0, 0);
                                 }
@@ -864,14 +940,15 @@ public class DocumentManager extends Network {
                                 request.prepareResult(index, document);
                             } catch (Exception e) {
                                 e.printStackTrace();
-                                //ACRA.getErrorReporter().handleSilentException(new Exception("Handler:Reply", e));
+                                // ACRA.getErrorReporter().handleSilentException(new
+                                // Exception("Handler:Reply", e));
                             }
-                            synchronized (DocumentManager.this.requestSparseArray) {
-                                DocumentManager.this.requestSparseArray.remove(messageId);
+                            synchronized (requestSparseArray) {
+                                requestSparseArray.remove(messageId);
                             }
-                            DocumentManager.f2755z.m655c(-1);
-                            if (2 == DocumentManager.this.errorStatusCode && DocumentManager.this.requestSparseArray.size() == 0) {
-                                DocumentManager.restartConnection(0);
+                            f2755z.m655c(-1);
+                            if (2 == errorStatusCode && requestSparseArray.size() == 0) {
+                                restartConnection(0);
                                 return;
                             }
                             return;
@@ -881,7 +958,9 @@ public class DocumentManager extends Network {
                     case 5:
                     case 6:
                         synchronized (DocumentManager.this.requestSparseArray) {
-                            for (int i6 = 0; i6 < DocumentManager.this.requestSparseArray.size(); i6++) {
+                            for (int i6 = 0;
+                                    i6 < DocumentManager.this.requestSparseArray.size();
+                                    i6++) {
                                 DocumentManager.this.requestSparseArray.valueAt(i6).m245h();
                             }
                             DocumentManager.this.requestSparseArray.clear();
@@ -930,11 +1009,13 @@ public class DocumentManager extends Network {
                                         return;
                                     } else if (101 == intValue) {
                                         MessageHandler dVar = DocumentManager.this.messageHandler;
-                                        dVar.sendMessage(dVar.obtainMessage(10, parseInt, intValue2));
+                                        dVar.sendMessage(
+                                                dVar.obtainMessage(10, parseInt, intValue2));
                                         return;
                                     } else if (102 == intValue) {
                                         MessageHandler dVar2 = DocumentManager.this.messageHandler;
-                                        dVar2.sendMessage(dVar2.obtainMessage(11, parseInt, intValue2));
+                                        dVar2.sendMessage(
+                                                dVar2.obtainMessage(11, parseInt, intValue2));
                                         return;
                                     } else {
                                         return;
@@ -947,7 +1028,8 @@ public class DocumentManager extends Network {
                                             return;
                                         }
                                         return;
-                                    } else if (2 == intValue && (g1Var4 = DocumentManager.this.unread2) != null) {
+                                    } else if (2 == intValue
+                                            && (g1Var4 = DocumentManager.this.unread2) != null) {
                                         g1Var4.m691g(2, parseInt, 0);
                                         return;
                                     } else {
@@ -975,31 +1057,34 @@ public class DocumentManager extends Network {
                                             return;
                                         }
                                         return;
-                                    } else if (4 == intValue && (g1Var3 = DocumentManager.this.unread2) != null) {
+                                    } else if (4 == intValue
+                                            && (g1Var3 = DocumentManager.this.unread2) != null) {
                                         g1Var3.m689i(3, parseInt, intValue2);
                                         return;
                                     } else {
                                         return;
                                     }
-                                } else if (charAt == 's' && 3 == intValue && (g1Var2 = DocumentManager.this.unread2) != null) {
+                                } else if (charAt == 's'
+                                        && 3 == intValue
+                                        && (g1Var2 = DocumentManager.this.unread2) != null) {
                                     g1Var2.m689i(5, intValue2, parseInt);
                                     return;
                                 } else {
                                     return;
                                 }
                             }
-                            DocumentManager.isMemberValid();
+                            isMemberValid();
                             return;
                         }
                         return;
                     case 13:
-                        DocumentManager.getResultRequest(new LoadBookmarkRequest());
+                        getResultRequest(new LoadBookmarkRequest());
                         return;
                     default:
                         return;
                 }
             } catch (Exception e2) {
-               /* ErrorReporter errorReporter = //ACRA.getErrorReporter();
+                /* ErrorReporter errorReporter = //ACRA.getErrorReporter();
                 StringBuilder sb = new StringBuilder();
                 sb.append("Event=");
                 sb.append(message.what);
@@ -1011,36 +1096,35 @@ public class DocumentManager extends Network {
                 Object obj = message.obj;
                 sb.append(obj != null ? obj.getClass().getCanonicalName() : "(null)");
                 errorReporter.putCustomData("extra", sb.toString());*/
-                //ACRA.getErrorReporter().handleSilentException(new Exception("DM.HandleMessage common", e2));
-                //ACRA.getErrorReporter().removeCustomData("extra");
+                // ACRA.getErrorReporter().handleSilentException(new Exception("DM.HandleMessage
+                // common", e2));
+                // ACRA.getErrorReporter().removeCustomData("extra");
                 e2.printStackTrace();
             }
         }
     }
 
-    public static abstract class IGenerateRequest {
+    public abstract static class IGenerateRequest {
         int result;
         int cmd;
         boolean isAuth;
         boolean f2797d;
-        int f2798e;
+        int errorOnUploadFile;
         String statusMessage;
 
         public IGenerateRequest(int cmd) {
             this.cmd = cmd;
+			       Log.d("DocumentManager", String.valueOf(cmd));
         }
 
-        void m245h() {
-        }
+        void m245h() {}
 
-        void prepareResult(int status, Document document) {
-        }
+        void prepareResult(int status, Document document) {}
 
-        void getResult(int status, Document document) {
-        }
+        void getResult(int status, Document document) {}
 
         public void onErrorUploadFile() {
-            this.f2798e = Math.min(this.f2798e + 1, 7);
+            this.errorOnUploadFile = Math.min(this.errorOnUploadFile + 1, 7);
         }
 
         public int onUploadFile(byte[] bytes, int len) {
@@ -1054,10 +1138,12 @@ public class DocumentManager extends Network {
         abstract Document generate();
 
         public Document getDocument() {
+			
             Document genDoc = generate();
             Document document = genDoc == null ? new Document() : genDoc.cloneDocument();
-            document.prepend(new String(new char[]{(char) (cmd & 255), (char) ((cmd >> 8) & 255)}));
-            document.prepend(this.result | (this.f2798e << 28));
+            document.prepend(
+                    new String(new char[] {(char) (cmd & 255), (char) ((cmd >> 8) & 255)}));
+            document.prepend(this.result | (this.errorOnUploadFile << 28));
             return document;
         }
     }
@@ -1070,6 +1156,7 @@ public class DocumentManager extends Network {
 
         @Override
         void prepareResult(int status, Document uVar) {
+			Log.d("DocumnetManager", "load user book marks");
             if (status == 0 && uVar.getDocument(1).count() + uVar.getDocument(2).count() > 0) {
                 DocumentManager.f2748E.m655c(null);
             }
@@ -1078,19 +1165,29 @@ public class DocumentManager extends Network {
         @Override
         void getResult(int status, Document uVar) {
             if (status == 0) {
-                DataDB.m362o(3, uVar.getInt(0));
+                DataDB.makeProps(3, uVar.getInt(0));
                 int i2 = 4;
-                DataDB.m362o(4, 0);
+                DataDB.makeProps(4, 0);
                 Document l = uVar.getDocument(1);
                 for (int i3 = 0; i3 < l.count(); i3++) {
                     Document l2 = l.getDocument(i3);
-                    DataDB.m369h(l2.getInt(0), l2.getInt(1));
+                    DataDB.updateBookmarks(l2.getInt(0), l2.getInt(1));
                 }
                 Document l3 = uVar.getDocument(2);
                 int i4 = 0;
                 while (i4 < l3.count()) {
                     Document l4 = l3.getDocument(i4);
-                    DataDB.m370g(new DataDB.C0736a(l4.getInt(0), l4.getInt(1), l4.getInt(2) != 0, l4.getInt(3), l4.getInt(i2).intValue(), l4.getInt(5).intValue(), l4.getString(6), l4.getString(7)), false);
+                    DataDB.m370g(
+                            new DataDB.UserBookMarkModel(
+                                    l4.getInt(0),
+                                    l4.getInt(1),
+                                    l4.getInt(2) != 0,
+                                    l4.getInt(3),
+                                    l4.getInt(i2).intValue(),
+                                    l4.getInt(5).intValue(),
+                                    l4.getString(6),
+                                    l4.getString(7)),
+                            false);
                     i4++;
                     i2 = 4;
                 }
@@ -1100,15 +1197,24 @@ public class DocumentManager extends Network {
         @Override
         public Document generate() {
             Document uVar = new Document();
-            DataDB.C0736a[] d = DataDB.m373d();
+            DataDB.UserBookMarkModel[] d = DataDB.m373d();
             if (d != null) {
-                for (DataDB.C0736a aVar : d) {
+                for (DataDB.UserBookMarkModel aVar : d) {
                     if ((aVar.f2499d & 2) == 0) {
-                        uVar.append(new Document(aVar.f2496a, aVar.f2497b, aVar.f2498c ? 1 : 0, aVar.f2499d & -241, aVar.f2500e, aVar.f2501f, aVar.f2502g, aVar.f2503h));
+                        uVar.append(
+                                new Document(
+                                        aVar.f2496a,
+                                        aVar.f2497b,
+                                        aVar.f2498c ? 1 : 0,
+                                        aVar.f2499d & -241,
+                                        aVar.f2500e,
+                                        aVar.f2501f,
+                                        aVar.f2502g,
+                                        aVar.f2503h));
                     }
                 }
             }
-            return new Document(DataDB.m363n(3, 0), uVar);
+            return new Document(DataDB.getPropsId(3, 0), uVar);
         }
     }
 
@@ -1119,21 +1225,29 @@ public class DocumentManager extends Network {
         }
 
         @Override
-        void getResult(int status, Document uVar) {
+        void getResult(int status, Document document) {
+			Log.d("DocumnetManager", "load standart bookmsrks");
             if (status == 0) {
-                DataDB.m361p();
-                DataDB.m362o(5, uVar.getInt(0));
-                Document l = uVar.getDocument(1);
-                for (int i2 = 0; i2 < l.count(); i2++) {
-                    Document l2 = l.getDocument(i2);
-                    DataDB.m357t(new DataDB.C0737b(l2.getInt(0), l2.getInt(1), l2.getString(2), l2.getString(3), l2.getInt(4).intValue() != 0, l2.getInt(5).intValue()));
+                DataDB.clearSiteMenu();
+                DataDB.makeProps(5, document.getInt(0));
+                Document bookMarkList = document.getDocument(1);
+                for (int i = 0; i < bookMarkList.count(); i++) {
+                    Document bookMark = bookMarkList.getDocument(i);
+                    DataDB.createBookmarks(
+                            new DataDB.BookMarkModel(
+                                    bookMark.getInt(0),
+                                    bookMark.getInt(1),
+                                    bookMark.getString(2),
+                                    bookMark.getString(3),
+                                    bookMark.getInt(4).intValue() != 0,
+                                    bookMark.getInt(5).intValue()));
                 }
             }
         }
 
         @Override
         public Document generate() {
-            return new Document(DataDB.m363n(5, 0));
+            return new Document(DataDB.getPropsId(5, 0));
         }
     }
 
@@ -1148,6 +1262,7 @@ public class DocumentManager extends Network {
 
         @Override
         Document generate() {
+			Log.d("DocumnetManager", "send login id");
             return new Document("u" + this.loginId);
         }
     }
@@ -1166,27 +1281,28 @@ public class DocumentManager extends Network {
         }
 
         @Override
-        void prepareResult(int status, Document uVar) {
+        void prepareResult(int status, Document document) {
+			Log.d("DocumnetManager", "autch request");
             if (this.memberId != 0) {
                 if (status == 0) {
-                    DocumentManager.getResultRequest(new SendLoginIdRequest(true, DocumentManager.this.memberId));
-                    DocumentManager.isMemberValid();
-                    int i2 = Prefs.f1169g;
-                    if (i2 == 4 || i2 == 5 || i2 == 6) {
-                        MainActivity.m900f(DocumentManager.documentManager.context);
+                    getResultRequest(new SendLoginIdRequest(true, memberId));
+                    isMemberValid();
+                    int backgroundMode = Prefs.backgroundMode;
+                    if (backgroundMode == 4 || backgroundMode == 5 || backgroundMode == 6) {
+                        MainActivity.initNotify(documentManager.context);
                     }
-                    DocumentManager.this.loadServerData();
+                    loadServerData();
                     return;
                 }
-                DocumentManager vVar = DocumentManager.this;
-                vVar.memberId = 0;
-                vVar.messageHandler.sendEmptyMessage(8);
+
+                memberId = 0;
+                messageHandler.sendEmptyMessage(8);
             }
         }
 
         @Override
         Document generate() {
-            Document document = new Document(this.memberId, this.loginKey);
+            Document document = new Document(memberId, loginKey);
             if (this.isHidden) {
                 document.append(1);
             }
@@ -1200,15 +1316,14 @@ public class DocumentManager extends Network {
             this.isAuth = true;
         }
 
-
         @Override
-        void prepareResult(int status, Document uVar) {
+        void prepareResult(int status, Document document) {
             Log.d("DocumnetManager", "send handshake");
             if (status == 3) {
-                DocumentManager.this.messageHandler.sendEmptyMessage(7);
+                messageHandler.sendEmptyMessage(7);
             } else if (status != 0) {
-                if (1 == DocumentManager.this.errorStatusCode) {
-                    Toast.makeText(DocumentManager.this.context, "Ошибка сервера!", Toast.LENGTH_LONG).show();
+                if (1 == errorStatusCode) {
+                    Toast.makeText(context, "Ошибка сервера!", Toast.LENGTH_LONG).show();
                 } else {
                     try {
                         Thread.sleep(1000);
@@ -1216,94 +1331,104 @@ public class DocumentManager extends Network {
                         unused.printStackTrace();
                     }
                 }
-                DocumentManager.closeConnection();
+                closeConnection();
             } else if (DocumentManager.isLoggined()) {
-                SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(DocumentManager.this.context);
-                DocumentManager vVar = DocumentManager.this;
-                DocumentManager.getResultRequest(new AuthRequest(vVar.memberId, defaultSharedPreferences.getString("login_key", ""), defaultSharedPreferences.getBoolean("member_hidden", false)));
+                SharedPreferences sharedPreferences =
+                        PreferenceManager.getDefaultSharedPreferences(context);
+                getResultRequest(
+                        new AuthRequest(
+                                memberId,
+                                sharedPreferences.getString("login_key", ""),
+                                sharedPreferences.getBoolean("member_hidden", false)));
             } else {
-                DocumentManager.this.loadServerData();
+                loadServerData();
             }
-            String n = uVar.getString(2);
+            String n = document.getString(2);
             if (!TextUtils.isEmpty(n)) {
-                DocumentManager.f2745B.m655c(n);
+                f2745B.m655c(n);
             }
         }
 
         @Override
         Document generate() {
-            int i;
-            String installerPackageName = DocumentManager.this.context.getPackageManager().getInstallerPackageName(DocumentManager.this.context.getPackageName());
-            @SuppressLint("DefaultLocale") String format = String.format("%d.%d.%d", 1, 9, 32);
+            int classesDexCrc = 0;
+            String installerPackageName =
+                    context.getPackageManager().getInstallerPackageName(context.getPackageName());
+            @SuppressLint("DefaultLocale")
+            String appVersion = String.format("%d.%d.%d", 1, 9, 32);
             try {
-                ZipFile zipFile = new ZipFile(DocumentManager.this.context.getPackageCodePath());
-                i = (int) zipFile.getEntry("classes.dex").getCrc();
+                ZipFile zipFile = new ZipFile(context.getPackageCodePath());
+                classesDexCrc = (int) zipFile.getEntry("classes.dex").getCrc();
                 try {
                     zipFile.close();
-                } catch (Exception unused) {
-                    unused.printStackTrace();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
-            } catch (Exception unused2) {
-                i = 0;
+            } catch (Exception ex) {
+                classesDexCrc = 0;
             }
-            Object[] objArr = new Object[5];
-            objArr[0] = format;
-            String str = Prefs.f1183u;
-            if (str == null) {
-                str = "";
+
+            String skinPkg = Prefs.skinId;
+            if (skinPkg == null) {
+                skinPkg = "";
             }
-            objArr[1] = "";
+
             if (installerPackageName == null) {
                 installerPackageName = "";
             }
-            objArr[2] = "";
-            objArr[3] = 0;
-            objArr[4] = DocumentManager.this.memberId;
-            return new Document(objArr);
+
+            Object[] documentObjects = new Object[5];
+            documentObjects[0] = appVersion;
+            documentObjects[1] = ""; // skinPkg
+            documentObjects[2] = ""; // installerPackageName
+            documentObjects[3] = 0; // classesDexCrc
+            documentObjects[4] = 0; // memberId;
+            return new Document(documentObjects);
         }
     }
 
     public class SendLoginedData extends IGenerateRequest {
         SendLoginedData() {
             super(27749);
-            this.isAuth = true;
+            isAuth = true;
         }
 
         @Override
-        void prepareResult(int status, Document uVar) {
-          //  Log.d("DocumentManager","doc: "+ uVar.toString());
+        void prepareResult(int status, Document document) {
+			Log.d("DocumnetManager", "send loginedData");
+            //  Log.d("DocumentManager","doc: "+ uVar.toString());
             if (status == 0) {
-                int intValue = uVar.getInt(0);
-                if (intValue != DocumentManager.this.f2767w && 2 == DocumentManager.this.errorStatusCode) {
-                    DocumentManager.getResultRequest(new SendHandshake());
+                int statusCode = document.getInt(0);
+                if (statusCode != sendLoginDataErrorCode && 2 == errorStatusCode) {
+                    getResultRequest(new SendHandshake());
                 }
-                DocumentManager.this.f2767w = intValue;
+                sendLoginDataErrorCode = statusCode;
             }
-
         }
 
         @Override
         Document generate() {
-            return new Document(DocumentManager.this.memberId);
+            return new Document(memberId);
         }
     }
 
     public class MemberSummaryRequest extends IGenerateRequest {
         MemberSummaryRequest() {
             super(29549);
-            this.isAuth = true;
+            isAuth = true;
         }
 
         @Override
         void prepareResult(int status, Document document) {
+			Log.d("DocumnetManager", "send memorySymary Request");
             if (status == 0) {
-                DocumentManager.this.memberInfoModel = new MemberInfoModel(document);
-                MemberInfoModel.parseMemberSummaryDocument(DocumentManager.this.context, document);
-                DocumentManager.this.messageHandler.sendEmptyMessage(9);
+                memberInfoModel = new MemberInfoModel(document);
+                MemberInfoModel.parseMemberSummaryDocument(context, document);
+                messageHandler.sendEmptyMessage(9);
                 if (unread2 == null) {
-                    unread2 = new Unread2(DocumentManager.this.context);
+                    unread2 = new Unread2(context);
                 }
-                DocumentManager.this.unread2.m695c();
+                unread2.m695c();
             }
         }
 

@@ -90,7 +90,7 @@ public class Widgets$CircleImageView extends ImageView {
         super(context, attributeSet);
         int i = 20;
         if (!(context == null || attributeSet == null)) {
-            TypedArray obtainStyledAttributes = context.obtainStyledAttributes(attributeSet, C0329c1.f1269b);
+            TypedArray obtainStyledAttributes = context.obtainStyledAttributes(attributeSet, Stylable.Radius);
             int indexCount = obtainStyledAttributes.getIndexCount();
             for (int i2 = 0; i2 < indexCount; i2++) {
                 int index = obtainStyledAttributes.getIndex(i2);
@@ -100,7 +100,7 @@ public class Widgets$CircleImageView extends ImageView {
             }
             obtainStyledAttributes.recycle();
         }
-        m848b(context, Skin.C0353a.f1374b0, (float) i);
+        m848b(context, Skin.SkinColorModel.f1374b0, (float) i);
     }
 
     public void m849a(boolean z) {

@@ -1,111 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    android:paddingLeft="0.0dip"
-    android:paddingTop="0.0dip"
-    android:paddingRight="0.0dip"
-    android:paddingBottom="16.0dip"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <HorizontalScrollView
-        android:id="@id/qmsTagsBar"
-        android:scrollbars="none"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8.0dip"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true">
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="42.0dip">
-            <Button
-                android:id="@id/editor_B"
-                android:background="@drawable/tag_b"
-                android:layout_width="42.0dip"
-                android:layout_height="fill_parent" />
-            <Button
-                android:id="@id/editor_I"
-                android:background="@drawable/tag_i"
-                android:layout_width="42.0dip"
-                android:layout_height="fill_parent" />
-            <Button
-                android:id="@id/editor_U"
-                android:background="@drawable/tag_u"
-                android:layout_width="42.0dip"
-                android:layout_height="fill_parent" />
-            <Button
-                android:id="@id/editor_Strike"
-                android:background="@drawable/tag_strike"
-                android:layout_width="42.0dip"
-                android:layout_height="fill_parent" />
-            <Button
-                android:id="@id/editor_Quote"
-                android:background="@drawable/tag_quote"
-                android:layout_width="42.0dip"
-                android:layout_height="fill_parent" />
-            <Button
-                android:id="@id/editor_Code"
-                android:background="@drawable/tag_code"
-                android:layout_width="42.0dip"
-                android:layout_height="fill_parent" />
-            <Button
-                android:id="@id/editor_Clear"
-                android:background="@drawable/tag_clear"
-                android:layout_width="42.0dip"
-                android:layout_height="fill_parent" />
-        </LinearLayout>
-    </HorizontalScrollView>
-    <View
-        android:id="@id/qmsSmiles"
-        android:background="@drawable/qms_smiles"
-        android:layout_width="48.0dip"
-        android:layout_height="fill_parent"
-        android:layout_marginLeft="4.0dip"
-        android:layout_marginRight="4.0dip"
-        android:layout_alignTop="@id/qmsMsg"
-        android:layout_alignBottom="@id/qmsMsg"
-        android:layout_alignParentLeft="true" />
-    <view
-        android:scrollbarStyle="insideInset"
-        android:textColor="@color/main_text"
-        android:gravity="top"
-        android:id="@id/qmsMsg"
-        android:background="@drawable/edit_qms_bubble"
-        android:scrollbars="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="4.0dip"
-        android:maxLines="7"
-        android:minLines="1"
-        android:layout_toLeftOf="@id/qmsAttach"
-        android:layout_toRightOf="@id/qmsSmiles"
-        android:layout_below="@id/qmsTagsBar"
-        android:inputType="textCapSentences|textMultiLine"
-        class="ru.fourpda.client.Widgets$ScrollingEditText" />
-    <View
-        android:id="@id/qmsAttach"
-        android:background="@drawable/qms_attach"
-        android:layout_width="48.0dip"
-        android:layout_height="fill_parent"
-        android:layout_toLeftOf="@id/qmsSend"
-        android:layout_alignTop="@id/qmsMsg"
-        android:layout_alignBottom="@id/qmsMsg" />
-    <View
-        android:id="@id/qmsSend"
-        android:background="@drawable/qms_send"
-        android:layout_width="48.0dip"
-        android:layout_height="fill_parent"
-        android:layout_marginRight="4.0dip"
-        android:layout_alignTop="@id/qmsMsg"
-        android:layout_alignBottom="@id/qmsMsg"
-        android:layout_alignParentRight="true" />
-    <View
-        android:id="@id/qmsProgress"
-        android:background="@color/progress_qms"
-        android:visibility="invisible"
-        android:layout_width="5.0dip"
-        android:layout_height="1.0dip"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:paddingBottom="0px"
+	android:paddingLeft="0px"
+	android:paddingRight="0px"
+	android:paddingTop="0px">
+
+	<HorizontalScrollView
+		android:id="@id/qmsTagsBar"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="true"
+		android:layout_marginLeft="8.0dip"
+		android:scrollbars="none">
+
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="0px"
+			android:orientation="horizontal">
+
+			<Button
+				android:id="@id/editor_B"
+				android:layout_width="0px"
+				android:layout_height="match_parent"
+				android:background="@drawable/tag_b"/>
+
+			<Button
+				android:id="@id/editor_I"
+				android:layout_width="0px"
+				android:layout_height="match_parent"
+				android:background="@drawable/tag_i"/>
+
+			<Button
+				android:id="@id/editor_U"
+				android:layout_width="0px"
+				android:layout_height="match_parent"
+				android:background="@drawable/tag_u"/>
+
+			<Button
+				android:id="@id/editor_Strike"
+				android:layout_width="0px"
+				android:layout_height="match_parent"
+				android:background="@drawable/tag_strike"/>
+
+			<Button
+				android:id="@id/editor_Quote"
+				android:layout_width="0px"
+				android:layout_height="match_parent"
+				android:background="@drawable/tag_quote"/>
+
+			<Button
+				android:id="@id/editor_Code"
+				android:layout_width="0px"
+				android:layout_height="match_parent"
+				android:background="@drawable/tag_code"/>
+
+			<Button
+				android:id="@id/editor_Clear"
+				android:layout_width="0px"
+				android:layout_height="match_parent"
+				android:background="@drawable/tag_clear"/>
+
+		</LinearLayout>
+
+	</HorizontalScrollView>
+
+	<View
+		android:id="@id/qmsSmiles"
+		android:layout_width="0px"
+		android:layout_height="match_parent"
+		android:layout_alignBottom="@id/qmsMsg"
+		android:layout_alignParentLeft="true"
+		android:layout_alignTop="@id/qmsMsg"
+		android:layout_marginLeft="0px"
+		android:layout_marginRight="0px"
+		android:background="@drawable/qms_smiles"/>
+
+	<view
+		android:id="@id/qmsMsg"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/qmsTagsBar"
+		android:layout_marginRight="4.0dip"
+		android:layout_toLeftOf="@id/qmsAttach"
+		android:layout_toRightOf="@id/qmsSmiles"
+		class="ru.fourpda.client.Widgets$ScrollingEditText"
+		android:background="@drawable/edit_qms_bubble"
+		android:gravity="top"
+		android:inputType="textCapSentences|textMultiLine"
+		android:maxLines="7"
+		android:minLines="1"
+		android:scrollbarStyle="insideInset"
+		android:scrollbars="vertical"
+		android:textColor="@color/main_text"/>
+
+	<View
+		android:id="@id/qmsAttach"
+		android:layout_width="0px"
+		android:layout_height="match_parent"
+		android:layout_alignBottom="@id/qmsMsg"
+		android:layout_alignTop="@id/qmsMsg"
+		android:layout_toLeftOf="@id/qmsSend"
+		android:background="@drawable/qms_attach"/>
+
+	<View
+		android:id="@id/qmsSend"
+		android:layout_width="0px"
+		android:layout_height="match_parent"
+		android:layout_alignBottom="@id/qmsMsg"
+		android:layout_alignParentRight="true"
+		android:layout_alignTop="@id/qmsMsg"
+		android:layout_marginRight="0px"
+		android:background="@drawable/qms_send"/>
+
+	<View
+		android:id="@id/qmsProgress"
+		android:layout_width="0px"
+		android:layout_height="0px"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="true"
+		android:background="@color/progress_qms"
+		android:visibility="invisible"/>
+
 </RelativeLayout>
+

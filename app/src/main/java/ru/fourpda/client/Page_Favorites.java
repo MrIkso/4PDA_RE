@@ -29,7 +29,7 @@ public class Page_Favorites extends Page {
         public Boolean mo103a(DataDB.C0738c cVar, DataDB.C0738c cVar2) {
             int i = cVar2.f2511a;
             if (2 == i || 3 == i) {
-                if (Prefs.f1141B) {
+                if (Prefs.autoRefresh) {
                     Page_Favorites f0Var = Page_Favorites.this;
                     f0Var.f1421N = true;
                     if (f0Var.isCurrentTab() && Page_Favorites.this.tab.m717i()) {
@@ -105,7 +105,7 @@ public class Page_Favorites extends Page {
             } else if (i3 == 1) {
                 new C0363h().show(true, true, true);
             } else if (i3 == 2) {
-                API.ForumModifyRequest.m821p(-1, null, 21, 32, 8, Page_Favorites.this, "отметка прочтения", "", new RunnableC0359a(this));
+                API.ForumModifyRequest.modifyForum(-1, null, 21, 32, 8, Page_Favorites.this, "отметка прочтения", "", new RunnableC0359a(this));
             }
         }
     }
@@ -217,22 +217,22 @@ public class Page_Favorites extends Page {
                 MainActivity mainActivity = Page_Favorites.this.mainActivity;
                 int i = 0;
                 boolean z = ((Integer) this.f1437a.getTag()).intValue() > 0;
-                Prefs.f1157R = z;
+                Prefs.favSortByName = z;
                 Prefs.saveBoolean(mainActivity, "fav_sort_by_name", z);
                 MainActivity mainActivity2 = Page_Favorites.this.mainActivity;
                 boolean checked = this.f1438b.getChecked();
-                Prefs.f1158S = checked;
+                Prefs.favSortReverse = checked;
                 Prefs.saveBoolean(mainActivity2, "fav_sort_reverse", checked);
                 MainActivity mainActivity3 = Page_Favorites.this.mainActivity;
                 boolean checked2 = this.f1439c.getChecked();
-                Prefs.f1156Q = checked2;
+                Prefs.favUnreadFirst = checked2;
                 Prefs.saveBoolean(mainActivity3, "fav_unread_first", checked2);
                 Page_Favorites f0Var = Page_Favorites.this;
                 Object[] objArr = new Object[3];
                 objArr[0] = Integer.valueOf(Page_Favorites.this.siteNum);
-                objArr[1] = Integer.valueOf(Prefs.f1181s);
-                int i2 = (Prefs.f1156Q ? 1 : 0) | (Prefs.f1157R ? 4 : 0);
-                if (Prefs.f1158S) {
+                objArr[1] = Integer.valueOf(Prefs.memberTopicsPerPage);
+                int i2 = (Prefs.favUnreadFirst ? 1 : 0) | (Prefs.favSortByName ? 4 : 0);
+                if (Prefs.favSortReverse) {
                     i = 8;
                 }
                 objArr[2] = Integer.valueOf(i | i2);
@@ -249,10 +249,10 @@ public class Page_Favorites extends Page {
             Widgets$CheckboxTextView widgets$CheckboxTextView2 = (Widgets$CheckboxTextView) this.rootView.findViewById(R.id.dlg_fav_sort_unread_first);
             String string = r11.mainActivity.getResources().getString(R.string.dlg_fav_sort_key_date);
             String string2 = r11.mainActivity.getResources().getString(R.string.dlg_fav_sort_key_name);
-            textView.setTag(Integer.valueOf(Prefs.f1157R ? 1 : 0));
-            textView.setText(Prefs.f1157R ? string2 : string);
-            widgets$CheckboxTextView.setChecked(Prefs.f1158S);
-            widgets$CheckboxTextView2.setChecked(Prefs.f1156Q);
+            textView.setTag(Integer.valueOf(Prefs.favSortByName ? 1 : 0));
+            textView.setText(Prefs.favSortByName ? string2 : string);
+            widgets$CheckboxTextView.setChecked(Prefs.favSortReverse);
+            widgets$CheckboxTextView2.setChecked(Prefs.favUnreadFirst);
             textView.setOnClickListener(new View$OnClickListenerC0364a(r11, textView, string2, string));
             m620f(new View$OnClickListenerC0366b(r11, textView, widgets$CheckboxTextView, widgets$CheckboxTextView2), true);
         }
@@ -263,8 +263,8 @@ public class Page_Favorites extends Page {
         Object[] objArr = new Object[3];
         int i2 = 0;
         objArr[0] = Integer.valueOf(i);
-        objArr[1] = Integer.valueOf(Prefs.f1181s);
-        objArr[2] = Integer.valueOf((Prefs.f1156Q ? 1 : 0) | (Prefs.f1157R ? 4 : 0) | (Prefs.f1158S ? 8 : i2));
+        objArr[1] = Integer.valueOf(Prefs.memberTopicsPerPage);
+        objArr[2] = Integer.valueOf((Prefs.favUnreadFirst ? 1 : 0) | (Prefs.favSortByName ? 4 : 0) | (Prefs.favSortReverse ? 8 : i2));
         this.f1422O = new C0355a();
         this.f1423P = new C0356b();
         this.iconId = R.drawable.ic_nav_fav;
@@ -339,17 +339,17 @@ public class Page_Favorites extends Page {
 
     @Override
     protected int mo141P() {
-        return ((this.f1413F - 1) / Prefs.f1181s) + 1;
+        return ((this.f1413F - 1) / Prefs.memberTopicsPerPage) + 1;
     }
 
     @Override
     protected int mo140Q() {
-        return (this.siteNum / Prefs.f1181s) + 1;
+        return (this.siteNum / Prefs.memberTopicsPerPage) + 1;
     }
 
     @Override
     Page mo139R(int i) {
-        return new Page_Favorites(this.mainActivity, (i - 1) * Prefs.f1181s);
+        return new Page_Favorites(this.mainActivity, (i - 1) * Prefs.memberTopicsPerPage);
     }
 
     @Override
@@ -457,7 +457,7 @@ public class Page_Favorites extends Page {
             if (i != 3) {
                 i7 = 11;
             }
-            API.ForumModifyRequest.m821p(intValue, null, i7, 8, 0, this, "удаление из избранного", "ОТПИСАТЬСЯ", null);
+            API.ForumModifyRequest.modifyForum(intValue, null, i7, 8, 0, this, "удаление из избранного", "ОТПИСАТЬСЯ", null);
         } else if (i3 == 4 || i3 == 5) {
             if (i != 3) {
                 i7 = 11;
@@ -465,12 +465,12 @@ public class Page_Favorites extends Page {
             if (i3 != 4) {
                 i6 = 0;
             }
-            API.ForumModifyRequest.m821p(intValue, null, i7, 1, i6 | 8, this, "закрепление в избранном", "", null);
+            API.ForumModifyRequest.modifyForum(intValue, null, i7, 1, i6 | 8, this, "закрепление в избранном", "", null);
         } else if (i3 == 33) {
             if (i != 3) {
                 i7 = 11;
             }
-            API.ForumModifyRequest.m821p(intValue, null, i7, 32, 0, this, "отметка прочтения", "", null);
+            API.ForumModifyRequest.modifyForum(intValue, null, i7, 32, 0, this, "отметка прочтения", "", null);
         } else if (i3 == 2) {
             MainActivity mainActivity = this.mainActivity;
             Util.copyToClipboard(mainActivity, "https://4pda.ru/forum/index.php?showtopic=" + intValue, "Адрес темы скопирован в буфер");
@@ -493,7 +493,7 @@ public class Page_Favorites extends Page {
             }
             i4 = i5;
             if (i4 == intValue2) {
-                API.ForumModifyRequest.m821p(intValue, null, 15, i4, 0, this, "", "", null);
+                API.ForumModifyRequest.modifyForum(intValue, null, 15, i4, 0, this, "", "", null);
                 return;
             }
             return;
@@ -507,7 +507,7 @@ public class Page_Favorites extends Page {
         OptionPoupupMenuView o1Var = new OptionPoupupMenuView(this.mainActivity, new C0357c(), true);
         o1Var.addMenuItem(i, i2, 21, "Открыть в новой вкладке");
         if (i == 4) {
-            int i3 = Prefs.f1187y;
+            int i3 = Prefs.topicAction;
             if (i3 == 0) {
                 o1Var.addMenuItem(i, i2, 32, "Перейти в конец");
             } else if (i3 == 1) {
@@ -591,26 +591,26 @@ public class Page_Favorites extends Page {
                 view2 = this.mainActivity.getLayoutInflater().inflate(R.layout.forum_list_for, viewGroup, false);
             } else if (d0 == 4) {
                 view2 = this.mainActivity.getLayoutInflater().inflate(R.layout.forum_list_top, viewGroup, false);
-                ((TextView) view2.findViewById(R.id.topicLastDate)).setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.m736f(R.drawable.ic_notify), (Drawable) null, (Drawable) null, (Drawable) null);
+                ((TextView) view2.findViewById(R.id.topicLastDate)).setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.getSkinDrawable(R.drawable.ic_notify), (Drawable) null, (Drawable) null, (Drawable) null);
             } else if (d0 == 1) {
                 view2 = this.mainActivity.getLayoutInflater().inflate(R.layout.forum_list_sep, viewGroup, false);
-                view2.setBackgroundDrawable(Skin.C0353a.f1388i0.getConstantState().newDrawable());
+                view2.setBackgroundDrawable(Skin.SkinColorModel.f1388i0.getConstantState().newDrawable());
                 float f = this.mainActivity.f731b;
                 view2.setPadding((int) (f * 16.0f), (int) (f * 16.0f), (int) (f * 16.0f), (int) (f * 8.0f));
                 ((TextView) view2).setText("Важные");
             } else if (d0 == 2) {
                 view2 = this.mainActivity.getLayoutInflater().inflate(R.layout.forum_list_sep, viewGroup, false);
                 if (this.f1416I > 0) {
-                    view2.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.card_sep));
+                    view2.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.card_sep));
                 } else {
-                    view2.setBackgroundDrawable(Skin.C0353a.f1388i0.getConstantState().newDrawable());
+                    view2.setBackgroundDrawable(Skin.SkinColorModel.f1388i0.getConstantState().newDrawable());
                 }
                 float f2 = this.mainActivity.f731b;
                 view2.setPadding((int) (f2 * 16.0f), (int) (f2 * 16.0f), (int) (f2 * 16.0f), (int) (f2 * 8.0f));
                 ((TextView) view2).setText("Темы / Форумы");
             } else if (d0 == 5) {
                 view2 = new View(this.mainActivity);
-                view2.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.card_sep));
+                view2.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.card_sep));
                 view2.setLayoutParams(new AbsListView.LayoutParams(-1, (int) (this.mainActivity.f731b * 16.0f)));
             }
             if (d0 != 3) {
@@ -621,7 +621,7 @@ public class Page_Favorites extends Page {
                 textView.setOnLongClickListener(this.f1417J);
                 int itemViewType = getItemViewType(i + 1);
                 if (itemViewType == 4 || itemViewType == 3) {
-                    textView.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.border_bottom));
+                    textView.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.border_bottom));
                 } else {
                     textView.setBackgroundResource(0);
                 }
@@ -630,11 +630,11 @@ public class Page_Favorites extends Page {
                 boolean z = (uVar.getInt(4).intValue() & 32) > 0;
                 int intValue = uVar.getInt(11).intValue();
                 if (intValue == 2) {
-                    textView.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.m736f(R.drawable.ic_notify_not), (Drawable) null, z ? this.mainActivity.skin.m736f(R.drawable.ic_unread) : null, (Drawable) null);
+                    textView.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.getSkinDrawable(R.drawable.ic_notify_not), (Drawable) null, z ? this.mainActivity.skin.getSkinDrawable(R.drawable.ic_unread) : null, (Drawable) null);
                 } else if (intValue == 1) {
-                    textView.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.m736f(R.drawable.ic_notify_once), (Drawable) null, z ? this.mainActivity.skin.m736f(R.drawable.ic_unread) : null, (Drawable) null);
+                    textView.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.getSkinDrawable(R.drawable.ic_notify_once), (Drawable) null, z ? this.mainActivity.skin.getSkinDrawable(R.drawable.ic_unread) : null, (Drawable) null);
                 } else {
-                    textView.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.m736f(R.drawable.ic_notify), (Drawable) null, z ? this.mainActivity.skin.m736f(R.drawable.ic_unread) : null, (Drawable) null);
+                    textView.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.getSkinDrawable(R.drawable.ic_notify), (Drawable) null, z ? this.mainActivity.skin.getSkinDrawable(R.drawable.ic_unread) : null, (Drawable) null);
                 }
             } else if (d0 == 4) {
                 ViewGroup viewGroup2 = (ViewGroup) view2;
@@ -656,10 +656,10 @@ public class Page_Favorites extends Page {
                 textView2.setEnabled((uVar.getInt(4).intValue() & 4) == 0);
                 int itemViewType2 = getItemViewType(i + 1);
                 if ((uVar.getInt(4).intValue() & 2) > 0) {
-                    viewGroup2.setBackgroundColor(Skin.C0353a.f1366V);
+                    viewGroup2.setBackgroundColor(Skin.SkinColorModel.f1366V);
                 } else {
                     if (itemViewType2 == 4 || itemViewType2 == 3) {
-                        drawable = this.mainActivity.skin.m736f(R.drawable.border_bottom);
+                        drawable = this.mainActivity.skin.getSkinDrawable(R.drawable.border_bottom);
                     } else {
                         drawable = null;
                     }
@@ -670,16 +670,16 @@ public class Page_Favorites extends Page {
                 if (i3 == 0 || (uVar.getInt(4).intValue() & 16) == 0) {
                     int i4 = intValue2 & 3;
                     if (i4 == 2) {
-                        textView2.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.m736f(R.drawable.ic_notify_not), (Drawable) null, (Drawable) null, (Drawable) null);
+                        textView2.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.getSkinDrawable(R.drawable.ic_notify_not), (Drawable) null, (Drawable) null, (Drawable) null);
                     } else if (i4 == 1) {
-                        textView2.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.m736f(R.drawable.ic_notify_once), (Drawable) null, (Drawable) null, (Drawable) null);
+                        textView2.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.getSkinDrawable(R.drawable.ic_notify_once), (Drawable) null, (Drawable) null, (Drawable) null);
                     } else if (i3 != 0) {
-                        textView2.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.m736f(R.drawable.ic_notify_pinned), (Drawable) null, (Drawable) null, (Drawable) null);
+                        textView2.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.getSkinDrawable(R.drawable.ic_notify_pinned), (Drawable) null, (Drawable) null, (Drawable) null);
                     } else {
-                        textView2.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.m736f(R.drawable.ic_notify), (Drawable) null, (Drawable) null, (Drawable) null);
+                        textView2.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.getSkinDrawable(R.drawable.ic_notify), (Drawable) null, (Drawable) null, (Drawable) null);
                     }
                 } else {
-                    textView2.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.m736f(R.drawable.ic_notify_pinned_unread), (Drawable) null, (Drawable) null, (Drawable) null);
+                    textView2.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.getSkinDrawable(R.drawable.ic_notify_pinned_unread), (Drawable) null, (Drawable) null, (Drawable) null);
                 }
             }
             if (d0 == 6) {

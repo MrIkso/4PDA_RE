@@ -49,14 +49,14 @@ public class OptionPoupupMenuView {
         LinearLayout linearLayout = new LinearLayout(mainActivity);
         this.rootLayout = linearLayout;
         linearLayout.setOrientation(1);
-        boolean z2 = Skin.C0353a.f1392k0;
+        boolean z2 = Skin.SkinColorModel.f1392k0;
         Dialog dialog = new Dialog(mainActivity, z ? z2 ? R.style.Dialog_Light : R.style.Dialog_Dark : z2 ? R.style.Menu_Light : R.style.Menu_Dark);
         this.dialog = dialog;
         dialog.setCanceledOnTouchOutside(true);
         ScrollView scrollView = new ScrollView(mainActivity);
         scrollView.addView(this.rootLayout);
         this.dialog.setContentView(scrollView);
-        this.dialog.getWindow().setBackgroundDrawable(mainActivity.skin.m736f(z ? R.drawable.np_dialog : R.drawable.np_menu));
+        this.dialog.getWindow().setBackgroundDrawable(mainActivity.skin.getSkinDrawable(z ? R.drawable.np_dialog : R.drawable.np_menu));
         this.f2154e = new View$OnClickListenerC0668a(this);
         View view = new View(this.mainActivity);
         this.rootLayout.addView(view);
@@ -81,13 +81,13 @@ public class OptionPoupupMenuView {
         textView.setTag(R.string.menu_item_type, Integer.valueOf(i));
         textView.setTag(R.string.menu_item_id, Integer.valueOf(i2));
         textView.setTag(R.string.menu_item_cmd, Integer.valueOf(i3));
-        textView.setTextColor(Skin.C0353a.f1365U);
+        textView.setTextColor(Skin.SkinColorModel.mainTextColor);
         textView.setText(str);
         textView.setTextSize(16.0f);
         textView.setGravity(16);
         textView.setLineSpacing(this.mainActivity.f732c * 3.0f, 1.0f);
         if (z2) {
-            textView.setTextColor(this.mainActivity.skin.m738d(R.color.moderator_text));
+            textView.setTextColor(this.mainActivity.skin.getSkinColor(R.color.moderator_text));
         }
         textView.setClickable(!z);
         if (z) {
@@ -96,16 +96,16 @@ public class OptionPoupupMenuView {
             textView.setPadding(0, (int) (f * 8.0f), 0, (int) (f * 8.0f));
             HorizontalScrollView horizontalScrollView = new HorizontalScrollView(this.mainActivity);
             horizontalScrollView.setHorizontalScrollBarEnabled(false);
-            horizontalScrollView.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.border_bottom));
+            horizontalScrollView.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.border_bottom));
             float f2 = this.mainActivity.f731b;
             horizontalScrollView.setPadding((int) (f2 * 16.0f), 0, (int) (f2 * 16.0f), 0);
             horizontalScrollView.addView(textView);
             this.rootLayout.addView(horizontalScrollView);
             return;
         }
-        textView.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.button_bg));
+        textView.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.button_bg));
         if (z3) {
-            textView.setCompoundDrawablesWithIntrinsicBounds((Drawable) null, (Drawable) null, this.mainActivity.skin.m736f(z4 ? R.drawable.ic_menu_checkbox_on : R.drawable.ic_zero), (Drawable) null);
+            textView.setCompoundDrawablesWithIntrinsicBounds((Drawable) null, (Drawable) null, this.mainActivity.skin.getSkinDrawable(z4 ? R.drawable.ic_menu_checkbox_on : R.drawable.ic_zero), (Drawable) null);
             textView.setCompoundDrawablePadding((int) (this.mainActivity.f731b * 8.0f));
             float f3 = this.mainActivity.f731b;
             textView.setPadding((int) (16.0f * f3), (int) (f3 * 8.0f), (int) (12.0f * f3), (int) (f3 * 8.0f));

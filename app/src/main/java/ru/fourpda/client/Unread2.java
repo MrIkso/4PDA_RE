@@ -53,7 +53,7 @@ public class Unread2 {
         if (z7) {
             if (cVar2.f2517g > (cVar != null ? cVar.f2517g : 0)) {
                 int i5 = cVar2.f2511a;
-                if ((1 == i5 && cVar2.f2515e == 0 && Prefs.f1164b) || ((1 == i5 && cVar2.f2515e != 0 && Prefs.f1163a) || ((3 == i5 || 2 == i5) && Prefs.f1165c && (!Prefs.f1166d || cVar2.f2520j != 0) ? (i4 = cVar2.f2519i & 3) == 0 || (1 == i4 && !z5) : (4 == i5 || 5 == i5) && Prefs.f1167e))) {
+                if ((1 == i5 && cVar2.f2515e == 0 && Prefs.notifyQmsSystem) || ((1 == i5 && cVar2.f2515e != 0 && Prefs.qmsNotify) || ((3 == i5 || 2 == i5) && Prefs.favNotify && (!Prefs.favImportantNotify || cVar2.f2520j != 0) ? (i4 = cVar2.f2519i & 3) == 0 || (1 == i4 && !z5) : (4 == i5 || 5 == i5) && Prefs.menNotify))) {
                     z2 = true;
                     z = false;
                     if (z8) {
@@ -69,21 +69,21 @@ public class Unread2 {
                                 if ((3 != i || 2 == i) && z2 && cVar2.f2515e == DocumentManager.getMemberId()) {
                                     z2 = false;
                                 }
-                                if ((!z2 || z) && Prefs.f1168f) {
+                                if ((!z2 || z) && Prefs.notifyGroup) {
                                     i2 = cVar2.f2511a;
                                     if (1 != i2) {
                                         int f = m692f();
                                         if (f > 0 && z2) {
-                                            Notify.m46c(this.f1570a, -1, "4pda-qms-group", true, true, "4PDA QMS", f + " " + Util.m662l(f, "новое сообщение", "новых сообщения", "новых сообщений"), Uri.parse("https://4pda.ru/forum/index.php?act=qms"));
+                                            Notify.createNotify(this.f1570a, -1, "4pda-qms-group", true, true, "4PDA QMS", f + " " + Util.m662l(f, "новое сообщение", "новых сообщения", "новых сообщений"), Uri.parse("https://4pda.ru/forum/index.php?act=qms"));
                                             return;
                                         } else if (f == 0 && z) {
-                                            Notify.m48a(this.f1570a, -1, "4pda-qms-group");
+                                            Notify.cancelNotify(this.f1570a, -1, "4pda-qms-group");
                                             return;
                                         } else {
                                             return;
                                         }
                                     } else if (2 == i2 || 3 == i2) {
-                                        if (Prefs.f1166d) {
+                                        if (Prefs.favImportantNotify) {
                                             DataDB.C0738c[] D = DataDB.m380D(2);
                                             if (D != null) {
                                                 i3 = 0;
@@ -109,12 +109,12 @@ public class Unread2 {
                                         if (i3 > 0 && z2) {
                                             Context context = this.f1570a;
                                             StringBuilder sb = new StringBuilder();
-                                            sb.append(Prefs.f1166d ? "Непрочитанных важных: " : "Непрочитанных в избранном: ");
+                                            sb.append(Prefs.favImportantNotify ? "Непрочитанных важных: " : "Непрочитанных в избранном: ");
                                             sb.append(i3);
-                                            Notify.m46c(context, -2, "4pda-fav-group", true, true, "4PDA избранное", sb.toString(), Uri.parse("https://4pda.ru/forum/index.php?act=fav"));
+                                            Notify.createNotify(context, -2, "4pda-fav-group", true, true, "4PDA избранное", sb.toString(), Uri.parse("https://4pda.ru/forum/index.php?act=fav"));
                                             return;
                                         } else if (i3 == 0 && z) {
-                                            Notify.m48a(this.f1570a, -2, "4pda-fav-group");
+                                            Notify.cancelNotify(this.f1570a, -2, "4pda-fav-group");
                                             return;
                                         } else {
                                             return;
@@ -122,10 +122,10 @@ public class Unread2 {
                                     } else if (4 == i2 || 5 == i2) {
                                         int e = m693e();
                                         if (e > 0 && z2) {
-                                            Notify.m46c(this.f1570a, -3, "4pda-mention-group", true, true, "4PDA упоминания", "Ссылаются на форуме: " + e, Uri.parse("https://4pda.ru/forum/index.php?act=mentions"));
+                                            Notify.createNotify(this.f1570a, -3, "4pda-mention-group", true, true, "4PDA упоминания", "Ссылаются на форуме: " + e, Uri.parse("https://4pda.ru/forum/index.php?act=mentions"));
                                             return;
                                         } else if (e == 0 && z) {
-                                            Notify.m48a(this.f1570a, -3, "4pda-mention-group");
+                                            Notify.cancelNotify(this.f1570a, -3, "4pda-mention-group");
                                             return;
                                         } else {
                                             return;
@@ -136,19 +136,19 @@ public class Unread2 {
                                 } else if (z2) {
                                     int i6 = cVar2.f2511a;
                                     if (1 == i6) {
-                                        Notify.m46c(this.f1570a, cVar2.f2512b, "4pda-qms", true, false, cVar2.f2516f, String.format(Locale.getDefault(), "%s: %d %s", cVar2.f2514d, Integer.valueOf(cVar2.f2519i), Util.m662l(cVar2.f2519i, "новое сообщение", "новых сообщения", "новых сообщений")), Uri.parse("https://4pda.ru/forum/index.php?act=qms&t=" + cVar2.f2512b));
+                                        Notify.createNotify(this.f1570a, cVar2.f2512b, "4pda-qms", true, false, cVar2.f2516f, String.format(Locale.getDefault(), "%s: %d %s", cVar2.f2514d, Integer.valueOf(cVar2.f2519i), Util.m662l(cVar2.f2519i, "новое сообщение", "новых сообщения", "новых сообщений")), Uri.parse("https://4pda.ru/forum/index.php?act=qms&t=" + cVar2.f2512b));
                                         return;
                                     } else if (2 == i6) {
-                                        Notify.m46c(this.f1570a, cVar2.f2512b, "4pda-forum", true, false, "Новое на форуме ", cVar2.f2514d, Uri.parse("https://4pda.ru/forum/index.php?showforum=" + cVar2.f2512b));
+                                        Notify.createNotify(this.f1570a, cVar2.f2512b, "4pda-forum", true, false, "Новое на форуме ", cVar2.f2514d, Uri.parse("https://4pda.ru/forum/index.php?showforum=" + cVar2.f2512b));
                                         return;
                                     } else if (3 == i6) {
-                                        Notify.m46c(this.f1570a, cVar2.f2512b, "4pda-topic", true, false, cVar2.f2516f + " в топике ", cVar2.f2514d, Uri.parse("https://4pda.ru/forum/index.php?showtopic=" + cVar2.f2512b + "&view=getnewpost"));
+                                        Notify.createNotify(this.f1570a, cVar2.f2512b, "4pda-topic", true, false, cVar2.f2516f + " в топике ", cVar2.f2514d, Uri.parse("https://4pda.ru/forum/index.php?showtopic=" + cVar2.f2512b + "&view=getnewpost"));
                                         return;
                                     } else if (4 == i6) {
-                                        Notify.m46c(this.f1570a, cVar2.f2512b, "4pda-mention-forum", true, false, "Упоминание в топике " + cVar2.f2514d, cVar2.f2516f + " ссылается на вас", Uri.parse("https://4pda.ru/forum/index.php?showtopic=" + cVar2.f2517g + "&view=findpost&p=" + cVar2.f2512b));
+                                        Notify.createNotify(this.f1570a, cVar2.f2512b, "4pda-mention-forum", true, false, "Упоминание в топике " + cVar2.f2514d, cVar2.f2516f + " ссылается на вас", Uri.parse("https://4pda.ru/forum/index.php?showtopic=" + cVar2.f2517g + "&view=findpost&p=" + cVar2.f2512b));
                                         return;
                                     } else if (5 == i6) {
-                                        Notify.m46c(this.f1570a, cVar2.f2512b, "4pda-mention-site", true, false, "Упоминание в новости " + cVar2.f2514d, cVar2.f2516f + " ссылается на вас", Uri.parse("https://4pda.ru/?p=" + cVar2.f2517g + "&c=" + cVar2.f2512b));
+                                        Notify.createNotify(this.f1570a, cVar2.f2512b, "4pda-mention-site", true, false, "Упоминание в новости " + cVar2.f2514d, cVar2.f2516f + " ссылается на вас", Uri.parse("https://4pda.ru/?p=" + cVar2.f2517g + "&c=" + cVar2.f2512b));
                                         return;
                                     } else {
                                         return;
@@ -156,28 +156,28 @@ public class Unread2 {
                                 } else if (z) {
                                     int i7 = cVar2.f2511a;
                                     if (1 == i7) {
-                                        Notify.m48a(this.f1570a, cVar2.f2512b, "4pda-qms");
+                                        Notify.cancelNotify(this.f1570a, cVar2.f2512b, "4pda-qms");
                                         return;
                                     } else if (2 == i7) {
-                                        Notify.m48a(this.f1570a, cVar2.f2512b, "4pda-forum");
+                                        Notify.cancelNotify(this.f1570a, cVar2.f2512b, "4pda-forum");
                                         return;
                                     } else if (3 == i7) {
-                                        Notify.m48a(this.f1570a, cVar2.f2512b, "4pda-topic");
+                                        Notify.cancelNotify(this.f1570a, cVar2.f2512b, "4pda-topic");
                                         return;
                                     } else if (4 == i7) {
-                                        Notify.m48a(this.f1570a, cVar2.f2512b, "4pda-mention-forum");
+                                        Notify.cancelNotify(this.f1570a, cVar2.f2512b, "4pda-mention-forum");
                                         return;
                                     } else if (5 == i7) {
-                                        Notify.m48a(this.f1570a, cVar2.f2512b, "4pda-mention-site");
+                                        Notify.cancelNotify(this.f1570a, cVar2.f2512b, "4pda-mention-site");
                                         return;
                                     } else {
                                         return;
                                     }
                                 } else if (z4) {
-                                    Notify.m46c(this.f1570a, cVar2.f2512b, "4pda-pinupd", true, false, "Обновилась шапка ", cVar2.f2514d, Uri.parse("https://4pda.ru/forum/index.php?showtopic=" + cVar2.f2512b));
+                                    Notify.createNotify(this.f1570a, cVar2.f2512b, "4pda-pinupd", true, false, "Обновилась шапка ", cVar2.f2514d, Uri.parse("https://4pda.ru/forum/index.php?showtopic=" + cVar2.f2512b));
                                     return;
                                 } else if (z3) {
-                                    Notify.m48a(this.f1570a, cVar2.f2512b, "4pda-pinupd");
+                                    Notify.cancelNotify(this.f1570a, cVar2.f2512b, "4pda-pinupd");
                                     return;
                                 } else {
                                     return;
@@ -318,8 +318,8 @@ public class Unread2 {
     }
 
     public void m696b() {
-        DataDB.m351z();
-        DataDB.m362o(2, 0);
+        DataDB.deleteUnread();
+        DataDB.makeProps(2, 0);
     }
 
     public void m695c() {
@@ -401,7 +401,7 @@ public class Unread2 {
         UnreadSyncRequest() {
             super(28269);
             this.f1571g = false;
-            this.f1572h = DataDB.m363n(2, 0);
+            this.f1572h = DataDB.getPropsId(2, 0);
             this.f1573i = 0;
             this.f1574j = 0;
         }
@@ -416,7 +416,7 @@ public class Unread2 {
                     Unread2.f1569c.m657a(aVar);
                 }
                 if (this.f1573i == 0 && this.f1571g) {
-                    DataDB.m353x();
+                    DataDB.updateUnread();
                 }
                 int i2 = 4;
                 try {
@@ -429,7 +429,7 @@ public class Unread2 {
                         i2 = 4;
                     }
                     if (this.f1573i == 0) {
-                        DataDB.m362o(2, uVar.getInt(0).intValue());
+                        DataDB.makeProps(2, uVar.getInt(0).intValue());
                     }
                 } catch (Throwable th) {
                     //ACRA.getErrorReporter().handleSilentException(th);

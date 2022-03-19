@@ -157,7 +157,7 @@ public class Page_QMS_List extends Page {
 
         @Override
         public void afterTextChanged(Editable editable) {
-            this.f2118a.m625a(this.f2119b.m844b() != null && editable.length() > 0);
+            this.f2118a.m625a(this.f2119b.getMemberId() != null && editable.length() > 0);
         }
 
         @Override
@@ -209,7 +209,7 @@ public class Page_QMS_List extends Page {
                     return;
                 }
             }
-            Integer userId = this.f2123b.m844b();
+            Integer userId = this.f2123b.getMemberId();
             if (this.f2125d.getText().length() <= 0 || userId == null) {
                 Toast.makeText(this.activity, "Введите сообщение", 1).show();
             } else {
@@ -258,7 +258,7 @@ public class Page_QMS_List extends Page {
         }
 
         DialogC0657k(MainActivity mainActivity, Document uVar, Util.AbstractC0429j<Boolean, Integer> jVar) {
-            super(mainActivity, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+            super(mainActivity, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
             ScrollView scrollView = new ScrollView(mainActivity);
             LinearLayout linearLayout = new LinearLayout(mainActivity);
             int i = 1;
@@ -271,7 +271,7 @@ public class Page_QMS_List extends Page {
             scrollView.addView(linearLayout);
             TextView textView = new TextView(mainActivity);
             textView.setText("Черный список");
-            textView.setTextColor(Skin.C0353a.f1365U);
+            textView.setTextColor(Skin.SkinColorModel.mainTextColor);
             textView.setSingleLine(true);
             textView.setTextSize(22.0f);
             textView.setTypeface(null, 1);
@@ -283,7 +283,7 @@ public class Page_QMS_List extends Page {
                 Document l = uVar.getDocument(i5);
                 if (i5 > 0) {
                     View view = new View(mainActivity);
-                    view.setBackgroundDrawable(mainActivity.skin.m736f(R.color.border_line));
+                    view.setBackgroundDrawable(mainActivity.skin.getSkinDrawable(R.color.border_line));
                     linearLayout.addView(view);
                     LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) view.getLayoutParams();
                     layoutParams.width = -1;
@@ -295,7 +295,7 @@ public class Page_QMS_List extends Page {
                 TextView textView2 = new TextView(mainActivity);
                 textView2.setText(Util.C0427h.UnEscapeString(l.getString(i)));
                 textView2.setTextSize(f2);
-                textView2.setTextColor(Skin.C0353a.f1365U);
+                textView2.setTextColor(Skin.SkinColorModel.mainTextColor);
                 textView2.setId(R.id.captionID);
                 textView2.setGravity(16);
                 int i6 = (int) (40.0f * f);
@@ -310,7 +310,7 @@ public class Page_QMS_List extends Page {
                 layoutParams2.addRule(i4, R.id.removeID);
                 View view2 = new View(mainActivity);
                 view2.setClickable(true);
-                view2.setBackgroundDrawable(mainActivity.skin.m736f(R.drawable.button_remove));
+                view2.setBackgroundDrawable(mainActivity.skin.getSkinDrawable(R.drawable.button_remove));
                 view2.setId(R.id.removeID);
                 view2.setOnClickListener(new View$OnClickListenerC0658a(jVar, l));
                 view2.setEnabled(true);
@@ -327,7 +327,7 @@ public class Page_QMS_List extends Page {
                 i4 = 0;
             }
             setContentView(scrollView);
-            getWindow().setBackgroundDrawable(mainActivity.skin.m736f(R.drawable.np_dialog));
+            getWindow().setBackgroundDrawable(mainActivity.skin.getSkinDrawable(R.drawable.np_dialog));
             getWindow().setLayout(-1, -2);
             setCanceledOnTouchOutside(true);
             getWindow().getAttributes().gravity = 17;
@@ -561,7 +561,7 @@ public class Page_QMS_List extends Page {
             this.userId = Math.abs(i);
             this.f2142c = Util.C0427h.UnEscapeString(uVar.getString(1));
             this.f2143d = API.userGroups.get(uVar.getInt(2));
-            this.f2144e = Util.C0424f.m646c(Skin.C0353a.f1398n0[uVar.getInt(2)], Skin.C0353a.f1370Z);
+            this.f2144e = Util.C0424f.m646c(Skin.SkinColorModel.f1398n0[uVar.getInt(2)], Skin.SkinColorModel.f1370Z);
             this.f2148i = uVar.getString(3);
             this.f2145f = ((int) (System.currentTimeMillis() / 1000)) - uVar.getInt(4) < 900 && z;
             Document l = uVar.getDocument(7);
@@ -711,7 +711,7 @@ public class Page_QMS_List extends Page {
         q1Var.editText.setText(this.searchText);
         q1Var.m625a(!TextUtils.isEmpty(this.searchText) && this.searchText.length() >= 3);
         q1Var.editText.addTextChangedListener(new C0648b(this, q1Var));
-        this.mainActivity.mainLayout.m859w(q1Var.editText);
+        this.mainActivity.mainLayout.hideKeyboard(q1Var.editText);
         q1Var.m620f(new View$OnClickListenerC0649c(q1Var), true);
         q1Var.m621e(new View$OnClickListenerC0650d(), true);
         q1Var.show(true, true, true);
@@ -846,7 +846,7 @@ public class Page_QMS_List extends Page {
             } else {
                 findViewById.setVisibility(8);
             }
-            textView.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.m736f(pVar.f2145f ? R.drawable.ic_online : R.drawable.ic_offline), (Drawable) null, (Drawable) null, (Drawable) null);
+            textView.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.getSkinDrawable(pVar.f2145f ? R.drawable.ic_online : R.drawable.ic_offline), (Drawable) null, (Drawable) null, (Drawable) null);
             Widgets$AvatarView avatarView = (Widgets$AvatarView) viewGroup2.findViewById(R.id.userImage);
             boolean isEmpty = TextUtils.isEmpty(pVar.f2148i);
             int i7 = R.drawable.ic_avatar;
@@ -857,12 +857,12 @@ public class Page_QMS_List extends Page {
                 if (i8 == 0 || i8 == 17927) {
                     i7 = R.drawable.ic_launcher;
                 }
-                avatarView.setImageDrawable(e1Var.m736f(i7));
+                avatarView.setImageDrawable(e1Var.getSkinDrawable(i7));
             } else {
                 PicoImgRequest l = PicoImg.loadUrl(this.mainActivity, pVar.f2148i);
                 l.to(avatarView);
-                l.disableAnimation(!Prefs.f1146G);
-                l.placeholder(this.mainActivity.skin.m736f(R.drawable.ic_avatar));
+                l.disableAnimation(!Prefs.animAvatars);
+                l.placeholder(this.mainActivity.skin.getSkinDrawable(R.drawable.ic_avatar));
                 l.fade(4, 200, false);
                 l.sizeToView();
                 l.runAsync();

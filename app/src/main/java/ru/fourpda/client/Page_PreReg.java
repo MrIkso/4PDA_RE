@@ -81,7 +81,7 @@ public class Page_PreReg extends Page implements BBDisplay.IBBDisplayCallback {
             @Override
             public void onClick(View view) {
                 if (!TextUtils.isEmpty(this.f1828a.getText().toString())) {
-                    DocumentManager.getResultRequest(new MainActivity.C0187e0(Page_PreReg.this.mainActivity, 5, 0, 0, "", this.f1828a.getText().toString()));
+                    DocumentManager.getResultRequest(new MainActivity.MemberAuthorizationRequest(Page_PreReg.this.mainActivity, 5, 0, 0, "", this.f1828a.getText().toString()));
                 } else {
                     Toast.makeText(Page_PreReg.this.mainActivity, "Введите логин", 0).show();
                 }
@@ -180,7 +180,7 @@ public class Page_PreReg extends Page implements BBDisplay.IBBDisplayCallback {
         this.f1819H = (RelativeLayout) viewGroup.findViewById(R.id.preregLayout);
         BBDisplay bBDisplay = (BBDisplay) this.f1816E.findViewById(R.id.preregRules);
         this.f1817F = bBDisplay;
-        bBDisplay.setBackgroundColor(Skin.C0353a.f1363S);
+        bBDisplay.setBackgroundColor(Skin.SkinColorModel.mainBgColor);
         this.f1817F.setCallback(this);
         this.f1816E.findViewById(R.id.preregLogin).setOnClickListener(new View$OnClickListenerC0536a());
         TextView textView = (TextView) this.f1816E.findViewById(R.id.preregRulesBtn);
@@ -246,7 +246,7 @@ public class Page_PreReg extends Page implements BBDisplay.IBBDisplayCallback {
             BBString.C0681k kVar = pVar.f2202I.get(i);
             int i2 = kVar.statusCode;
             if (i2 == 1) {
-                Urls2.m676g(this.mainActivity, kVar.link);
+                Urls2.visitPage(this.mainActivity, kVar.link);
             } else if (i2 == 2) {
                 Util.sendMail(this.mainActivity, kVar.link, this.title);
             }

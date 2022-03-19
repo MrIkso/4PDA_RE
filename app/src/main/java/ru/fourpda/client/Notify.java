@@ -13,7 +13,7 @@ import android.text.TextUtils;
 import java.lang.reflect.InvocationTargetException;
 
 public class Notify {
-    public static void m48a(Context context, int i, String str) {
+    public static void cancelNotify(Context context, int i, String str) {
         try {
             ((NotificationManager) context.getSystemService("notification")).cancel(str, i);
         } catch (Exception unused) {
@@ -21,14 +21,14 @@ public class Notify {
     }
 
     @SuppressLint({"NewApi"})
-    public static void m47b(Context context, int i, String str, boolean z, boolean z2, String str2, String str3, Intent intent) {
+    public static void createNotify(Context context, int i, String str, boolean z, boolean z2, String str2, String str3, Intent intent) {
         Notification notification;
         NotificationManager notificationManager = (NotificationManager) context.getSystemService("notification");
         notificationManager.cancel(str, i);
         String c = Util.C0427h.UnEscapeString(str2);
         String c2 = Util.C0427h.UnEscapeString(str3);
         PendingIntent activity = PendingIntent.getActivity(context, i, intent, 0);
-        int i2 = z ? (Prefs.f1172j || !Prefs.f1171i) ? 4 : 6 : 0;
+        int i2 = z ? (Prefs.notifySilence || !Prefs.notificationVibration) ? 4 : 6 : 0;
         int i3 = Build.VERSION.SDK_INT;
         if (i3 < 11) {
             notification = new Notification(R.drawable.notify, c2, System.currentTimeMillis());
@@ -36,8 +36,8 @@ public class Notify {
                 notification.getClass().getMethod("setLatestEventInfo", Context.class, CharSequence.class, CharSequence.class, PendingIntent.class).invoke(notification, context, c, c2, activity);
             } catch (IllegalAccessException | IllegalArgumentException | NoSuchMethodException | InvocationTargetException unused) {
             }
-            if (z && !Prefs.f1172j && !TextUtils.isEmpty(Prefs.f1170h)) {
-                notification.sound = Uri.parse(Prefs.f1170h);
+            if (z && !Prefs.notifySilence && !TextUtils.isEmpty(Prefs.notificationSound)) {
+                notification.sound = Uri.parse(Prefs.notificationSound);
             }
             notification.defaults = i2;
             if (z2) {
@@ -65,10 +65,10 @@ public class Notify {
                 builder.setOnlyAlertOnce(!z);
                 builder.setTicker(c2);
             } else {
-                if (z && !Prefs.f1172j) {
+                if (z && !Prefs.notifySilence) {
                     builder.setTicker(c2);
-                    if (!TextUtils.isEmpty(Prefs.f1170h)) {
-                        builder.setSound(Uri.parse(Prefs.f1170h));
+                    if (!TextUtils.isEmpty(Prefs.notificationSound)) {
+                        builder.setSound(Uri.parse(Prefs.notificationSound));
                     }
                 }
                 builder.setDefaults(i2);
@@ -78,12 +78,12 @@ public class Notify {
         notificationManager.notify(str, i, notification);
     }
 
-    public static void m46c(Context context, int i, String str, boolean z, boolean z2, String str2, String str3, Uri uri) {
+    public static void createNotify(Context context, int i, String str, boolean z, boolean z2, String str2, String str3, Uri uri) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.setAction("android.intent.action.VIEW");
         intent.setData(uri);
         intent.putExtra("fromNotification", true);
-        m47b(context, i, str, z, z2, str2, str3, intent);
+        createNotify(context, i, str, z, z2, str2, str3, intent);
     }
 
     public static void createNotificationChannel(Context context) {

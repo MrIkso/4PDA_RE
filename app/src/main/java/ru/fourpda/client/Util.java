@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.sql.Array;
+import java.util.ArrayList;
 
 public class Util {
     static Typeface fontelloTypeface;
@@ -30,28 +32,28 @@ public class Util {
     static AtomicInteger f1625c = new AtomicInteger(((int) (Math.random() * 8192.0d)) + 65536);
     private static BBDisplay bbDisplay;
 
-    static class C0419a {
-        private final Object f1627a = new Object();
-        private volatile boolean f1628b;
+    static class LockerStore {
+        private final Object locker = new Object();
+        private volatile boolean isNotify;
 
-        public C0419a(boolean z) {
-            this.f1628b = false;
-            this.f1628b = z;
+        public LockerStore(boolean z) {
+            this.isNotify = false;
+            this.isNotify = z;
         }
 
-        public void m659a() {
-            synchronized (this.f1627a) {
-                this.f1628b = true;
-                this.f1627a.notify();
+        public void notifyLocker() {
+            synchronized (this.locker) {
+                this.isNotify = true;
+                this.locker.notify();
             }
         }
 
-        public void m658b(long j) {
-            synchronized (this.f1627a) {
+        public void waitLocker(long j) {
+            synchronized (this.locker) {
                 long currentTimeMillis = System.currentTimeMillis();
-                while (!this.f1628b) {
+                while (!this.isNotify) {
                     try {
-                        this.f1627a.wait(j);
+                        this.locker.wait(j);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -59,7 +61,7 @@ public class Util {
                         break;
                     }
                 }
-                this.f1628b = false;
+                this.isNotify = false;
             }
         }
     }
@@ -270,276 +272,276 @@ public class Util {
     }
 
     public static class C0427h {
-        static Map<String, Integer> f1648a;
+        static Map<String, Integer> htmlTags;
         static StringBuilder f1649b = new StringBuilder(8);
         static StringBuilder f1650c = new StringBuilder(1024);
 
         static {
-            HashMap<String, Integer> hashMap = new HashMap<>(252);
-            f1648a = hashMap;
-            hashMap.put("quot", 34);
-            f1648a.put("amp", 38);
-            f1648a.put("lt", 60);
-            f1648a.put("gt", 62);
-            f1648a.put("nbsp", 160);
-            f1648a.put("iexcl", 161);
-            f1648a.put("cent", 162);
-            f1648a.put("pound", 163);
-            f1648a.put("curren", 164);
-            f1648a.put("yen", 165);
-            f1648a.put("brvbar", 166);
-            f1648a.put("sect", 167);
-            f1648a.put("uml", 168);
-            f1648a.put("copy", 169);
-            f1648a.put("ordf", 170);
-            f1648a.put("laquo", 171);
-            f1648a.put("not", 172);
-            f1648a.put("shy", 173);
-            f1648a.put("reg", 174);
-            f1648a.put("macr", 175);
-            f1648a.put("deg", 176);
-            f1648a.put("plusmn", 177);
-            f1648a.put("sup2", 178);
-            f1648a.put("sup3", 179);
-            f1648a.put("acute", 180);
-            f1648a.put("micro", 181);
-            f1648a.put("para", 182);
-            f1648a.put("middot", 183);
-            f1648a.put("cedil", 184);
-            f1648a.put("sup1", 185);
-            f1648a.put("ordm", 186);
-            f1648a.put("raquo", 187);
-            f1648a.put("frac14", 188);
-            f1648a.put("frac12", 189);
-            f1648a.put("frac34", 190);
-            f1648a.put("iquest", 191);
-            f1648a.put("Agrave", 192);
-            f1648a.put("Aacute", 193);
-            f1648a.put("Acirc", 194);
-            f1648a.put("Atilde", 195);
-            f1648a.put("Auml", 196);
-            f1648a.put("Aring", 197);
-            f1648a.put("AElig", 198);
-            f1648a.put("Ccedil", 199);
-            f1648a.put("Egrave", 200);
-            f1648a.put("Eacute", 201);
-            f1648a.put("Ecirc", 202);
-            f1648a.put("Euml", 203);
-            f1648a.put("Igrave", 204);
-            f1648a.put("Iacute", 205);
-            f1648a.put("Icirc", 206);
-            f1648a.put("Iuml", 207);
-            f1648a.put("ETH", 208);
-            f1648a.put("Ntilde", 209);
-            f1648a.put("Ograve", 210);
-            f1648a.put("Oacute", 211);
-            f1648a.put("Ocirc", 212);
-            f1648a.put("Otilde", 213);
-            f1648a.put("Ouml", 214);
-            f1648a.put("times", 215);
-            f1648a.put("Oslash", 216);
-            f1648a.put("Ugrave", 217);
-            f1648a.put("Uacute", 218);
-            f1648a.put("Ucirc", 219);
-            f1648a.put("Uuml", 220);
-            f1648a.put("Yacute", 221);
-            f1648a.put("THORN", 222);
-            f1648a.put("szlig", 223);
-            f1648a.put("agrave", 224);
-            f1648a.put("aacute", 225);
-            f1648a.put("acirc", 226);
-            f1648a.put("atilde", 227);
-            f1648a.put("auml", 228);
-            f1648a.put("aring", 229);
-            f1648a.put("aelig", 230);
-            f1648a.put("ccedil", 231);
-            f1648a.put("egrave", 232);
-            f1648a.put("eacute", 233);
-            f1648a.put("ecirc", 234);
-            f1648a.put("euml", 235);
-            f1648a.put("igrave", 236);
-            f1648a.put("iacute", 237);
-            f1648a.put("icirc", 238);
-            f1648a.put("iuml", 239);
-            f1648a.put("eth", 240);
-            f1648a.put("ntilde", 241);
-            f1648a.put("ograve", 242);
-            f1648a.put("oacute", 243);
-            f1648a.put("ocirc", 244);
-            f1648a.put("otilde", 245);
-            f1648a.put("ouml", 246);
-            f1648a.put("divide", 247);
-            f1648a.put("oslash", 248);
-            f1648a.put("ugrave", 249);
-            f1648a.put("uacute", 250);
-            f1648a.put("ucirc", 251);
-            f1648a.put("uuml", 252);
-            f1648a.put("yacute", 253);
-            f1648a.put("thorn", 254);
-            f1648a.put("yuml", 255);
-            f1648a.put("fnof", 402);
-            f1648a.put("Alpha", 913);
-            f1648a.put("Beta", 914);
-            f1648a.put("Gamma", 915);
-            f1648a.put("Delta", 916);
-            f1648a.put("Epsilon", 917);
-            f1648a.put("Zeta", 918);
-            f1648a.put("Eta", 919);
-            f1648a.put("Theta", 920);
-            f1648a.put("Iota", 921);
-            f1648a.put("Kappa", 922);
-            f1648a.put("Lambda", 923);
-            f1648a.put("Mu", 924);
-            f1648a.put("Nu", 925);
-            f1648a.put("Xi", 926);
-            f1648a.put("Omicron", 927);
-            f1648a.put("Pi", 928);
-            f1648a.put("Rho", 929);
-            f1648a.put("Sigma", 931);
-            f1648a.put("Tau", 932);
-            f1648a.put("Upsilon", 933);
-            f1648a.put("Phi", 934);
-            f1648a.put("Chi", 935);
-            f1648a.put("Psi", 936);
-            f1648a.put("Omega", 937);
-            f1648a.put("alpha", 945);
-            f1648a.put("beta", 946);
-            f1648a.put("gamma", 947);
-            f1648a.put("delta", 948);
-            f1648a.put("epsilon", 949);
-            f1648a.put("zeta", 950);
-            f1648a.put("eta", 951);
-            f1648a.put("theta", 952);
-            f1648a.put("iota", 953);
-            f1648a.put("kappa", 954);
-            f1648a.put("lambda", 955);
-            f1648a.put("mu", 956);
-            f1648a.put("nu", 957);
-            f1648a.put("xi", 958);
-            f1648a.put("omicron", 959);
-            f1648a.put("pi", 960);
-            f1648a.put("rho", 961);
-            f1648a.put("sigmaf", 962);
-            f1648a.put("sigma", 963);
-            f1648a.put("tau", 964);
-            f1648a.put("upsilon", 965);
-            f1648a.put("phi", 966);
-            f1648a.put("chi", 967);
-            f1648a.put("psi", 968);
-            f1648a.put("omega", 969);
-            f1648a.put("thetasym", 977);
-            f1648a.put("upsih", 978);
-            f1648a.put("piv", 982);
-            f1648a.put("bull", 8226);
-            f1648a.put("hellip", 8230);
-            f1648a.put("prime", 8242);
-            f1648a.put("Prime", 8243);
-            f1648a.put("oline", 8254);
-            f1648a.put("frasl", 8260);
-            f1648a.put("weierp", 8472);
-            f1648a.put("image", 8465);
-            f1648a.put("real", 8476);
-            f1648a.put("trade", 8482);
-            f1648a.put("alefsym", 8501);
-            f1648a.put("larr", 8592);
-            f1648a.put("uarr", 8593);
-            f1648a.put("rarr", 8594);
-            f1648a.put("darr", 8595);
-            f1648a.put("harr", 8596);
-            f1648a.put("crarr", 8629);
-            f1648a.put("lArr", 8656);
-            f1648a.put("uArr", 8657);
-            f1648a.put("rArr", 8658);
-            f1648a.put("dArr", 8659);
-            f1648a.put("hArr", 8660);
-            f1648a.put("forall", 8704);
-            f1648a.put("part", 8706);
-            f1648a.put("exist", 8707);
-            f1648a.put("empty", 8709);
-            f1648a.put("nabla", 8711);
-            f1648a.put("isin", 8712);
-            f1648a.put("notin", 8713);
-            f1648a.put("ni", 8715);
-            f1648a.put("prod", 8719);
-            f1648a.put("sum", 8721);
-            f1648a.put("minus", 8722);
-            f1648a.put("lowast", 8727);
-            f1648a.put("radic", 8730);
-            f1648a.put("prop", 8733);
-            f1648a.put("infin", 8734);
-            f1648a.put("ang", 8736);
-            f1648a.put("and", 8743);
-            f1648a.put("or", 8744);
-            f1648a.put("cap", 8745);
-            f1648a.put("cup", 8746);
-            f1648a.put("int", 8747);
-            f1648a.put("there4", 8756);
-            f1648a.put("sim", 8764);
-            f1648a.put("cong", 8773);
-            f1648a.put("asymp", 8776);
-            f1648a.put("ne", 8800);
-            f1648a.put("equiv", 8801);
-            f1648a.put("le", 8804);
-            f1648a.put("ge", 8805);
-            f1648a.put("sub", 8834);
-            f1648a.put("sup", 8835);
-            f1648a.put("sube", 8838);
-            f1648a.put("supe", 8839);
-            f1648a.put("oplus", 8853);
-            f1648a.put("otimes", 8855);
-            f1648a.put("perp", 8869);
-            f1648a.put("sdot", 8901);
-            f1648a.put("lceil", 8968);
-            f1648a.put("rceil", 8969);
-            f1648a.put("lfloor", 8970);
-            f1648a.put("rfloor", 8971);
-            f1648a.put("lang", 9001);
-            f1648a.put("rang", 9002);
-            f1648a.put("loz", 9674);
-            f1648a.put("spades", 9824);
-            f1648a.put("clubs", 9827);
-            f1648a.put("hearts", 9829);
-            f1648a.put("diams", 9830);
-            f1648a.put("OElig", 338);
-            f1648a.put("oelig", 339);
-            f1648a.put("Scaron", 352);
-            f1648a.put("scaron", 353);
-            f1648a.put("Yuml", 376);
-            f1648a.put("circ", 710);
-            f1648a.put("tilde", 732);
-            f1648a.put("ensp", 8194);
-            f1648a.put("emsp", 8195);
-            f1648a.put("thinsp", 8201);
-            f1648a.put("zwnj", 8204);
-            f1648a.put("zwj", 8205);
-            f1648a.put("lrm", 8206);
-            f1648a.put("rlm", 8207);
-            f1648a.put("ndash", 8211);
-            f1648a.put("mdash", 8212);
-            f1648a.put("lsquo", 8216);
-            f1648a.put("rsquo", 8217);
-            f1648a.put("sbquo", 8218);
-            f1648a.put("ldquo", 8220);
-            f1648a.put("rdquo", 8221);
-            f1648a.put("bdquo", 8222);
-            f1648a.put("dagger", 8224);
-            f1648a.put("Dagger", 8225);
-            f1648a.put("permil", 8240);
-            f1648a.put("lsaquo", 8249);
-            f1648a.put("rsaquo", 8250);
-            f1648a.put("euro", 8364);
+             htmlTags = new HashMap<>(252);
+            
+            htmlTags.put("quot", 34);
+            htmlTags.put("amp", 38);
+            htmlTags.put("lt", 60);
+            htmlTags.put("gt", 62);
+            htmlTags.put("nbsp", 160);
+            htmlTags.put("iexcl", 161);
+            htmlTags.put("cent", 162);
+            htmlTags.put("pound", 163);
+            htmlTags.put("curren", 164);
+            htmlTags.put("yen", 165);
+            htmlTags.put("brvbar", 166);
+            htmlTags.put("sect", 167);
+            htmlTags.put("uml", 168);
+            htmlTags.put("copy", 169);
+            htmlTags.put("ordf", 170);
+            htmlTags.put("laquo", 171);
+            htmlTags.put("not", 172);
+            htmlTags.put("shy", 173);
+            htmlTags.put("reg", 174);
+            htmlTags.put("macr", 175);
+            htmlTags.put("deg", 176);
+            htmlTags.put("plusmn", 177);
+            htmlTags.put("sup2", 178);
+            htmlTags.put("sup3", 179);
+            htmlTags.put("acute", 180);
+            htmlTags.put("micro", 181);
+            htmlTags.put("para", 182);
+            htmlTags.put("middot", 183);
+            htmlTags.put("cedil", 184);
+            htmlTags.put("sup1", 185);
+            htmlTags.put("ordm", 186);
+            htmlTags.put("raquo", 187);
+            htmlTags.put("frac14", 188);
+            htmlTags.put("frac12", 189);
+            htmlTags.put("frac34", 190);
+            htmlTags.put("iquest", 191);
+            htmlTags.put("Agrave", 192);
+            htmlTags.put("Aacute", 193);
+            htmlTags.put("Acirc", 194);
+            htmlTags.put("Atilde", 195);
+            htmlTags.put("Auml", 196);
+            htmlTags.put("Aring", 197);
+            htmlTags.put("AElig", 198);
+            htmlTags.put("Ccedil", 199);
+            htmlTags.put("Egrave", 200);
+            htmlTags.put("Eacute", 201);
+            htmlTags.put("Ecirc", 202);
+            htmlTags.put("Euml", 203);
+            htmlTags.put("Igrave", 204);
+            htmlTags.put("Iacute", 205);
+            htmlTags.put("Icirc", 206);
+            htmlTags.put("Iuml", 207);
+            htmlTags.put("ETH", 208);
+            htmlTags.put("Ntilde", 209);
+            htmlTags.put("Ograve", 210);
+            htmlTags.put("Oacute", 211);
+            htmlTags.put("Ocirc", 212);
+            htmlTags.put("Otilde", 213);
+            htmlTags.put("Ouml", 214);
+            htmlTags.put("times", 215);
+            htmlTags.put("Oslash", 216);
+            htmlTags.put("Ugrave", 217);
+            htmlTags.put("Uacute", 218);
+            htmlTags.put("Ucirc", 219);
+            htmlTags.put("Uuml", 220);
+            htmlTags.put("Yacute", 221);
+            htmlTags.put("THORN", 222);
+            htmlTags.put("szlig", 223);
+            htmlTags.put("agrave", 224);
+            htmlTags.put("aacute", 225);
+            htmlTags.put("acirc", 226);
+            htmlTags.put("atilde", 227);
+            htmlTags.put("auml", 228);
+            htmlTags.put("aring", 229);
+            htmlTags.put("aelig", 230);
+            htmlTags.put("ccedil", 231);
+            htmlTags.put("egrave", 232);
+            htmlTags.put("eacute", 233);
+            htmlTags.put("ecirc", 234);
+            htmlTags.put("euml", 235);
+            htmlTags.put("igrave", 236);
+            htmlTags.put("iacute", 237);
+            htmlTags.put("icirc", 238);
+            htmlTags.put("iuml", 239);
+            htmlTags.put("eth", 240);
+            htmlTags.put("ntilde", 241);
+            htmlTags.put("ograve", 242);
+            htmlTags.put("oacute", 243);
+            htmlTags.put("ocirc", 244);
+            htmlTags.put("otilde", 245);
+            htmlTags.put("ouml", 246);
+            htmlTags.put("divide", 247);
+            htmlTags.put("oslash", 248);
+            htmlTags.put("ugrave", 249);
+            htmlTags.put("uacute", 250);
+            htmlTags.put("ucirc", 251);
+            htmlTags.put("uuml", 252);
+            htmlTags.put("yacute", 253);
+            htmlTags.put("thorn", 254);
+            htmlTags.put("yuml", 255);
+            htmlTags.put("fnof", 402);
+            htmlTags.put("Alpha", 913);
+            htmlTags.put("Beta", 914);
+            htmlTags.put("Gamma", 915);
+            htmlTags.put("Delta", 916);
+            htmlTags.put("Epsilon", 917);
+            htmlTags.put("Zeta", 918);
+            htmlTags.put("Eta", 919);
+            htmlTags.put("Theta", 920);
+            htmlTags.put("Iota", 921);
+            htmlTags.put("Kappa", 922);
+            htmlTags.put("Lambda", 923);
+            htmlTags.put("Mu", 924);
+            htmlTags.put("Nu", 925);
+            htmlTags.put("Xi", 926);
+            htmlTags.put("Omicron", 927);
+            htmlTags.put("Pi", 928);
+            htmlTags.put("Rho", 929);
+            htmlTags.put("Sigma", 931);
+            htmlTags.put("Tau", 932);
+            htmlTags.put("Upsilon", 933);
+            htmlTags.put("Phi", 934);
+            htmlTags.put("Chi", 935);
+            htmlTags.put("Psi", 936);
+            htmlTags.put("Omega", 937);
+            htmlTags.put("alpha", 945);
+            htmlTags.put("beta", 946);
+            htmlTags.put("gamma", 947);
+            htmlTags.put("delta", 948);
+            htmlTags.put("epsilon", 949);
+            htmlTags.put("zeta", 950);
+            htmlTags.put("eta", 951);
+            htmlTags.put("theta", 952);
+            htmlTags.put("iota", 953);
+            htmlTags.put("kappa", 954);
+            htmlTags.put("lambda", 955);
+            htmlTags.put("mu", 956);
+            htmlTags.put("nu", 957);
+            htmlTags.put("xi", 958);
+            htmlTags.put("omicron", 959);
+            htmlTags.put("pi", 960);
+            htmlTags.put("rho", 961);
+            htmlTags.put("sigmaf", 962);
+            htmlTags.put("sigma", 963);
+            htmlTags.put("tau", 964);
+            htmlTags.put("upsilon", 965);
+            htmlTags.put("phi", 966);
+            htmlTags.put("chi", 967);
+            htmlTags.put("psi", 968);
+            htmlTags.put("omega", 969);
+            htmlTags.put("thetasym", 977);
+            htmlTags.put("upsih", 978);
+            htmlTags.put("piv", 982);
+            htmlTags.put("bull", 8226);
+            htmlTags.put("hellip", 8230);
+            htmlTags.put("prime", 8242);
+            htmlTags.put("Prime", 8243);
+            htmlTags.put("oline", 8254);
+            htmlTags.put("frasl", 8260);
+            htmlTags.put("weierp", 8472);
+            htmlTags.put("image", 8465);
+            htmlTags.put("real", 8476);
+            htmlTags.put("trade", 8482);
+            htmlTags.put("alefsym", 8501);
+            htmlTags.put("larr", 8592);
+            htmlTags.put("uarr", 8593);
+            htmlTags.put("rarr", 8594);
+            htmlTags.put("darr", 8595);
+            htmlTags.put("harr", 8596);
+            htmlTags.put("crarr", 8629);
+            htmlTags.put("lArr", 8656);
+            htmlTags.put("uArr", 8657);
+            htmlTags.put("rArr", 8658);
+            htmlTags.put("dArr", 8659);
+            htmlTags.put("hArr", 8660);
+            htmlTags.put("forall", 8704);
+            htmlTags.put("part", 8706);
+            htmlTags.put("exist", 8707);
+            htmlTags.put("empty", 8709);
+            htmlTags.put("nabla", 8711);
+            htmlTags.put("isin", 8712);
+            htmlTags.put("notin", 8713);
+            htmlTags.put("ni", 8715);
+            htmlTags.put("prod", 8719);
+            htmlTags.put("sum", 8721);
+            htmlTags.put("minus", 8722);
+            htmlTags.put("lowast", 8727);
+            htmlTags.put("radic", 8730);
+            htmlTags.put("prop", 8733);
+            htmlTags.put("infin", 8734);
+            htmlTags.put("ang", 8736);
+            htmlTags.put("and", 8743);
+            htmlTags.put("or", 8744);
+            htmlTags.put("cap", 8745);
+            htmlTags.put("cup", 8746);
+            htmlTags.put("int", 8747);
+            htmlTags.put("there4", 8756);
+            htmlTags.put("sim", 8764);
+            htmlTags.put("cong", 8773);
+            htmlTags.put("asymp", 8776);
+            htmlTags.put("ne", 8800);
+            htmlTags.put("equiv", 8801);
+            htmlTags.put("le", 8804);
+            htmlTags.put("ge", 8805);
+            htmlTags.put("sub", 8834);
+            htmlTags.put("sup", 8835);
+            htmlTags.put("sube", 8838);
+            htmlTags.put("supe", 8839);
+            htmlTags.put("oplus", 8853);
+            htmlTags.put("otimes", 8855);
+            htmlTags.put("perp", 8869);
+            htmlTags.put("sdot", 8901);
+            htmlTags.put("lceil", 8968);
+            htmlTags.put("rceil", 8969);
+            htmlTags.put("lfloor", 8970);
+            htmlTags.put("rfloor", 8971);
+            htmlTags.put("lang", 9001);
+            htmlTags.put("rang", 9002);
+            htmlTags.put("loz", 9674);
+            htmlTags.put("spades", 9824);
+            htmlTags.put("clubs", 9827);
+            htmlTags.put("hearts", 9829);
+            htmlTags.put("diams", 9830);
+            htmlTags.put("OElig", 338);
+            htmlTags.put("oelig", 339);
+            htmlTags.put("Scaron", 352);
+            htmlTags.put("scaron", 353);
+            htmlTags.put("Yuml", 376);
+            htmlTags.put("circ", 710);
+            htmlTags.put("tilde", 732);
+            htmlTags.put("ensp", 8194);
+            htmlTags.put("emsp", 8195);
+            htmlTags.put("thinsp", 8201);
+            htmlTags.put("zwnj", 8204);
+            htmlTags.put("zwj", 8205);
+            htmlTags.put("lrm", 8206);
+            htmlTags.put("rlm", 8207);
+            htmlTags.put("ndash", 8211);
+            htmlTags.put("mdash", 8212);
+            htmlTags.put("lsquo", 8216);
+            htmlTags.put("rsquo", 8217);
+            htmlTags.put("sbquo", 8218);
+            htmlTags.put("ldquo", 8220);
+            htmlTags.put("rdquo", 8221);
+            htmlTags.put("bdquo", 8222);
+            htmlTags.put("dagger", 8224);
+            htmlTags.put("Dagger", 8225);
+            htmlTags.put("permil", 8240);
+            htmlTags.put("lsaquo", 8249);
+            htmlTags.put("rsaquo", 8250);
+            htmlTags.put("euro", 8364);
         }
 
         static int m643a() {
-            Integer num = f1648a.get(f1649b.toString());
+            Integer num = htmlTags.get(f1649b.toString());
             if (num != null) {
                 return num;
             }
             return -1;
         }
 
-        public static int m642b(String str) {
-            Integer num = f1648a.get(str);
+        public static int getHtmlCode(String str) {
+            Integer num = htmlTags.get(str);
             if (num != null) {
                 return num;
             }
@@ -596,7 +598,7 @@ public class Util {
             }
         }
 
-        public static String m640d(String str) {
+        public static String urlDecode(String str) {
             try {
                 String decode = URLDecoder.decode(str, "windows-1251");
                 if (-1 != decode.indexOf(65533)) {
@@ -663,22 +665,22 @@ public class Util {
         return new StaticLayout(str, textPaint, i, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, true).getHeight();
     }
 
-    public static int m671c() {
+    public static int getAndIncrement() {
         return f1625c.getAndIncrement();
     }
 
     @SuppressLint("DefaultLocale")
-    public static String formatFileSize(long j) {
-        if (j > 1048576) {
-            double d = (double) j;
+    public static String formatFileSize(long size) {
+        if (size > 1048576) {
+            double d = (double) size;
             Double.isNaN(d);
             return String.format("%.2f МБ", d / 1048576.0d);
-        } else if (j > 1024) {
-            double d2 = (double) j;
+        } else if (size > 1024) {
+            double d2 = (double) size;
             Double.isNaN(d2);
             return String.format("%.2f КБ", d2 / 1024.0d);
         } else {
-            return j + " Б";
+            return size + " Б";
         }
     }
 
@@ -809,8 +811,8 @@ public class Util {
     }
 
     static class SmileClass {
-        static List<SmileClass> smilesList = new Vector(200);
-        String f1654a;
+        static List<SmileClass> smilesList = new ArrayList<SmileClass>(200);
+        String code;
         int f1655b;
         int f1656c;
         int f1657d;
@@ -821,8 +823,8 @@ public class Util {
         char f1662i;
         char f1663j;
 
-        SmileClass(String str, int i, int i2, int i3, String str2, int i4, int i5, boolean z) {
-            this.f1654a = str;
+        SmileClass(String code, int i, int i2, int i3, String str2, int i4, int i5, boolean z) {
+            this.code = code;
             this.f1655b = i;
             this.f1656c = i2;
             this.f1657d = i3;
@@ -830,12 +832,12 @@ public class Util {
             this.f1659f = i4;
             this.f1660g = i5;
             this.f1661h = z;
-            this.f1662i = str.charAt(0);
-            this.f1663j = str.charAt(1);
+            this.f1662i = code.charAt(0);
+            this.f1663j = code.charAt(1);
         }
 
-        static void addSmile(SmileClass mVar) {
-            smilesList.add(mVar);
+        static void addSmile(SmileClass smile) {
+            smilesList.add(smile);
         }
 
         public static void initSmiles() {
@@ -1023,8 +1025,8 @@ public class Util {
             addSmile(new SmileClass("&#64;}-&#39;-,-", R.drawable.st_give_rose_012, 25, 24, "give_rose", 27, 25, true));
         }
 
-        SmileClass(String str, int i, int i2, int i3) {
-            this(str, i, i2, i3, null, 0, 0, false);
+        SmileClass(String code, int resId, int i2, int i3) {
+            this(code, resId, i2, i3, null, 0, 0, false);
         }
     }
 }

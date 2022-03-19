@@ -102,7 +102,7 @@ public class Widgets$ScrollingEditText extends EditText {
                         Matcher matcher = Widgets$ScrollingEditText.f909d.matcher(text.subSequence(lineStart, layout.getLineEnd(Math.min(lineCount - 1, i2 + 5))));
                         while (matcher.find()) {
                             String group = matcher.group(i);
-                            text.setSpan(new C0244e(group, matcher.group(1) != null, false, Skin.C0353a.f1360P), matcher.start(0) + lineStart, matcher.end(0) + lineStart, 33);
+                            text.setSpan(new C0244e(group, matcher.group(1) != null, false, Skin.SkinColorModel.f1360P), matcher.start(0) + lineStart, matcher.end(0) + lineStart, 33);
                             String group2 = matcher.group(3);
                             if (group2 != null) {
                                 int start = matcher.start(3);
@@ -123,9 +123,9 @@ public class Widgets$ScrollingEditText extends EditText {
                                             } else if (z) {
                                                 i6++;
                                             }
-                                            int i7 = Skin.C0353a.f1362R;
+                                            int i7 = Skin.SkinColorModel.f1362R;
                                             if (!group.equalsIgnoreCase("color") || group.equalsIgnoreCase("background")) {
-                                                i7 = Util.C0424f.m646c(group2.substring(i6, indexOf), Skin.C0353a.f1365U);
+                                                i7 = Util.C0424f.m646c(group2.substring(i6, indexOf), Skin.SkinColorModel.mainTextColor);
                                             }
                                             int i8 = lineStart + start;
                                             text.setSpan(new C0244e(null, false, true, i7), i6 + i8, i8 + indexOf, 33);
@@ -137,10 +137,10 @@ public class Widgets$ScrollingEditText extends EditText {
                                         indexOf = group2.indexOf(charAt, (!z ? 1 : 0) + i6);
                                         if (-1 != indexOf) {
                                         }
-                                        int i72 = Skin.C0353a.f1362R;
+                                        int i72 = Skin.SkinColorModel.f1362R;
                                         if (!group.equalsIgnoreCase("color")) {
                                         }
-                                        i72 = Util.C0424f.m646c(group2.substring(i6, indexOf), Skin.C0353a.f1365U);
+                                        i72 = Util.C0424f.m646c(group2.substring(i6, indexOf), Skin.SkinColorModel.mainTextColor);
                                         int i82 = lineStart + start;
                                         text.setSpan(new C0244e(null, false, true, i72), i6 + i82, i82 + indexOf, 33);
                                         i5 = indexOf;
@@ -312,7 +312,7 @@ public class Widgets$ScrollingEditText extends EditText {
             }
             if (i4 >= 0) {
                 if (this.f911b == null) {
-                    this.f911b = new BackgroundColorSpan(Skin.C0353a.f1361Q);
+                    this.f911b = new BackgroundColorSpan(Skin.SkinColorModel.f1361Q);
                 }
                 text.setSpan(this.f911b, i4, i6, 33);
             }

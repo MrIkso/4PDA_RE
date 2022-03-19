@@ -848,7 +848,7 @@ public class ImageDialog extends Dialog {
         this.f656m = new RunnableC0162b();
         this.f644a = mainActivity;
         this.f645b = (ImageDialogLayout) mainActivity.getLayoutInflater().inflate(R.layout.image_gallary, (ViewGroup) null, false);
-        getWindow().setBackgroundDrawable(mainActivity.skin.m736f(R.color.image_gallary_bg));
+        getWindow().setBackgroundDrawable(mainActivity.skin.getSkinDrawable(R.color.image_gallary_bg));
         ImageDialogLayout imageDialogLayout = this.f645b;
         imageDialogLayout.f685k = new RunnableC0165d();
         imageDialogLayout.f687m = this.f648e;
@@ -981,7 +981,7 @@ public class ImageDialog extends Dialog {
         this.f656m = new RunnableC0162b();
         this.f644a = mainActivity;
         this.f645b = (ImageDialogLayout) mainActivity.getLayoutInflater().inflate(R.layout.dlg_guide, (ViewGroup) null, false);
-        getWindow().setBackgroundDrawable(mainActivity.skin.m736f(R.color.guide_gallary_bg));
+        getWindow().setBackgroundDrawable(mainActivity.skin.getSkinDrawable(R.color.guide_gallary_bg));
         ImageDialogLayout imageDialogLayout = this.f645b;
         imageDialogLayout.f685k = new RunnableC0166e();
         imageDialogLayout.f687m = this.f650g;

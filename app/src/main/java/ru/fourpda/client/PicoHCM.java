@@ -30,7 +30,7 @@ import org.json.JSONObject;
 public class PicoHCM {
     private static final char[] f1106k = "0123456789ABCDEF".toCharArray();
     private final Context f1107a;
-    private final String f1108b;
+    private final String appId;
     private IBinder f1114h;
     private boolean f1113g = false;
     private int f1115i = 1;
@@ -113,7 +113,7 @@ public class PicoHCM {
                     Bundle bundle = new Bundle();
                     bundle.putInt("apiLevel", 0);
                     PicoHCM.this.m803A(bundle, "apiNameList", new String[]{"HuaweiPush.API", "Core.API"});
-                    bundle.putString("appId", PicoHCM.this.f1108b);
+                    bundle.putString("appId", PicoHCM.this.appId);
                     bundle.putString("packageName", PicoHCM.this.f1107a.getPackageName());
                     bundle.putInt("sdkVersion", 40000300);
                     bundle.putString("sessionId", PicoHCM.this.f1116j);
@@ -265,7 +265,7 @@ public class PicoHCM {
 
     public PicoHCM(Context context, String str) {
         this.f1107a = context;
-        this.f1108b = str;
+        this.appId = str;
     }
 
     private static String m788o(byte[] bArr) {
@@ -484,7 +484,7 @@ public class PicoHCM {
         boolean contains = sharedPreferences.contains("hasRequestAgreement");
         Bundle bundle = new Bundle();
         bundle.putString("aaid", m786q());
-        bundle.putString("appId", this.f1108b);
+        bundle.putString("appId", this.appId);
         bundle.putBoolean("firstTime", !contains);
         bundle.putString("packageName", this.f1107a.getPackageName());
         bundle.putString("scope", "HCM");

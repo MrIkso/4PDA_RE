@@ -372,7 +372,7 @@ public class AttachDialog implements MainActivity.AbstractC0193g0 {
         TextView textView = new TextView(this.f1854b);
         textView.setId(R.id.captionID);
         textView.setText("Вложения");
-        textView.setTextColor(Skin.C0353a.f1365U);
+        textView.setTextColor(Skin.SkinColorModel.mainTextColor);
         textView.setSingleLine(true);
         textView.setTextSize(22.0f);
         textView.setTypeface(null, 1);
@@ -383,7 +383,7 @@ public class AttachDialog implements MainActivity.AbstractC0193g0 {
         layoutParams.addRule(9);
         View view = new View(this.f1854b);
         view.setClickable(true);
-        view.setBackgroundDrawable(this.f1854b.skin.m736f(R.drawable.add_attach));
+        view.setBackgroundDrawable(this.f1854b.skin.getSkinDrawable(R.drawable.add_attach));
         view.setOnClickListener(new View$OnClickListenerC0551c());
         relativeLayout.addView(view);
         RelativeLayout.LayoutParams layoutParams2 = (RelativeLayout.LayoutParams) view.getLayoutParams();
@@ -398,18 +398,18 @@ public class AttachDialog implements MainActivity.AbstractC0193g0 {
         this.f1857e = linearLayout2;
         linearLayout2.setOrientation(1);
         scrollView.addView(this.f1857e);
-        Dialog dialog = new Dialog(this.f1854b, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+        Dialog dialog = new Dialog(this.f1854b, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
         this.f1853a = dialog;
         dialog.setContentView(linearLayout);
         this.f1853a.setCanceledOnTouchOutside(true);
         this.f1853a.getWindow().setLayout(-1, -2);
-        this.f1853a.getWindow().setBackgroundDrawable(this.f1854b.skin.m736f(R.drawable.np_dialog));
+        this.f1853a.getWindow().setBackgroundDrawable(this.f1854b.skin.getSkinDrawable(R.drawable.np_dialog));
         this.f1853a.setOnDismissListener(new DialogInterface$OnDismissListenerC0552d());
     }
 
     private void m591m(View view) {
         TextView textView = (TextView) view.findViewById(R.id.captionID);
-        textView.setTextColor(Skin.C0353a.f1384g0);
+        textView.setTextColor(Skin.SkinColorModel.linkColor);
         textView.setClickable(true);
     }
 
@@ -421,7 +421,7 @@ public class AttachDialog implements MainActivity.AbstractC0193g0 {
     }
 
     public static void m585s(MainActivity mainActivity) {
-        if (!Prefs.f1153N) {
+        if (!Prefs.uploadChooser) {
             try {
                 Intent intent = new Intent("android.intent.action.GET_CONTENT");
                 intent.putExtra("android.intent.extra.ALLOW_MULTIPLE", true);
@@ -496,7 +496,7 @@ public class AttachDialog implements MainActivity.AbstractC0193g0 {
     Util.C0428i<View, View> m601a(C0553e eVar, int i, boolean z) {
         View view = i > 0 ? new View(this.f1854b) : null;
         if (view != null) {
-            view.setBackgroundColor(this.f1854b.skin.m738d(R.color.border_line));
+            view.setBackgroundColor(this.f1854b.skin.getSkinColor(R.color.border_line));
             this.f1857e.addView(view);
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) view.getLayoutParams();
             layoutParams.width = -1;
@@ -509,9 +509,9 @@ public class AttachDialog implements MainActivity.AbstractC0193g0 {
         TextView textView = new TextView(this.f1854b);
         textView.setText(z ? eVar.f1869a : "загрузка...");
         if (z) {
-            textView.setTextColor(Skin.C0353a.f1384g0);
+            textView.setTextColor(Skin.SkinColorModel.linkColor);
         } else {
-            textView.setTextColor(Skin.C0353a.f1386h0);
+            textView.setTextColor(Skin.SkinColorModel.labelTextCsl);
         }
         textView.setTextSize(16.0f);
         textView.setOnClickListener(new View$OnClickListenerC0548a(eVar));
@@ -530,7 +530,7 @@ public class AttachDialog implements MainActivity.AbstractC0193g0 {
         layoutParams2.addRule(0, R.id.removeID);
         View view2 = new View(this.f1854b);
         view2.setClickable(true);
-        view2.setBackgroundDrawable(this.f1854b.skin.m736f(R.drawable.button_remove));
+        view2.setBackgroundDrawable(this.f1854b.skin.getSkinDrawable(R.drawable.button_remove));
         view2.setId(R.id.removeID);
         view2.setOnClickListener(new View$OnClickListenerC0549b(eVar, relativeLayout, view));
         view2.setEnabled(true);
@@ -554,14 +554,14 @@ public class AttachDialog implements MainActivity.AbstractC0193g0 {
         layoutParams4.rightMargin = (int) (this.f1854b.f731b * 12.0f);
         View view3 = new View(this.f1854b);
         view3.setId(R.id.progressBlueID);
-        view3.setBackgroundColor(this.f1854b.skin.m738d(R.color.progress_done));
+        view3.setBackgroundColor(this.f1854b.skin.getSkinColor(R.color.progress_done));
         linearLayout.addView(view3);
         LinearLayout.LayoutParams layoutParams5 = (LinearLayout.LayoutParams) view3.getLayoutParams();
         layoutParams5.width = -1;
         layoutParams5.height = (int) (this.f1854b.f731b * 3.0f);
         View view4 = new View(this.f1854b);
         view4.setId(R.id.progressWhiteID);
-        view4.setBackgroundColor(this.f1854b.skin.m738d(R.color.progress_all));
+        view4.setBackgroundColor(this.f1854b.skin.getSkinColor(R.color.progress_all));
         linearLayout.addView(view4);
         LinearLayout.LayoutParams layoutParams6 = (LinearLayout.LayoutParams) view4.getLayoutParams();
         layoutParams6.width = -1;

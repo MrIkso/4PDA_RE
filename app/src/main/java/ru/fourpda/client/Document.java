@@ -14,6 +14,7 @@ class Document {
     protected DocumentData data;
 
     public static class DocumentData extends Vector<Object> {
+		
     }
 
     public Document() {

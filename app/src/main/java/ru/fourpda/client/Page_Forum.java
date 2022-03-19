@@ -77,7 +77,7 @@ public class Page_Forum extends Page implements BBDisplay.IBBDisplayCallback {
                 int i2 = cVar2.f2512b;
                 Page_Forum g0Var = Page_Forum.this;
                 if (i2 == g0Var.forumNumber && g0Var.pageNumber == 0) {
-                    if (Prefs.f1141B) {
+                    if (Prefs.autoRefresh) {
                         g0Var.f1527T = true;
                         if (g0Var.isCurrentTab() && Page_Forum.this.tab.m717i()) {
                             Page_Forum g0Var2 = Page_Forum.this;
@@ -99,7 +99,7 @@ public class Page_Forum extends Page implements BBDisplay.IBBDisplayCallback {
                         break;
                     }
                     if (g0Var3.f1516I.getDocument(i3).getInt(0).intValue() == cVar2.f2512b) {
-                        if (Prefs.f1141B) {
+                        if (Prefs.autoRefresh) {
                             Page_Forum g0Var4 = Page_Forum.this;
                             g0Var4.f1527T = true;
                             if (g0Var4.isCurrentTab() && Page_Forum.this.tab.m717i()) {
@@ -193,7 +193,7 @@ public class Page_Forum extends Page implements BBDisplay.IBBDisplayCallback {
                 Page_Forum.this.tabReload();
             } else if (i3 == 5) {
                 MainActivity mainActivity = Page_Forum.this.mainActivity;
-                Urls2.m676g(mainActivity, "https://4pda.ru/" + Page_Forum.this.getLink());
+                Urls2.visitPage(mainActivity, "https://4pda.ru/" + Page_Forum.this.getLink());
             } else if (i3 == 4) {
                 DocumentManager.getResultRequest(new CreateForumTopicRequest());
             } else if (i3 == 3) {
@@ -209,7 +209,7 @@ public class Page_Forum extends Page implements BBDisplay.IBBDisplayCallback {
                         z = false;
                     }
                     Page_Forum g0Var2 = Page_Forum.this;
-                    API.ForumModifyRequest.m821p(g0Var2.forumNumber, null, 21, 8, z ? 8 : 0, g0Var2, "обновление подписки", "", new RunnableC0382a(z));
+                    API.ForumModifyRequest.modifyForum(g0Var2.forumNumber, null, 21, 8, z ? 8 : 0, g0Var2, "обновление подписки", "", new RunnableC0382a(z));
                 } else if (i3 == 6) {
                     Page_Forum.f1507b0.remove(Integer.valueOf(Page_Forum.this.forumNumber));
                     Page_Forum.this.m704e0();
@@ -296,14 +296,14 @@ public class Page_Forum extends Page implements BBDisplay.IBBDisplayCallback {
                     if (i3 != 1) {
                         z = false;
                     }
-                    API.ForumModifyRequest.m821p(intValue, null, 21, 8, z ? 8 : 0, Page_Forum.this, "обновление подписки", "", new RunnableC0386a(this, uVar, z));
+                    API.ForumModifyRequest.modifyForum(intValue, null, 21, 8, z ? 8 : 0, Page_Forum.this, "обновление подписки", "", new RunnableC0386a(this, uVar, z));
                 } else if (i3 == 34) {
                     DocumentManager.getResultRequest(new API.ForumGetTopicsRequest(intValue, Page_Forum.this.mainActivity));
                 } else if (i3 == 8) {
                     MainActivity mainActivity = Page_Forum.this.mainActivity;
                     Util.copyToClipboard(mainActivity, "https://4pda.ru/forum/index.php?showforum=" + intValue, "Ссылка скопирована");
                 } else if (i3 == 33) {
-                    API.ForumModifyRequest.m821p(intValue, null, 21, 32, 0, Page_Forum.this, "отметка прочтения", "", new RunnableC0387b(uVar));
+                    API.ForumModifyRequest.modifyForum(intValue, null, 21, 32, 0, Page_Forum.this, "отметка прочтения", "", new RunnableC0387b(uVar));
                 }
             }
         }
@@ -500,7 +500,7 @@ public class Page_Forum extends Page implements BBDisplay.IBBDisplayCallback {
                     if (i != 0) {
                         int i2 = this.f1564b;
                         boolean checked = this.f1563a.checkboxTextView.getChecked();
-                        API.ForumModifyRequest.m821p(i2, null, 12, i, checked ? 1 : 0, Page_Forum.this, "перемещение темы", "", null);
+                        API.ForumModifyRequest.modifyForum(i2, null, 12, i, checked ? 1 : 0, Page_Forum.this, "перемещение темы", "", null);
                         return;
                     }
                     Toast.makeText(Page_Forum.this.mainActivity, "Неправильная ссылка", 1).show();
@@ -547,22 +547,22 @@ public class Page_Forum extends Page implements BBDisplay.IBBDisplayCallback {
                     if (i3 != 1) {
                         z2 = false;
                     }
-                    API.ForumModifyRequest.m821p(intValue, null, 11, 8, z2 ? 8 : 0, Page_Forum.this, "обновление подписки", "", new RunnableC0392a(this, uVar, z2));
+                    API.ForumModifyRequest.modifyForum(intValue, null, 11, 8, z2 ? 8 : 0, Page_Forum.this, "обновление подписки", "", new RunnableC0392a(this, uVar, z2));
                 } else if (i3 == 13 || i3 == 14) {
                     if (i3 != 14) {
                         z2 = false;
                     }
-                    API.ForumModifyRequest.m821p(intValue, null, 11, 4, z2 ? 4 : 0, Page_Forum.this, z2 ? "закрытие темы" : "открытие темы", "ВЫПОЛНИТЬ", new RunnableC0393b(uVar, z2));
+                    API.ForumModifyRequest.modifyForum(intValue, null, 11, 4, z2 ? 4 : 0, Page_Forum.this, z2 ? "закрытие темы" : "открытие темы", "ВЫПОЛНИТЬ", new RunnableC0393b(uVar, z2));
                 } else if (i3 == 16 || i3 == 15) {
                     if (i3 != 16) {
                         z2 = false;
                     }
-                    API.ForumModifyRequest.m821p(intValue, null, 11, 2, z2 ? 2 : 0, Page_Forum.this, z2 ? "скрытие темы" : "отображение темы", "ВЫПОЛНИТЬ", new RunnableC0394c(uVar, z2));
+                    API.ForumModifyRequest.modifyForum(intValue, null, 11, 2, z2 ? 2 : 0, Page_Forum.this, z2 ? "скрытие темы" : "отображение темы", "ВЫПОЛНИТЬ", new RunnableC0394c(uVar, z2));
                 } else if (i3 == 11 || i3 == 12) {
                     int i4 = i3 == 11 ? 1 : 0;
-                    API.ForumModifyRequest.m821p(intValue, null, 11, 1, i4, Page_Forum.this, i4 != 0 ? "прикрепление темы" : "открепление темы", "ВЫПОЛНИТЬ", null);
+                    API.ForumModifyRequest.modifyForum(intValue, null, 11, 1, i4, Page_Forum.this, i4 != 0 ? "прикрепление темы" : "открепление темы", "ВЫПОЛНИТЬ", null);
                 } else if (i3 == 4) {
-                    API.ForumModifyRequest.m821p(intValue, null, 14, 0, 0, Page_Forum.this, "удаление темы", "УДАЛИТЬ", null);
+                    API.ForumModifyRequest.modifyForum(intValue, null, 14, 0, 0, Page_Forum.this, "удаление темы", "УДАЛИТЬ", null);
                 } else if (i3 == 17) {
                     DlgSimple q1Var = new DlgSimple(Page_Forum.this.mainActivity, "Введите ссылку на форум", false, null, null);
                     q1Var.checkboxTextView.setText("Оставить ссылку");
@@ -585,7 +585,7 @@ public class Page_Forum extends Page implements BBDisplay.IBBDisplayCallback {
                     }
                     new DlgEditTopic(mainActivity2, intValue, n, c, z, false, false, null, null).show(true, true, true);
                 } else if (i3 == 33) {
-                    API.ForumModifyRequest.m821p(intValue, null, 11, 32, 0, Page_Forum.this, "отметка прочтения", "", new RunnableC0397f(uVar));
+                    API.ForumModifyRequest.modifyForum(intValue, null, 11, 32, 0, Page_Forum.this, "отметка прочтения", "", new RunnableC0397f(uVar));
                 }
             }
         }
@@ -607,7 +607,7 @@ public class Page_Forum extends Page implements BBDisplay.IBBDisplayCallback {
             Document uVar = (Document) Page_Forum.this.getItem(intValue);
             OptionPoupupMenuView o1Var = new OptionPoupupMenuView(Page_Forum.this.mainActivity, new C0391a(), true);
             o1Var.addMenuItem(7, intValue, 21, "Открыть в новой вкладке");
-            int i = Prefs.f1187y;
+            int i = Prefs.topicAction;
             if (i == 0) {
                 o1Var.addMenuItem(7, intValue, 32, "Перейти в конец");
             } else if (i == 1) {
@@ -654,11 +654,11 @@ public class Page_Forum extends Page implements BBDisplay.IBBDisplayCallback {
 
     @SuppressLint("DefaultLocale")
     public Page_Forum(MainActivity mainActivity, int forumNumber, int pageNumber, String str) {
-        super(mainActivity, 29542, new Document(forumNumber, pageNumber, Prefs.f1181s));
+        super(mainActivity, 29542, new Document(forumNumber, pageNumber, Prefs.memberTopicsPerPage));
         this.iconId = R.drawable.ic_nav_forum;
         this.forumNumber = forumNumber;
         this.pageNumber = pageNumber;
-        this.title = TextUtils.isEmpty(str) ? String.format("форум %d: %d(%d)", forumNumber, pageNumber, Prefs.f1181s) : str;
+        this.title = TextUtils.isEmpty(str) ? String.format("форум %d: %d(%d)", forumNumber, pageNumber, Prefs.memberTopicsPerPage) : str;
         this.statusMessage = String.format("Загрузка форума %d", this.forumNumber);
         this.f1523P = new View$OnClickListenerC0383e(this, this);
         this.f1524Q = new View$OnClickListenerC0384f(this);
@@ -789,17 +789,17 @@ public class Page_Forum extends Page implements BBDisplay.IBBDisplayCallback {
 
     @Override
     int mo141P() {
-        return ((this.f1514G - 1) / Prefs.f1181s) + 1;
+        return ((this.f1514G - 1) / Prefs.memberTopicsPerPage) + 1;
     }
 
     @Override
     int mo140Q() {
-        return (this.pageNumber / Prefs.f1181s) + 1;
+        return (this.pageNumber / Prefs.memberTopicsPerPage) + 1;
     }
 
     @Override
     Page mo139R(int i) {
-        return new Page_Forum(this.mainActivity, this.forumNumber, (i - 1) * Prefs.f1181s, this.title);
+        return new Page_Forum(this.mainActivity, this.forumNumber, (i - 1) * Prefs.memberTopicsPerPage, this.title);
     }
 
     @Override
@@ -1022,9 +1022,9 @@ public class Page_Forum extends Page implements BBDisplay.IBBDisplayCallback {
             } else if (intValue == 1) {
                 view = mainActivity.getLayoutInflater().inflate(R.layout.forum_list_sep, viewGroup, false);
                 if (this.f1522O != null) {
-                    view.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.card_sep));
+                    view.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.card_sep));
                 } else {
-                    view.setBackgroundDrawable(Skin.C0353a.f1388i0.getConstantState().newDrawable());
+                    view.setBackgroundDrawable(Skin.SkinColorModel.f1388i0.getConstantState().newDrawable());
                 }
                 int i3 = (int) (f * 16.0f);
                 view.setPadding(i3, i3, i3, (int) (8.0f * f));
@@ -1032,9 +1032,9 @@ public class Page_Forum extends Page implements BBDisplay.IBBDisplayCallback {
             } else if (intValue == 3) {
                 view = mainActivity.getLayoutInflater().inflate(R.layout.forum_list_sep, viewGroup, false);
                 if (this.f1518K > 0 || this.f1522O != null) {
-                    view.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.card_sep));
+                    view.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.card_sep));
                 } else {
-                    view.setBackgroundDrawable(Skin.C0353a.f1388i0.getConstantState().newDrawable());
+                    view.setBackgroundDrawable(Skin.SkinColorModel.f1388i0.getConstantState().newDrawable());
                 }
                 int i4 = (int) (f * 16.0f);
                 view.setPadding(i4, i4, i4, (int) (8.0f * f));
@@ -1042,9 +1042,9 @@ public class Page_Forum extends Page implements BBDisplay.IBBDisplayCallback {
             } else if (intValue == 5) {
                 view = mainActivity.getLayoutInflater().inflate(R.layout.forum_list_sep, viewGroup, false);
                 if (this.f1518K > 0 || this.f1522O != null) {
-                    view.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.card_sep));
+                    view.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.card_sep));
                 } else {
-                    view.setBackgroundDrawable(Skin.C0353a.f1388i0.getConstantState().newDrawable());
+                    view.setBackgroundDrawable(Skin.SkinColorModel.f1388i0.getConstantState().newDrawable());
                 }
                 int i5 = (int) (f * 16.0f);
                 view.setPadding(i5, i5, i5, (int) (8.0f * f));
@@ -1052,16 +1052,16 @@ public class Page_Forum extends Page implements BBDisplay.IBBDisplayCallback {
             } else if (intValue == 6) {
                 view = mainActivity.getLayoutInflater().inflate(R.layout.forum_list_sep, viewGroup, false);
                 if (this.f1518K > 0 || this.f1520M > 0 || this.f1522O != null) {
-                    view.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.card_sep));
+                    view.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.card_sep));
                 } else {
-                    view.setBackgroundDrawable(Skin.C0353a.f1388i0.getConstantState().newDrawable());
+                    view.setBackgroundDrawable(Skin.SkinColorModel.f1388i0.getConstantState().newDrawable());
                 }
                 int i6 = (int) (f * 16.0f);
                 view.setPadding(i6, i6, i6, (int) (8.0f * f));
                 ((TextView) view).setText("Темы");
             } else if (intValue == 8) {
                 view = new View(this.mainActivity);
-                view.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.card_sep));
+                view.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.card_sep));
                 view.setLayoutParams(new AbsListView.LayoutParams(-1, (int) (f * 16.0f)));
             }
             if (intValue != 10) {
@@ -1072,9 +1072,9 @@ public class Page_Forum extends Page implements BBDisplay.IBBDisplayCallback {
                 textView.setTag(i);
                 textView.setOnClickListener(this.f1524Q);
                 textView.setOnLongClickListener(this.f1524Q);
-                textView.setCompoundDrawablesWithIntrinsicBounds((Drawable) null, (Drawable) null, (uVar.getInt(2) & 32) > 0 ? this.mainActivity.skin.m736f(R.drawable.ic_unread) : null, (Drawable) null);
+                textView.setCompoundDrawablesWithIntrinsicBounds((Drawable) null, (Drawable) null, (uVar.getInt(2) & 32) > 0 ? this.mainActivity.skin.getSkinDrawable(R.drawable.ic_unread) : null, (Drawable) null);
                 if (getItemViewType(i + 1) == 2) {
-                    textView.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.border_bottom));
+                    textView.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.border_bottom));
                 } else {
                     textView.setBackgroundResource(0);
                 }
@@ -1086,7 +1086,7 @@ public class Page_Forum extends Page implements BBDisplay.IBBDisplayCallback {
                 textView2.setTag(uVar.getInt(0));
                 textView2.setOnClickListener(this.f1523P);
                 if (getItemViewType(i + 1) == 4) {
-                    textView2.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.border_bottom));
+                    textView2.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.border_bottom));
                 } else {
                     textView2.setBackgroundResource(0);
                 }
@@ -1115,9 +1115,9 @@ public class Page_Forum extends Page implements BBDisplay.IBBDisplayCallback {
                 textView3.setEnabled(z);
                 int itemViewType = getItemViewType(i + 1);
                 if ((uVar.getInt(3) & 2) > 0) {
-                    viewGroup2.setBackgroundColor(Skin.C0353a.f1366V);
+                    viewGroup2.setBackgroundColor(Skin.SkinColorModel.f1366V);
                 } else {
-                    viewGroup2.setBackgroundDrawable(itemViewType == 7 ? this.mainActivity.skin.m736f(R.drawable.border_bottom) : null);
+                    viewGroup2.setBackgroundDrawable(itemViewType == 7 ? this.mainActivity.skin.getSkinDrawable(R.drawable.border_bottom) : null);
                 }
             }
             if (intValue == 9) {

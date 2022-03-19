@@ -86,7 +86,7 @@ public class Urls2 {
             if (TextUtils.isEmpty(this.f1595a.getText().toString()) || TextUtils.isEmpty(this.f1596b.getText().toString())) {
                 Toast.makeText(this.f1597c, "Введите пароль", Toast.LENGTH_SHORT).show();
             } else if (this.f1595a.getText().toString().equals(this.f1596b.getText().toString())) {
-                DocumentManager.getResultRequest(new MainActivity.C0187e0(this.f1597c, 6, Urls2.m674i((String) this.f1598d.get("m")), Urls2.m674i((String) this.f1598d.get("t")), (String) this.f1598d.get("s"), this.f1595a.getText().toString()));
+                DocumentManager.getResultRequest(new MainActivity.MemberAuthorizationRequest(this.f1597c, 6, Urls2.m674i((String) this.f1598d.get("m")), Urls2.m674i((String) this.f1598d.get("t")), (String) this.f1598d.get("s"), this.f1595a.getText().toString()));
             } else {
                 Toast.makeText(this.f1597c, "Новые пароли не совпадают", Toast.LENGTH_SHORT).show();
             }
@@ -201,7 +201,7 @@ public class Urls2 {
         int i8;
         int i9;
         if (is4pdaHost(uri)) {
-            String d = Util.C0427h.m640d(uri.getPath());
+            String d = Util.C0427h.urlDecode(uri.getPath());
             if (!d.startsWith("/")) {
                 d = "/" + d;
             }
@@ -212,8 +212,8 @@ public class Urls2 {
                 for (String str8 : encodedQuery.replace("&amp;", "&").split("&")) {
                     String[] split = str8.split("=");
                     if (split.length == 2) {
-                        String d2 = Util.C0427h.m640d(split[0].trim());
-                        String d3 = Util.C0427h.m640d(split[1].trim());
+                        String d2 = Util.C0427h.urlDecode(split[0].trim());
+                        String d3 = Util.C0427h.urlDecode(split[1].trim());
                         if (treeMap.containsKey(d2)) {
                             treeMap.put(d2, ((String) treeMap.get(d2)) + "," + d3);
                         } else {
@@ -340,7 +340,7 @@ public class Urls2 {
                                                 }
                                             }
                                             int page = m674i((String) treeMap.get("st"));
-                                            int maxPageOnScreen = Prefs.f1179q;
+                                            int maxPageOnScreen = Prefs.memberPostsPerPage;
                                             return new Page_Topic(mainActivity, topicId, (page / maxPageOnScreen) * maxPageOnScreen, i12, 0, null, "");
                                         }
                                         if (str11.equalsIgnoreCase("findpost")) {
@@ -370,7 +370,7 @@ public class Urls2 {
                                             i2 = m674i(actionType);
                                         }
                                         int i15 = m674i((String) treeMap.get("st"));
-                                        int i16 = Prefs.f1181s;
+                                        int i16 = Prefs.memberTopicsPerPage;
                                         return new Page_Forum(mainActivity, i2, (i15 / i16) * i16, null);
                                     } else {
                                         String str13 = (String) treeMap.get("showuser");
@@ -390,7 +390,7 @@ public class Urls2 {
                                         if (!z3) {
                                         }
                                         int i152 = m674i((String) treeMap.get("st"));
-                                        int i162 = Prefs.f1181s;
+                                        int i162 = Prefs.memberTopicsPerPage;
                                         return new Page_Forum(mainActivity, i2, (i152 / i162) * i162, null);
                                     }
                                 } else if (actionType.equalsIgnoreCase("idx")) {
@@ -648,7 +648,7 @@ public class Urls2 {
                                                 actionType = (String) treeMap.get("type");
                                                 if ("newemail".equalsIgnoreCase(actionType)) {
                                                     if (DocumentManager.isLoggined()) {
-                                                        DocumentManager.getResultRequest(new MainActivity.C0187e0(mainActivity, 3, m674i((String) treeMap.get("m")), m674i((String) treeMap.get("t")), (String) treeMap.get("s"), (String) treeMap.get("p")));
+                                                        DocumentManager.getResultRequest(new MainActivity.MemberAuthorizationRequest(mainActivity, 3, m674i((String) treeMap.get("m")), m674i((String) treeMap.get("t")), (String) treeMap.get("s"), (String) treeMap.get("p")));
                                                     } else {
                                                         Toast.makeText(mainActivity, "Вы должны быть авторизованы.", Toast.LENGTH_LONG).show();
                                                     }
@@ -671,7 +671,7 @@ public class Urls2 {
                                                     return null;
                                                 } else if ("reg".equalsIgnoreCase(actionType)) {
                                                     if (DocumentManager.isLoggined()) {
-                                                        DocumentManager.getResultRequest(new MainActivity.C0187e0(mainActivity, 1, m674i((String) treeMap.get("m")), m674i((String) treeMap.get("t")), (String) treeMap.get("s"), ""));
+                                                        DocumentManager.getResultRequest(new MainActivity.MemberAuthorizationRequest(mainActivity, 1, m674i((String) treeMap.get("m")), m674i((String) treeMap.get("t")), (String) treeMap.get("s"), ""));
                                                     } else {
                                                         Toast.makeText(mainActivity, "Вы должны быть авторизованы.", Toast.LENGTH_LONG).show();
                                                     }
@@ -684,7 +684,7 @@ public class Urls2 {
                                                 DocumentManager.initAuthenticate();
                                                 return new Page_Login(mainActivity, true);
                                             } else if ("regrevalidate".equalsIgnoreCase(actionType)) {
-                                                DocumentManager.getResultRequest(new MainActivity.C0187e0(mainActivity, 0, 0, 0, "", ""));
+                                                DocumentManager.getResultRequest(new MainActivity.MemberAuthorizationRequest(mainActivity, 0, 0, 0, "", ""));
                                                 return null;
                                             } else if ("registration".equalsIgnoreCase(actionType)) {
                                                 DocumentManager.initAuthenticate();
@@ -715,7 +715,7 @@ public class Urls2 {
                                                             q1Var2.editText.addTextChangedListener(new C0410d(q1Var2));
                                                             q1Var2.m620f(new View$OnClickListenerC0411e(mainActivity, memberId, equalsIgnoreCase, i20, q1Var2), true);
                                                             q1Var2.show(true, true, true);
-                                                            mainActivity.mainLayout.m859w(q1Var2.editText);
+                                                            mainActivity.mainLayout.hideKeyboard(q1Var2.editText);
                                                             DocumentManager.getResultRequest(new ChangeReputationRequest(memberId, q1Var2));
                                                         }
                                                         return null;
@@ -752,7 +752,7 @@ public class Urls2 {
                                             }
                                             if (actionType.equalsIgnoreCase("zmod") && "update-pinned".equalsIgnoreCase((String) treeMap.get("CODE"))) {
                                                 if (!z) {
-                                                    API.ForumModifyRequest.m821p(m674i((String) treeMap.get("p")), null, 6, 0, 0, mainActivity.mainLayout.tab.page, "поднятие поста в шапку", "ПОДНЯТЬ", new RunnableC0413g(treeMap, mainActivity));
+                                                    API.ForumModifyRequest.modifyForum(m674i((String) treeMap.get("p")), null, 6, 0, 0, mainActivity.mainLayout.tab.page, "поднятие поста в шапку", "ПОДНЯТЬ", new RunnableC0413g(treeMap, mainActivity));
                                                 }
                                                 return null;
                                             }
@@ -769,7 +769,7 @@ public class Urls2 {
                             if (!z3) {
                             }
                             int i1522 = m674i((String) treeMap.get("st"));
-                            int i1622 = Prefs.f1181s;
+                            int i1622 = Prefs.memberTopicsPerPage;
                             return new Page_Forum(mainActivity, i2, (i1522 / i1622) * i1622, null);
                         }
                     }
@@ -784,7 +784,7 @@ public class Urls2 {
             }
         }
         if (!z) {
-            m677f(mainActivity, uri);
+            visitPage(mainActivity, uri);
         }
         return null;
     }
@@ -813,14 +813,14 @@ public class Urls2 {
         return Patterns.EMAIL_ADDRESS.matcher(str).matches();
     }
 
-    static void m677f(Context context, Uri uri) {
-        if (DataDB.m355v(uri.toString().toLowerCase())) {
+    static void visitPage(Context context, Uri uri) {
+        if (DataDB.containsTrackUrls(uri.toString().toLowerCase())) {
             DocumentManager.getResultRequest(new API.ForumLoginAnonymous(uri, context));
             return;
         }
         String host = uri.getHost();
         while (host != null) {
-            if (!DataDB.m355v(host)) {
+            if (!DataDB.containsTrackUrls(host)) {
                 int indexOf = host.indexOf(46);
                 if (indexOf < 0) {
                     break;
@@ -834,10 +834,10 @@ public class Urls2 {
         m675h(context, uri);
     }
 
-    public static void m676g(Context context, String str) {
+    public static void visitPage(Context context, String str) {
         Uri parse;
         if (!TextUtils.isEmpty(str) && (parse = Uri.parse(Util.C0427h.UnEscapeString(str))) != null) {
-            m677f(context, parse);
+            visitPage(context, parse);
         }
     }
 

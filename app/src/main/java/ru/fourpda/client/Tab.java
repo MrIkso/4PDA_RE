@@ -268,13 +268,13 @@ public class Tab extends ViewGroup {
         public ForumsListView(Context context) {
             super(context);
             Resources resources = Tab.this.f1443a.getResources();
-            this.f1481i = Tab.this.f1443a.skin.m736f(R.drawable.scrollbar_handle_accelerated_anim2);
+            this.f1481i = Tab.this.f1443a.skin.getSkinDrawable(R.drawable.scrollbar_handle_accelerated_anim2);
             this.f1483k = resources.getDimensionPixelSize(R.dimen.fastscroll_thumb_width);
             this.f1482j = resources.getDimensionPixelSize(R.dimen.fastscroll_thumb_height);
             C0376b bVar = new C0376b(context);
             this.f1474b = bVar;
             bVar.setLayoutParams(new AbsListView.LayoutParams(-1, Tab.this.mainLayout.f816a.getMeasuredHeight()));
-            this.f1474b.setBackgroundColor(Skin.C0353a.f1367W);
+            this.f1474b.setBackgroundColor(Skin.SkinColorModel.f1367W);
             this.f1475c = this.f1474b.getBackground();
             addHeaderView(this.f1474b, null, false);
             setOnScrollListener(this);
@@ -703,14 +703,14 @@ public class Tab extends ViewGroup {
             Page a0Var;
             MainLayout mainLayout = Tab.this.mainLayout;
             mainLayout.f830m = i + i2 < i3;
-            if (Prefs.f1185w == 0) {
+            if (Prefs.scrollMode == 0) {
                 if ((i == 0) == mainLayout.f829l.isEnabled()) {
                     Tab.this.mainLayout.f829l.setEnabled(i != 0);
                 }
             } else if (mainLayout.f829l.isEnabled()) {
                 Tab.this.mainLayout.f829l.setEnabled(false);
             }
-            if (2 == Prefs.f1185w && (a0Var = this.f1473a) != null) {
+            if (2 == Prefs.scrollMode && (a0Var = this.f1473a) != null) {
                 if (this.f1485m == 0) {
                     if (a0Var.f1071B != null) {
                         int height = getHeight();
@@ -790,13 +790,13 @@ public class Tab extends ViewGroup {
         public void onScrollStateChanged(AbsListView absListView, int i) {
             boolean z = true;
             int i2 = 1;
-            if (1 != Prefs.f1185w) {
+            if (1 != Prefs.scrollMode) {
                 return;
             }
             if (i == 2 && this.f1497y != this.f1496x) {
                 int measuredHeight = getMeasuredHeight() / 2;
                 MainLayout mainLayout = Tab.this.mainLayout;
-                mainLayout.f822e.setImageDrawable(mainLayout.f796D.skin.m736f(this.f1497y > this.f1496x ? R.drawable.ic_scroll_up : R.drawable.ic_scroll_down));
+                mainLayout.f822e.setImageDrawable(mainLayout.f796D.skin.getSkinDrawable(this.f1497y > this.f1496x ? R.drawable.ic_scroll_up : R.drawable.ic_scroll_down));
                 Widgets$CircleImageView widgets$CircleImageView = Tab.this.mainLayout.f822e;
                 if (this.f1497y > this.f1496x) {
                     i2 = 2;
@@ -855,8 +855,8 @@ public class Tab extends ViewGroup {
         textView.setText("Тут ничего нет");
         this.f1454l.setLayoutParams(new ViewGroup.LayoutParams(-1, -1));
         this.f1454l.setGravity(17);
-        this.f1454l.setTextColor(Skin.C0353a.f1386h0);
-        this.f1454l.setBackgroundDrawable(Skin.C0353a.f1388i0.getConstantState().newDrawable());
+        this.f1454l.setTextColor(Skin.SkinColorModel.labelTextCsl);
+        this.f1454l.setBackgroundDrawable(Skin.SkinColorModel.f1388i0.getConstantState().newDrawable());
         this.f1454l.setFocusable(true);
         this.f1454l.setFocusableInTouchMode(true);
         addView(this.f1454l);
@@ -876,13 +876,13 @@ public class Tab extends ViewGroup {
         addView(this.f1456n);
         TextView textView2 = new TextView(this.f1443a);
         this.f1453k = textView2;
-        textView2.setTextColor(Skin.C0353a.f1365U);
+        textView2.setTextColor(Skin.SkinColorModel.mainTextColor);
         this.f1453k.setTextSize(2, 16.0f);
         this.f1453k.setSingleLine();
         this.f1453k.setEllipsize(TextUtils.TruncateAt.END);
         this.f1453k.setLineSpacing(this.mainLayout.f834q * 3.0f, 1.0f);
         this.f1453k.setClickable(false);
-        this.f1453k.setBackgroundDrawable(this.mainLayout.f796D.skin.m736f(R.drawable.nav_item));
+        this.f1453k.setBackgroundDrawable(this.mainLayout.f796D.skin.getSkinDrawable(R.drawable.nav_item));
         this.f1453k.setPadding((int) (this.mainLayout.f833p * 8.0f), 0, 0, 0);
         this.f1453k.setCompoundDrawablePadding((int) (this.mainLayout.f833p * 8.0f));
         this.f1453k.setGravity(19);
@@ -936,7 +936,7 @@ public class Tab extends ViewGroup {
                 this.mainLayout.postDelayed(new RunnableC0369c(), 300);
             }
             if (this.pageList.size() > 0) {
-                if (Prefs.f1186x && this.page.f1078l) {
+                if (Prefs.backButton && this.page.f1078l) {
                     while (this.pageList.size() > 0) {
                         List<Page> list = this.pageList;
                         Page a0Var2 = list.get(list.size() - 1);
@@ -1109,7 +1109,7 @@ public class Tab extends ViewGroup {
             this.f1445c = str;
             this.f1446d = i;
             this.f1453k.setText(str);
-            this.f1453k.setCompoundDrawablesWithIntrinsicBounds(this.mainLayout.f796D.skin.m736f(this.f1446d), (Drawable) null, (Drawable) null, (Drawable) null);
+            this.f1453k.setCompoundDrawablesWithIntrinsicBounds(this.mainLayout.f796D.skin.getSkinDrawable(this.f1446d), (Drawable) null, (Drawable) null, (Drawable) null);
             MainLayout mainLayout = this.mainLayout;
             if (mainLayout.tab == this) {
                 mainLayout.f826i.setText(str);
@@ -1140,7 +1140,7 @@ public class Tab extends ViewGroup {
     protected void onFinishInflate() {
         super.onFinishInflate();
         if (Build.VERSION.SDK_INT < 11) {
-            setBackgroundDrawable(((MainActivity) getContext()).skin.m736f(R.drawable.main_background));
+            setBackgroundDrawable(((MainActivity) getContext()).skin.getSkinDrawable(R.drawable.main_background));
         }
     }
 

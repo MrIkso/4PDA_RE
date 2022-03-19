@@ -104,11 +104,11 @@ public class API {
             if (this.linkUri == null) {
                 Document l = document.getDocument(1);
                 if (l != null) {
-                    DataDB.m354w();
+                    DataDB.deleteTrackUrls();
                     for (int i2 = 0; i2 < l.count(); i2++) {
                         DataDB.m356u(l.getString(i2));
                     }
-                    DataDB.m362o(6, document.getInt(0));
+                    DataDB.makeProps(6, document.getInt(0));
                     return;
                 }
                 return;
@@ -124,7 +124,7 @@ public class API {
 
         @Override
         public Document generate() {
-            return this.linkUri == null ? new Document(DataDB.m363n(6, 0)) : new Document(this.linkUri.toString());
+            return this.linkUri == null ? new Document(DataDB.getPropsId(6, 0)) : new Document(this.linkUri.toString());
         }
 
         public ForumLoginAnonymous() {
@@ -364,61 +364,61 @@ public class API {
     static class LoadForumAttachRequest extends ForumAttachRequest {
         static String f977j;
         static String f978k;
-        MainActivity f979h;
-        String f980i;
+        MainActivity activity;
+        String fileName;
 
         public static class View$OnClickListenerC0263a implements View.OnClickListener {
-            final MainActivity f981a;
+            final MainActivity activity;
 
             View$OnClickListenerC0263a(MainActivity mainActivity) {
-                this.f981a = mainActivity;
+                this.activity = mainActivity;
             }
 
             @Override
             public void onClick(View view) {
-                this.f981a.startActivity(new Intent("android.settings.MANAGE_UNKNOWN_APP_SOURCES").setData(Uri.parse(String.format("package:%s", this.f981a.getPackageName()))));
+                this.activity.startActivity(new Intent("android.settings.MANAGE_UNKNOWN_APP_SOURCES").setData(Uri.parse(String.format("package:%s", this.activity.getPackageName()))));
             }
         }
 
         public static class View$OnClickListenerC0264b implements View.OnClickListener {
-            final MainActivity f982a;
+            final MainActivity activity;
             final String f983b;
             final String f984c;
 
             View$OnClickListenerC0264b(MainActivity mainActivity, String str, String str2) {
-                this.f982a = mainActivity;
+                this.activity = mainActivity;
                 this.f983b = str;
                 this.f984c = str2;
             }
 
             @Override
             public void onClick(View view) {
-                LoadForumAttachRequest.m831p(this.f982a, this.f983b, this.f984c, Boolean.FALSE);
+                LoadForumAttachRequest.downloadFile(this.activity, this.f983b, this.f984c, Boolean.FALSE);
             }
         }
 
         public static class View$OnClickListenerC0265c implements View.OnClickListener {
-            final MainActivity f985a;
+            final MainActivity activity;
             final String f986b;
             final String f987c;
 
             View$OnClickListenerC0265c(MainActivity mainActivity, String str, String str2) {
-                this.f985a = mainActivity;
+                this.activity = mainActivity;
                 this.f986b = str;
                 this.f987c = str2;
             }
 
             @Override
             public void onClick(View view) {
-                LoadForumAttachRequest.m831p(this.f985a, this.f986b, this.f987c, Boolean.TRUE);
+                LoadForumAttachRequest.downloadFile(this.activity, this.f986b, this.f987c, Boolean.TRUE);
             }
         }
 
         public static class View$OnClickListenerC0266d implements View.OnClickListener {
-            final MainActivity f988a;
+            final MainActivity activity;
 
             View$OnClickListenerC0266d(MainActivity mainActivity) {
-                this.f988a = mainActivity;
+                this.activity = mainActivity;
             }
 
             @Override
@@ -426,65 +426,65 @@ public class API {
                 try {
                     Intent intent = new Intent("android.settings.APPLICATION_DETAILS_SETTINGS");
                     intent.setData(Uri.parse("package:com.android.providers.downloads"));
-                    this.f988a.startActivity(intent);
+                    this.activity.startActivity(intent);
                 } catch (ActivityNotFoundException unused) {
-                    this.f988a.startActivity(new Intent("android.settings.MANAGE_APPLICATIONS_SETTINGS"));
+                    this.activity.startActivity(new Intent("android.settings.MANAGE_APPLICATIONS_SETTINGS"));
                 }
             }
         }
 
         public static class View$OnClickListenerC0267e implements View.OnClickListener {
-            final MainActivity f989a;
+            final MainActivity activity;
             final String f990b;
             final String f991c;
 
             View$OnClickListenerC0267e(MainActivity mainActivity, String str, String str2) {
-                this.f989a = mainActivity;
+                this.activity = mainActivity;
                 this.f990b = str;
                 this.f991c = str2;
             }
 
             @Override
             public void onClick(View view) {
-                LoadForumAttachRequest.m831p(this.f989a, this.f990b, this.f991c, Boolean.TRUE);
+                LoadForumAttachRequest.downloadFile(this.activity, this.f990b, this.f991c, Boolean.TRUE);
             }
         }
 
-        public LoadForumAttachRequest(int attachId, MainActivity mainActivity, String str) {
+        public LoadForumAttachRequest(int attachId, MainActivity mainActivity, String fileName) {
             super(attachId);
-            String str2;
-            this.f979h = mainActivity;
-            this.f980i = str;
-            if (str != null) {
-                str2 = "Получение файла " + this.f980i;
+            String message;
+            this.activity = mainActivity;
+            this.fileName = fileName;
+            if (fileName != null) {
+                message = "Получение файла " + this.fileName;
             } else {
-                str2 = String.format("Получение URL изображения %d", this.attachId);
+                message = String.format("Получение URL изображения %d", this.attachId);
             }
-            this.statusMessage = str2;
+            this.statusMessage = message;
         }
 
         @SuppressLint({"NewApi"})
-        static void m831p(MainActivity mainActivity, String str, String str2, Boolean bool) {
+        static void downloadFile(MainActivity mainActivity, String fileName, String fileUrl, Boolean bool) {
             int i = Build.VERSION.SDK_INT;
-            if (str2 == null) {
+            if (fileUrl == null) {
                 //ACRA.getErrorReporter().handleSilentException(new Exception("null attach location."));
                 return;
             }
-            if (i >= 26 && str.toLowerCase().endsWith(".apk") && !mainActivity.getPackageManager().canRequestPackageInstalls()) {
+            if (i >= 26 && fileName.toLowerCase().endsWith(".apk") && !mainActivity.getPackageManager().canRequestPackageInstalls()) {
                 DlgSimple q1Var = new DlgSimple(mainActivity, "Чтобы система разрешила установку этого файла, вам надо разрешить установку файлов, скачанных с 4PDA в настройках.", false, "НАСТРОЙКИ", "ОТМЕНА");
                 q1Var.promtMessage.setTextSize(16.0f);
                 q1Var.editText.setVisibility(View.GONE);
                 q1Var.m620f(new View$OnClickListenerC0263a(mainActivity), true);
                 q1Var.show(true, true, true);
             }
-            if (bool == null ? !Prefs.f1152M : !bool) {
+            if (bool == null ? !Prefs.attachChooser : !bool) {
                 try {
                     int applicationEnabledSetting = mainActivity.getPackageManager().getApplicationEnabledSetting("com.android.providers.downloads");
                     if (applicationEnabledSetting == 2 || applicationEnabledSetting == 3 || applicationEnabledSetting == 4) {
                         DlgSimple q1Var2 = new DlgSimple(mainActivity, "Менеджер загрузок отключен в настройках системы.\n\nНажмите Ок, чтобы попробовать скачать другим приложением.\nНажмите Настройки, чтобы перейти в настройки Менеджера загрузок.", false, null, "Настройки");
                         q1Var2.promtMessage.setTextSize(2, 16.0f);
                         q1Var2.editText.setVisibility(View.GONE);
-                        q1Var2.m620f(new View$OnClickListenerC0265c(mainActivity, str, str2), true);
+                        q1Var2.m620f(new View$OnClickListenerC0265c(mainActivity, fileName, fileUrl), true);
                         q1Var2.m621e(new View$OnClickListenerC0266d(mainActivity), true);
                         q1Var2.show(true, true, true);
                         return;
@@ -494,16 +494,16 @@ public class API {
                 }
                 try {
                     @SuppressLint("WrongConstant") DownloadManager downloadManager = (DownloadManager) mainActivity.getSystemService("download");
-                    String str3 = str2;
+                    String url = fileUrl;
                     boolean z = false;
                     while (true) {
                         try {
-                            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(str3));
-                            request.setTitle(str);
+                            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+                            request.setTitle(fileName);
                             request.setDescription("4PDA");
                             if (!z) {
                                 try {
-                                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, str);
+                                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
                                 } catch (Exception e2) {
                                     e2.printStackTrace();
                                 }
@@ -515,11 +515,11 @@ public class API {
                             if (i < 11) {
                                 BootReceiver.f635a.add(enqueue);
                             }
-                            Toast.makeText(mainActivity, "Загрузка " + str, Toast.LENGTH_LONG).show();
+                            Toast.makeText(mainActivity, "Загрузка " + fileName, Toast.LENGTH_LONG).show();
                             return;
                         } catch (Exception e3) {
-                            if ((e3 instanceof IllegalArgumentException) && str3.startsWith("https:")) {
-                                str3 = "http" + str3.substring(5);
+                            if ((e3 instanceof IllegalArgumentException) && url.startsWith("https:")) {
+                                url = "http" + url.substring(5);
                             } else if (!z) {
                                 z = true;
                             } else {
@@ -534,12 +534,12 @@ public class API {
                     DlgSimple q1Var3 = new DlgSimple(mainActivity, "При запросе к системному загрузчику произошла ошибка " + e4.getClass().getCanonicalName() + ".\n\nНажмите Ок, чтобы выбрать сторонний загрузчик или Отмена, чтобы отказаться от загрузки.", false, null, null);
                     q1Var3.promtMessage.setTextSize(2, 16.0f);
                     q1Var3.editText.setVisibility(View.GONE);
-                    q1Var3.m620f(new View$OnClickListenerC0267e(mainActivity, str, str2), true);
+                    q1Var3.m620f(new View$OnClickListenerC0267e(mainActivity, fileName, fileUrl), true);
                     q1Var3.show(true, true, true);
                 }
             } else {
                 try {
-                    mainActivity.startActivity(Intent.createChooser(new Intent("android.intent.action.VIEW", Uri.parse(str2)), "Загрузить с помощью"));
+                    mainActivity.startActivity(Intent.createChooser(new Intent("android.intent.action.VIEW", Uri.parse(fileUrl)), "Загрузить с помощью"));
                 } catch (Exception e5) {
                     //ACRA.getErrorReporter().putCustomData("extra", str2);
                     //ACRA.getErrorReporter().handleSilentException(new Exception("MA Attach Chooser", e5));
@@ -547,44 +547,44 @@ public class API {
                     DlgSimple q1Var4 = new DlgSimple(mainActivity, "При выборе внешнего загрузчика произошла ошибка " + e5.getClass().getCanonicalName() + ".\n\nНажмите Ок, чтобы скачать системным загрузчиком или Отмена, чтобы отказаться от загрузки.", false, null, null);
                     q1Var4.promtMessage.setTextSize(2, 16.0f);
                     q1Var4.editText.setVisibility(View.GONE);
-                    q1Var4.m620f(new View$OnClickListenerC0264b(mainActivity, str, str2), true);
+                    q1Var4.m620f(new View$OnClickListenerC0264b(mainActivity, fileName, fileUrl), true);
                     q1Var4.show(true, true, true);
                 }
             }
         }
 
-        public static void m830q(MainActivity mainActivity) {
-            m831p(mainActivity, f977j, f978k, null);
+        public static void downloadFile(MainActivity mainActivity) {
+            downloadFile(mainActivity, f977j, f978k, null);
         }
 
         @Override
         @SuppressLint({"NewApi", "WrongConstant"})
-        public void prepareResult(int status, Document uVar) {
+        public void prepareResult(int status, Document document) {
             String str;
             if (status == 0) {
-                String n = uVar.getString(0);
-                if (this.f980i == null) {
-                    int lastIndexOf = n.lastIndexOf(63);
+                String name = document.getString(0);
+                if (this.fileName == null) {
+                    int lastIndexOf = name.lastIndexOf(63);
                     if (lastIndexOf < 0) {
-                        str = n;
+                        str = name;
                     } else {
-                        str = n.substring(0, lastIndexOf);
+                        str = name.substring(0, lastIndexOf);
                     }
-                    this.f980i = str;
+                    this.fileName = str;
                     int lastIndexOf2 = str.lastIndexOf(47) + 1;
-                    this.f980i = lastIndexOf2 <= 0 ? this.f980i : this.f980i.substring(lastIndexOf2);
+                    this.fileName = lastIndexOf2 <= 0 ? this.fileName : this.fileName.substring(lastIndexOf2);
                 }
-                if (Build.VERSION.SDK_INT < 23 || this.f979h.checkSelfPermission("android.permission.WRITE_EXTERNAL_STORAGE") == 0) {
-                    m831p(this.f979h, this.f980i, n, null);
+                if (Build.VERSION.SDK_INT < 23 || this.activity.checkSelfPermission("android.permission.WRITE_EXTERNAL_STORAGE") == 0) {
+                    downloadFile(this.activity, this.fileName, name, null);
                     return;
                 }
-                f977j = this.f980i;
-                f978k = n;
-                this.f979h.requestPermissions(new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"}, 1);
+                f977j = this.fileName;
+                f978k = name;
+                this.activity.requestPermissions(new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"}, 1);
             } else if (4 == status) {
-                Toast.makeText(this.f979h, "Ошибка. Похоже, вы скачали слишком много файлов за последнее время. Попробуйте еще раз завтра.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.activity, "Ошибка. Похоже, вы скачали слишком много файлов за последнее время. Попробуйте еще раз завтра.", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this.f979h, "Ошибка при запросе адреса", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.activity, "Ошибка при запросе адреса", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -611,7 +611,7 @@ public class API {
             @Override
             public void onClick(View view) {
                 MainActivity mainActivity = ForumGetTopicsRequest.this.mainActivity;
-                Urls2.m676g(mainActivity, "https://4pda.ru/forum/index.php?showforum=" + ForumGetTopicsRequest.this.forumId);
+                Urls2.visitPage(mainActivity, "https://4pda.ru/forum/index.php?showforum=" + ForumGetTopicsRequest.this.forumId);
             }
         }
 
@@ -657,10 +657,10 @@ public class API {
         @Override
         public void prepareResult(int status, Document uVar) {
             if (status == 0) {
-                Dialog dialog = new Dialog(this.mainActivity, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+                Dialog dialog = new Dialog(this.mainActivity, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
                 dialog.requestWindowFeature(1);
                 dialog.setContentView(R.layout.dlg_foruminfo);
-                dialog.getWindow().setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.np_dialog));
+                dialog.getWindow().setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.np_dialog));
                 dialog.getWindow().setLayout(-1, -2);
                 dialog.setCanceledOnTouchOutside(true);
                 ((TextView) dialog.findViewById(R.id.forumName)).setText(Util.C0427h.UnEscapeString(uVar.getString(2)));
@@ -681,7 +681,7 @@ public class API {
                     if (intValue > 0) {
                         sb.append("[url=https://4pda.ru/forum/index.php?showuser=" + intValue + "]");
                     }
-                    sb.append("[color=" + Skin.C0353a.f1398n0[l2.getInt(2)] + "]");
+                    sb.append("[color=" + Skin.SkinColorModel.f1398n0[l2.getInt(2)] + "]");
                     sb.append(l2.getString(1).replace("[", "&#91;").replace("]", "&#93;"));
                     sb.append("[/color]");
                     if (intValue > 0) {
@@ -729,7 +729,7 @@ public class API {
                     sb.append(" [url=https://4pda.ru/forum/index.php?showuser=");
                     sb.append(l2.getInt(1));
                     sb.append("][color=");
-                    sb.append(Skin.C0353a.f1398n0[l2.getInt(3)]);
+                    sb.append(Skin.SkinColorModel.f1398n0[l2.getInt(3)]);
                     sb.append("]");
                     sb.append(l2.getString(2).replace("[", "&#91;").replace("]", "&#93;"));
                     sb.append("[/color][/url]:\n");
@@ -787,7 +787,7 @@ public class API {
         }
 
         @Override
-        public void prepareResult(int status, Document uVar) {
+        public void prepareResult(int status, Document document) {
             Page_Topic x0Var;
             if (status != 0) {
                 Toast.makeText(this.mainActivity, "Пост не найден", Toast.LENGTH_SHORT).show();
@@ -795,12 +795,12 @@ public class API {
             }
             Tab f1Var = this.tab;
             if (f1Var == null || f1Var.forumsListView != null) {
-                int intValue = uVar.getInt(0);
-                int intValue2 = uVar.getInt(2);
-                int intValue3 = uVar.getInt(1);
-                int i2 = Prefs.f1179q;
+                int intValue = document.getInt(0);
+                int intValue2 = document.getInt(2);
+                int intValue3 = document.getInt(1);
+                int i2 = Prefs.memberPostsPerPage;
                 int i3 = (intValue3 / i2) * i2;
-                int intValue4 = uVar.getInt(3);
+                int intValue4 = document.getInt(3);
                 Page_Topic x0Var2 = new Page_Topic(this.mainActivity, intValue, i3, intValue4, intValue2, this.f1007n, this.f1008o);
                 x0Var2.f1079m = this.f1009p;
                 if (this.f1006m) {
@@ -940,42 +940,42 @@ public class API {
     }
 
     static class ForumModifyRequest extends DocumentManager.IGenerateRequest {
-        Document f1013g;
-        int f1014h;
-        int f1015i;
-        int f1016j;
-        private Page f1017k;
-        private SparseArray f1018l;
-        private Runnable f1019m;
+        Document document;
+        int action;
+        int cmd;
+        int param;
+        private Page page;
+        private SparseArray attaches;
+        private Runnable runnable;
 
         static class View$OnClickListenerC0276a implements View.OnClickListener {
             final Document document;
             final int action;
             final int cmd;
             final int param;
-            final Page f1024e;
-            final String f1025f;
-            final SparseArray f1026g;
-            final Runnable f1027h;
+            final Page page;
+            final String statusMessage;
+            final SparseArray attaches;
+            final Runnable runnable;
 
-            View$OnClickListenerC0276a(Document document, int action, int cmd, int param, Page a0Var, String str, SparseArray sparseArray, Runnable runnable) {
+            View$OnClickListenerC0276a(Document document, int action, int cmd, int param, Page page, String statusMessage, SparseArray attaches, Runnable runnable) {
                 this.document = document;
                 this.action = action;
                 this.cmd = cmd;
                 this.param = param;
-                this.f1024e = a0Var;
-                this.f1025f = str;
-                this.f1026g = sparseArray;
-                this.f1027h = runnable;
+                this.page = page;
+                this.statusMessage = statusMessage;
+                this.attaches = attaches;
+                this.runnable = runnable;
             }
 
             @Override
             public void onClick(View view) {
-                DocumentManager.getResultRequest(new ForumModifyRequest(this.document, this.action, this.cmd, this.param, this.f1024e, this.f1025f, this.f1026g, this.f1027h));
+                DocumentManager.getResultRequest(new ForumModifyRequest(this.document, this.action, this.cmd, this.param, this.page, this.statusMessage, this.attaches, this.runnable));
             }
         }
 
-        public static void m821p(int postId, SparseArray attaches, int action, int cmd, int param, Page page, String str, String str2, Runnable runnable) {
+        public static void modifyForum(int postId, SparseArray attaches, int action, int cmd, int param, Page page, String message, String commandMessage, Runnable runnable) {
             Document document = new Document();
             if (postId != 0) {
                 document.append(postId);
@@ -988,51 +988,51 @@ public class API {
                     }
                 }
             }
-            if ((Prefs.f1151L || 14 == action || 4 == action) && !TextUtils.isEmpty(str2)) {
-                DlgSimple q1Var = new DlgSimple(page.mainActivity, String.format("Подтвердите %s (%d)", str, document.count()), false, str2, null);
-                q1Var.editText.setVisibility(View.GONE);
-                q1Var.m620f(new View$OnClickListenerC0276a(document, action, cmd, param, page, str, attaches, runnable), true);
-                q1Var.show(true, true, true);
+            if ((Prefs.confirmAction || 14 == action || 4 == action) && !TextUtils.isEmpty(commandMessage)) {
+                DlgSimple dialog = new DlgSimple(page.mainActivity, String.format("Подтвердите %s (%d)", message, document.count()), false, commandMessage, null);
+                dialog.editText.setVisibility(View.GONE);
+                dialog.m620f(new View$OnClickListenerC0276a(document, action, cmd, param, page, message, attaches, runnable), true);
+                dialog.show(true, true, true);
                 return;
             }
-            DocumentManager.getResultRequest(new ForumModifyRequest(document, action, cmd, param, page, str, attaches, runnable));
+            DocumentManager.getResultRequest(new ForumModifyRequest(document, action, cmd, param, page, message, attaches, runnable));
         }
 
         @Override
         public void prepareResult(int status, Document uVar) {
-            if (!this.f1017k.isLoading) {
+            if (!this.page.isLoading) {
                 Integer m = uVar.getInt(0);
-                int d = this.f1013g.count();
-                if (status != 0 && 1 == d && 6 == this.f1014h) {
-                    MainActivity mainActivity = this.f1017k.mainActivity;
+                int d = this.document.count();
+                if (status != 0 && 1 == d && 6 == this.action) {
+                    MainActivity mainActivity = this.page.mainActivity;
                     Toast.makeText(mainActivity, "Не удалось поднять пост в шапку: " + uVar.getDocument(1).getString(0), Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(this.f1017k.mainActivity, status == 0 ? (m == null || m.intValue() >= d) ? "Действие выполнено" : String.format("Действие выполнено частично (%d/%d)", m, Integer.valueOf(d)) : "Действие завершилось ошибкой", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this.page.mainActivity, status == 0 ? (m == null || m.intValue() >= d) ? "Действие выполнено" : String.format("Действие выполнено частично (%d/%d)", m, Integer.valueOf(d)) : "Действие завершилось ошибкой", Toast.LENGTH_LONG).show();
                 }
                 if (status == 0) {
-                    int i2 = this.f1014h;
-                    if (i2 == 11 || i2 == 12 || i2 == 14 || i2 == 13) {
-                        for (int i3 = 0; i3 < this.f1013g.count(); i3++) {
-                            DocumentManager.f2752I.m649c(1, this.f1013g.getInt(i3), this.f1017k);
+                    int action = this.action;
+                    if (action == 11 || action == 12 || action == 14 || action == 13) {
+                        for (int i3 = 0; i3 < this.document.count(); i3++) {
+                            DocumentManager.f2752I.m649c(1, this.document.getInt(i3), this.page);
                         }
-                    } else if (i2 == 21) {
-                        for (int i4 = 0; i4 < this.f1013g.count(); i4++) {
-                            DocumentManager.f2752I.m649c(0, this.f1013g.getInt(i4), this.f1017k);
+                    } else if (action == 21) {
+                        for (int i4 = 0; i4 < this.document.count(); i4++) {
+                            DocumentManager.f2752I.m649c(0, this.document.getInt(i4), this.page);
                         }
                     }
-                    int i5 = this.f1014h;
-                    if ((i5 == 11 || i5 == 21) && this.f1015i == 8 && this.f1016j == 0) {
+                    
+                    if ((action == 11 || action == 21) && this.cmd == 8 && this.param == 0) {
                         DocumentManager.isMemberValid();
                     }
-                    SparseArray sparseArray = this.f1018l;
+                    SparseArray sparseArray = this.attaches;
                     if (sparseArray != null) {
                         sparseArray.clear();
                     }
-                    Runnable runnable = this.f1019m;
+                    Runnable runnable = this.runnable;
                     if (runnable != null) {
                         runnable.run();
                     } else {
-                        this.f1017k.tabReload();
+                        this.page.tabReload();
                     }
                 }
             }
@@ -1040,20 +1040,20 @@ public class API {
 
         @Override
         public Document generate() {
-            return new Document(this.f1014h, this.f1013g, this.f1015i, this.f1016j);
+            return new Document(this.action, this.document, this.cmd, this.param);
         }
 
-        private ForumModifyRequest(Document uVar, int i, int i2, int i3, Page a0Var, String str, SparseArray sparseArray, Runnable runnable) {
+        private ForumModifyRequest(Document document, int action, int cmd, int param, Page page, String str, SparseArray attaches, Runnable runnable) {
             super(28006);
-            this.f1013g = uVar;
-            this.f1014h = i;
-            this.f1015i = i2;
-            this.f1016j = i3;
-            this.f1017k = a0Var;
-            this.f1018l = sparseArray;
-            this.f1019m = runnable;
+            this.document = document;
+            this.action = action;
+            this.cmd = cmd;
+            this.param = param;
+            this.page = page;
+            this.attaches = attaches;
+            this.runnable = runnable;
             if (!TextUtils.isEmpty(str)) {
-                this.statusMessage = uVar.count() > 1 ? String.format("%s (%d)", str, uVar.count()) : str;
+                this.statusMessage = document.count() > 1 ? String.format("%s (%d)", str, document.count()) : str;
             }
         }
     }

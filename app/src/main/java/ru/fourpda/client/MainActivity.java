@@ -34,6 +34,7 @@ import java.lang.ref.WeakReference;
 
 import in.cpp.picoimg.PicoImg;
 import in.cpp.picoimg.PicoImgRequest;
+import android.widget.ImageView;
 
 
 public class MainActivity extends Activity {
@@ -194,72 +195,72 @@ public class MainActivity extends Activity {
         }
     }
 
-    public static class C0187e0 extends MemberSecurityRequest {
-        MainActivity f759l;
+    public static class MemberAuthorizationRequest extends MemberSecurityRequest {
+        MainActivity activity;
 
-        public C0187e0(MainActivity mainActivity, int i, int i2, int i3, String str, String str2) {
-            super(i, i2, i3, str, str2);
-            this.f759l = mainActivity;
+        public MemberAuthorizationRequest(MainActivity mainActivity, int action, int mid, int ts, String sig, String value) {
+            super(action, mid, ts, sig, value);
+            this.activity = mainActivity;
             this.statusMessage = "Авторизация";
         }
 
         @Override
         public void prepareResult(int status, Document uVar) {
-            String str = null;
-            String str2;
-            String format = String.format("Статус %d", Integer.valueOf(status));
-            int i2 = this.action;
-            if (i2 == 1) {
-                format = status == 0 ? "Успешная авторизация" : "Ошибка авторизации";
+            String messageText1 = null;
+            String messageText2;
+            String messageText = String.format("Статус %d", Integer.valueOf(status));
+            int action = this.action;
+            if (action == 1) {
+                messageText = status == 0 ? "Успешная авторизация" : "Ошибка авторизации";
                 DocumentManager.isMemberValid();
             } else {
-                if (i2 == 3) {
-                    str2 = status == 0 ? "Успешная смена e-mail" : "Ошибка смены e-mail";
+                if (action == 3) {
+                    messageText2 = status == 0 ? "Успешная смена e-mail" : "Ошибка смены e-mail";
                 } else {
-                    str2 = "Письмо отправлено";
-                    if (i2 != 0) {
-                        format = "Успешная смена пароля";
-                        format = "Ошибка смены пароля";
-                        if (i2 != 6) {
-                            if (i2 == 2) {
+                    messageText2 = "Письмо отправлено";
+                    if (action != 0) {
+                        messageText = "Успешная смена пароля";
+                        messageText = "Ошибка смены пароля";
+                        if (action != 6) {
+                            if (action == 2) {
                                 if (status != 0) {
-                                    str2 = "Ошибка смена электронной почты";
+                                    messageText2 = "Ошибка смена электронной почты";
                                 }
-                            } else if (i2 != 4) {
-                                if (i2 == 5) {
+                            } else if (action != 4) {
+                                if (action == 5) {
                                     if (status != 0) {
-                                        str2 = "Неверный логин или e-mail";
+                                        messageText2 = "Неверный логин или e-mail";
                                     }
-                                } else if (i2 == 7) {
-                                    str2 = status == 0 ? "Логин успешно изменен" : "Ошибка при смене логина";
+                                } else if (action == 7) {
+                                    messageText2 = status == 0 ? "Логин успешно изменен" : "Ошибка при смене логина";
                                 }
                             }
                         }
                     } else if (status != 0) {
-                        str2 = "Ошибка отправки письма";
+                        messageText2 = "Ошибка отправки письма";
                     }
                 }
-                format = str2;
+                messageText = messageText2;
             }
             if (status == 3) {
-                format = "Неправильный пользователь";
+                messageText = "Неправильный пользователь";
             } else if (status == 4) {
-                format = "Ссылка устарела";
+                messageText = "Ссылка устарела";
             } else {
                 if (status == 5) {
-                    str = this.action == 7 ? "Некорректный логин" : "Неправильный адрес почты";
+                    messageText1 = this.action == 7 ? "Некорректный логин" : "Неправильный адрес почты";
                 } else if (status == 6) {
-                    str = this.action == 7 ? "Логин уже используется" : "Адрес почты уже используется";
+                    messageText1 = this.action == 7 ? "Логин уже используется" : "Адрес почты уже используется";
                 } else if (status == 7) {
-                    str = "Неверный пароль";
+                    messageText1 = "Неверный пароль";
                 } else if (status == 8) {
-                    str = this.action == 7 ? "Запрещенный логин" : "Запрещенный адрес почты";
+                    messageText1 = this.action == 7 ? "Запрещенный логин" : "Запрещенный адрес почты";
                 } else if (status == 9) {
-                    str = "С предыдущей смены логина прошло слишком мало времени";
+                    messageText1 = "С предыдущей смены логина прошло слишком мало времени";
                 }
-                format = str;
+                messageText = messageText1;
             }
-            Toast.makeText(this.f759l, format, 0).show();
+            Toast.makeText(this.activity, messageText, 0).show();
         }
     }
 
@@ -297,7 +298,7 @@ public class MainActivity extends Activity {
                     }
                     Toast.makeText(context, str, 1).show();
                     Context context2 = AsyncTaskC0189f0.this.f761a;
-                    Prefs.f1169g = 3;
+                    Prefs.backgroundMode = 3;
                     Prefs.saveInt(context2, "background_mode", 3);
                 }
             }
@@ -310,7 +311,7 @@ public class MainActivity extends Activity {
                 if (bundle == null || !bundle.containsKey("registration_id") || TextUtils.isEmpty(bundle.getString("registration_id"))) {
                     new Handler(Looper.getMainLooper()).post(new RunnableC0191a(bundle));
                 } else {
-                    MainActivity.m900f(AsyncTaskC0189f0.this.f761a);
+                    MainActivity.initNotify(AsyncTaskC0189f0.this.f761a);
                 }
             }
         }
@@ -376,7 +377,7 @@ public class MainActivity extends Activity {
                     Context context = AsyncTaskC0195h0.this.f768a;
                     Toast.makeText(context, "Ошибка HCM: код " + this.f770a, 1).show();
                     Context context2 = AsyncTaskC0195h0.this.f768a;
-                    Prefs.f1169g = 3;
+                    Prefs.backgroundMode = 3;
                     Prefs.saveInt(context2, "background_mode", 3);
                 }
             }
@@ -413,10 +414,10 @@ public class MainActivity extends Activity {
 
         @Override
         public void onClick(View view) {
-            Dialog dialog = new Dialog(MainActivity.this, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+            Dialog dialog = new Dialog(MainActivity.this, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
             dialog.requestWindowFeature(1);
             dialog.setContentView(R.layout.dlg_about);
-            dialog.getWindow().setBackgroundDrawable(MainActivity.this.skin.m736f(R.drawable.np_dialog));
+            dialog.getWindow().setBackgroundDrawable(MainActivity.this.skin.getSkinDrawable(R.drawable.np_dialog));
             Window window = dialog.getWindow();
             MainActivity mainActivity = MainActivity.this;
             window.setLayout(Math.min((int) (mainActivity.f731b * 400.0f), mainActivity.getResources().getDisplayMetrics().widthPixels), -2);
@@ -489,7 +490,7 @@ public class MainActivity extends Activity {
 
         @Override
         public void onClick(View view) {
-            if (Prefs.f1151L) {
+            if (Prefs.confirmAction) {
                 DlgSimple q1Var = new DlgSimple(MainActivity.this, "Закрыть приложение?", false, "ДА", null);
                 q1Var.editText.setVisibility(8);
                 q1Var.m620f(new View$OnClickListenerC0203a(), true);
@@ -509,10 +510,10 @@ public class MainActivity extends Activity {
         public void onClick(View view) {
             MainActivity mainActivity = MainActivity.this;
             int i = 3;
-            if (Prefs.f1184v == 3) {
+            if (Prefs.nightMode == 3) {
                 i = 2;
             }
-            Prefs.f1184v = i;
+            Prefs.nightMode = i;
             Prefs.saveInt(mainActivity, "nightMode", i);
             MainActivity.this.m899g(null);
         }
@@ -599,7 +600,7 @@ public class MainActivity extends Activity {
             edit.putInt("update_msg", hashCode);
             edit.putInt("update_msg_count", i2);
             edit.commit();
-            Notify.m46c(MainActivity.this, hashCode, "4pda-update", true, true, "Обновление 4PDA", str, Uri.parse("https://4pda.ru/forum/index.php?showtopic=673755&view=getlastpost"));
+            Notify.createNotify(MainActivity.this, hashCode, "4pda-update", true, true, "Обновление 4PDA", str, Uri.parse("https://4pda.ru/forum/index.php?showtopic=673755&view=getlastpost"));
             return Boolean.TRUE;
         }
     }
@@ -646,22 +647,22 @@ public class MainActivity extends Activity {
         public Boolean mo222a(DocumentManager.MemberInfoModel hVar) {
             int i = 8;
             if (hVar != null) {
-                if (Prefs.f1180r) {
-                    Prefs.f1179q = hVar.memberPostsPerPage;
+                if (Prefs.topicPppServer) {
+                    Prefs.memberPostsPerPage = hVar.memberPostsPerPage;
                 }
-                if (Prefs.f1182t) {
-                    Prefs.f1181s = hVar.memberTopicsPerPage;
+                if (Prefs.forumTppServer) {
+                    Prefs.memberTopicsPerPage = hVar.memberTopicsPerPage;
                 }
                 ((TextView) MainActivity.this.findViewById(R.id.nav_user_name)).setText(hVar.memberInfoName);
                 ((TextView) MainActivity.this.findViewById(R.id.nav_user_group)).setText(hVar.memberGroupName);
                 MainActivity.this.findViewById(R.id.nav_new_qms).setClickable(true);
                 if (!TextUtils.isEmpty(hVar.memberAvatar)) {
                     PicoImgRequest l = PicoImg.loadUrl(MainActivity.this, hVar.memberAvatar);
-                    l.to(MainActivity.this.findViewById(R.id.nav_avatar));
-                    l.disableAnimation(!Prefs.f1146G);
+                    l.to((ImageView)MainActivity.this.findViewById(R.id.nav_avatar));
+                    l.disableAnimation(!Prefs.animAvatars);
                     l.runAsync();
                 } else {
-                    ((Widgets$AvatarView) MainActivity.this.findViewById(R.id.nav_avatar)).setImageDrawable(MainActivity.this.skin.m736f(R.drawable.ic_avatar));
+                    ((Widgets$AvatarView) MainActivity.this.findViewById(R.id.nav_avatar)).setImageDrawable(MainActivity.this.skin.getSkinDrawable(R.drawable.ic_avatar));
                 }
                 MainActivity.this.findViewById(R.id.nav_user_profile).setVisibility(0);
                 MainActivity.this.findViewById(R.id.nav_user_history).setVisibility(0);
@@ -678,7 +679,7 @@ public class MainActivity extends Activity {
             } else {
                 ((TextView) MainActivity.this.findViewById(R.id.nav_user_name)).setText("");
                 ((TextView) MainActivity.this.findViewById(R.id.nav_user_group)).setText("");
-                ((Widgets$AvatarView) MainActivity.this.findViewById(R.id.nav_avatar)).setImageDrawable(MainActivity.this.skin.m736f(R.drawable.ic_avatar));
+                ((Widgets$AvatarView) MainActivity.this.findViewById(R.id.nav_avatar)).setImageDrawable(MainActivity.this.skin.getSkinDrawable(R.drawable.ic_avatar));
                 MainActivity.this.findViewById(R.id.nav_user_profile).setVisibility(8);
                 MainActivity.this.findViewById(R.id.nav_user_history).setVisibility(8);
                 MainActivity.this.findViewById(R.id.nav_user_edit).setVisibility(8);
@@ -805,30 +806,30 @@ public class MainActivity extends Activity {
         g0Var.mo426e(uri, str.replace(':', '_').replace('\"', '_').replace('\\', '_'));
     }
 
-    public static void m900f(Context context) {
+    public static void initNotify(Context context) {
         int i;
         int i2;
         PicoFCM.C0962g gVar;
         if (DocumentManager.isLoggined()) {
-            boolean z = Prefs.f1163a;
+            boolean z = Prefs.qmsNotify;
             int i3 = z ? 1 :0;
-            if (Prefs.f1164b) {
+            if (Prefs.notifyQmsSystem) {
                 i3 = (z ? 1 : 0) | 2;
             }
             int i4 = i3;
-            if (Prefs.f1165c) {
+            if (Prefs.favNotify) {
                 int i5 = i3 == 1 ? 1 : 0;
                 boolean z2 = i3 == 1;
                 i4 = i5 | 4;
             }
             int i6 = i4;
-            if (Prefs.f1166d) {
+            if (Prefs.favImportantNotify) {
                 int i7 = i4 == 1 ? 1 : 0;
             //    boolean z3 = i4 == 1 ? 1 : 0;
                 i6 = i7 | 8;
             }
             i = i6;
-            if (Prefs.f1167e) {
+            if (Prefs.menNotify) {
                 int i8 = i6 == 1 ? 1 : 0;
               //  boolean z4 = i6 == 1 ? 1 : 0;
                 i = i8 | 16;
@@ -836,7 +837,7 @@ public class MainActivity extends Activity {
         } else {
             i = 0;
         }
-        int i9 = Prefs.f1169g;
+        int i9 = Prefs.backgroundMode;
         if (i9 == 4) {
             int i10 = i == 1 ? 1 : 0;
            // boolean z5 = i == 1 ? 1 : 0;
@@ -883,7 +884,7 @@ public class MainActivity extends Activity {
     public static void m897i(Context context, String str) {
         token = str;
         if (!TextUtils.isEmpty(str)) {
-            m900f(context);
+            initNotify(context);
         }
     }
 
@@ -942,7 +943,7 @@ public class MainActivity extends Activity {
     }
 
     public void m904b(Intent intent) {
-        int c = Util.m671c();
+        int c = Util.getAndIncrement();
         this.f737h = c;
         startActivityForResult(intent, c);
     }
@@ -953,24 +954,24 @@ public class MainActivity extends Activity {
     }
 
     public void m901e() {
-        float applyDimension = TypedValue.applyDimension(2, (float) Prefs.f1178p, getResources().getDisplayMetrics());
+        float applyDimension = TypedValue.applyDimension(2, (float) Prefs.textSize, getResources().getDisplayMetrics());
         BBString.m477l(applyDimension, this.f731b);
         try {
-            BBOverlay.C0152h hVar = new BBOverlay.C0152h(this.skin.m736f(R.drawable.text_select_handle_left));
+            BBOverlay.C0152h hVar = new BBOverlay.C0152h(this.skin.getSkinDrawable(R.drawable.text_select_handle_left));
             BBOverlay.C0152h.f593s = hVar;
             hVar.m936a(0.73f, 0.05f, 0.52f, 0.5f, applyDimension / 3.0f);
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
         }
         try {
-            BBOverlay.C0152h hVar2 = new BBOverlay.C0152h(this.skin.m736f(R.drawable.text_select_handle_right));
+            BBOverlay.C0152h hVar2 = new BBOverlay.C0152h(this.skin.getSkinDrawable(R.drawable.text_select_handle_right));
             BBOverlay.C0152h.f594t = hVar2;
             hVar2.m936a(0.26f, 0.05f, 0.48f, 0.5f, applyDimension / 3.0f);
         } catch (Exception e2) {
             //ACRA.getErrorReporter().handleSilentException(e2);
         }
         try {
-            BBOverlay.C0152h.f595u = new BBOverlay.C0152h.C0153a(this.skin.m736f(R.drawable.np_float_panel), applyDimension * 1.1f, this.f731b);
+            BBOverlay.C0152h.f595u = new BBOverlay.C0152h.C0153a(this.skin.getSkinDrawable(R.drawable.np_float_panel), applyDimension * 1.1f, this.f731b);
         } catch (Exception e3) {
             //ACRA.getErrorReporter().handleSilentException(e3);
         }
@@ -984,9 +985,9 @@ public class MainActivity extends Activity {
         }
         Skin e1Var = new Skin(this);
         this.skin = e1Var;
-        Skin.C0353a.m731a(e1Var);
+        Skin.SkinColorModel.initColors(e1Var);
         if (this.mainLayout == null) {
-            ((LayoutInflater) getSystemService("layout_inflater")).setFactory(new LayoutInflater$FactoryC0201k());
+           // ((LayoutInflater) getSystemService("layout_inflater")).setFactory(new LayoutInflater$FactoryC0201k());
         }
         Window window = getWindow();
         int i = Build.VERSION.SDK_INT;
@@ -994,28 +995,28 @@ public class MainActivity extends Activity {
             if (this.f735f == 0) {
                 this.f735f = getWindow().getNavigationBarColor();
             }
-            window.setStatusBarColor(Skin.C0353a.f1368X);
-            int i2 = Skin.C0353a.f1369Y;
+            window.setStatusBarColor(Skin.SkinColorModel.f1368X);
+            int i2 = Skin.SkinColorModel.f1369Y;
             if (i2 == 0) {
                 i2 = this.f735f;
             }
             window.setNavigationBarColor(i2);
             if (i >= 23) {
                 int systemUiVisibility = window.getDecorView().getSystemUiVisibility();
-                int i3 = (((systemUiVisibility & -8193) | (Skin.C0353a.f1394l0 ? 8192 : 0)) & -17) | ((i < 26 || !Skin.C0353a.f1396m0) ? 0 : 16);
+                int i3 = (((systemUiVisibility & -8193) | (Skin.SkinColorModel.f1394l0 ? 8192 : 0)) & -17) | ((i < 26 || !Skin.SkinColorModel.f1396m0) ? 0 : 16);
                 if (i3 != systemUiVisibility) {
                     window.getDecorView().setSystemUiVisibility(i3);
                 }
             }
         }
-        if (-16777216 != (Skin.C0353a.f1363S & -16777216)) {
+        if (-16777216 != (Skin.SkinColorModel.mainBgColor & -16777216)) {
             window.addFlags(1048576);
         } else {
             window.clearFlags(1048576);
         }
-        setTheme(Skin.C0353a.f1392k0 ? R.style.Activity_Light : R.style.Activity_Dark);
+        setTheme(Skin.SkinColorModel.f1392k0 ? R.style.Activity_Light : R.style.Activity_Dark);
         setContentView(R.layout.mainactivity);
-        window.setBackgroundDrawable(this.skin.m736f(R.drawable.main_background));
+        window.setBackgroundDrawable(this.skin.getSkinDrawable(R.drawable.main_background));
         MainLayout mainLayout = findViewById(R.id.main_layout);
         this.mainLayout = mainLayout;
         mainLayout.m860v(this);
@@ -1024,7 +1025,7 @@ public class MainActivity extends Activity {
         }
         if (this.f734e > 0) {
             View findViewById = findViewById(R.id.top_status_spacer);
-            findViewById.setBackgroundColor(Skin.C0353a.f1368X);
+            findViewById.setBackgroundColor(Skin.SkinColorModel.f1368X);
             findViewById.getLayoutParams().height = this.f734e;
             findViewById.requestLayout();
         }
@@ -1048,7 +1049,7 @@ public class MainActivity extends Activity {
         findViewById(R.id.nav_user_logout).setOnClickListener(new LogOutClickListenerC0199j());
         findViewById(R.id.nav_exit).setOnClickListener(new View$OnClickListenerC0202l());
         View findViewById2 = findViewById(R.id.nav_night);
-        int i4 = Prefs.f1184v;
+        int i4 = Prefs.nightMode;
         if (i4 == 2 || i4 == 3) {
             findViewById2.setVisibility(0);
             findViewById2.setOnClickListener(new View$OnClickListenerC0204m());
@@ -1077,8 +1078,8 @@ public class MainActivity extends Activity {
         }
         if (f1Var == null) {
             f1Var = new Tab(this);
-            if (Prefs.f1155P) {
-                Prefs.f1155P = false;
+            if (Prefs.firstStart) {
+                Prefs.firstStart = false;
                 Prefs.saveBoolean(this, "first_start", false);
                 if (!DocumentManager.isLoggined()) {
                     f1Var.addPage(new Page_Login(this, false));
@@ -1129,7 +1130,7 @@ public class MainActivity extends Activity {
     @Override
     public void onConfigurationChanged(Configuration configuration) {
         super.onConfigurationChanged(configuration);
-        if (this.skin.m733i(configuration) && Prefs.f1184v == 0) {
+        if (this.skin.m733i(configuration) && Prefs.nightMode == 0) {
             m899g(null);
         }
     }
@@ -1151,7 +1152,13 @@ public class MainActivity extends Activity {
             }
         }
         super.onCreate(bundle);
-        in.cpp.picoimg.PicoImg.init(this, null, ((long) Prefs.f1150K) * 1024 * 1024);
+		
+		Prefs.initPreference(this);
+        DataDB.mkdirDB(this);
+        DocumentManager.syncBookmarks(this);
+        Notify.createNotificationChannel(this);
+		
+        in.cpp.picoimg.PicoImg.init(this, null, ((long) Prefs.cacheSize) * 1024 * 1024);
         Resources resources = getResources();
         this.f731b = resources.getDisplayMetrics().density;
         this.f732c = resources.getDisplayMetrics().scaledDensity;
@@ -1218,12 +1225,12 @@ public class MainActivity extends Activity {
     public void onRequestPermissionsResult(int i, String[] strArr, int[] iArr) {
         if (iArr != null && 1 <= iArr.length && iArr[0] == 0) {
             if (1 == i) {
-                API.LoadForumAttachRequest.m830q(this);
+                API.LoadForumAttachRequest.downloadFile(this);
             } else if (2 == i) {
                 Prefs.exportSettings(this);
             } else if (3 == i) {
                 Prefs.importSettings(this);
-                m900f(this);
+                initNotify(this);
                 m899g(null);
             } else if (4 == i) {
                 AttachDialog.m585s(this);

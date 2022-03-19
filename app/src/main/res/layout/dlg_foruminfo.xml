@@ -1,138 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
-    android:layout_width="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_width="fill_parent">
+    
     <RelativeLayout
-        android:padding="24.0dip"
+        android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:padding="24.0dip">
+        
         <TextView
-            android:textSize="20.0sp"
-            android:textStyle="bold"
-            android:textColor="@color/main_text"
-            android:id="@id/forumName"
             android:background="@drawable/border_bottom"
-            android:paddingRight="20.0dip"
-            android:paddingBottom="5.0dip"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Trepalka"
+            android:id="@id/forumName"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true" />
-        <View
-            android:textColor="@color/link_color"
-            android:id="@id/forumShare"
-            android:background="@drawable/button_share"
-            android:layout_width="36.0dip"
-            android:layout_height="fill_parent"
-            android:layout_alignBottom="@id/forumName"
             android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true" />
-        <TextView
-            android:textSize="16.0sp"
-            android:textColor="@color/main_text"
-            android:id="@id/forumDesc"
+            android:layout_height="wrap_content"
             android:layout_width="fill_parent"
+            android:paddingBottom="5.0dip"
+            android:paddingRight="20.0dip"
+            android:text="Trepalka"
+            android:textColor="@color/main_text"
+            android:textSize="20.0sp"
+            android:textStyle="bold"/>
+        
+        <View
+            android:background="@drawable/button_share"
+            android:id="@id/forumShare"
+            android:layout_alignBottom="@id/forumName"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_height="fill_parent"
+            android:layout_width="36.0dip"
+            android:textColor="@color/link_color"/>
+        
+        <TextView
+            android:id="@id/forumDesc"
+            android:layout_below="@id/forumName"
             android:layout_height="wrap_content"
             android:layout_marginTop="5.0dip"
+            android:layout_width="fill_parent"
             android:text="Dlinnoye opisaniye k forumu, chetko obyasnyayushcheye chto v nem obsuzhdaetsya"
-            android:layout_below="@id/forumName" />
+            android:textColor="@color/main_text"
+            android:textSize="16.0sp"/>
+        
         <TextView
-            android:textSize="16.0sp"
-            android:textColor="@color/label_text_csl"
             android:id="@id/forumForumsLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20.0dip"
-            android:layout_marginRight="16.0dip"
-            android:text="@string/dlg_foruminfo_forums"
-            android:singleLine="true"
+            android:layout_alignParentLeft="true"
             android:layout_below="@id/forumDesc"
-            android:layout_alignParentLeft="true" />
-        <TextView
-            android:textSize="16.0sp"
-            android:textStyle="bold"
-            android:textColor="@color/main_text"
-            android:id="@id/forumForums"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="12"
-            android:layout_toRightOf="@id/forumForumsLabel"
-            android:layout_alignTop="@id/forumForumsLabel"
-            android:layout_alignParentRight="true" />
-        <TextView
-            android:textSize="16.0sp"
-            android:textColor="@color/label_text_csl"
-            android:id="@id/forumTopicsLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20.0dip"
             android:layout_marginRight="16.0dip"
-            android:text="@string/dlg_foruminfo_topics"
+            android:layout_marginTop="20.0dip"
+            android:layout_width="wrap_content"
             android:singleLine="true"
+            android:text="@string/dlg_foruminfo_forums"
+            android:textColor="@color/label_text_csl"
+            android:textSize="16.0sp"/>
+        
+        <TextView
+            android:id="@id/forumForums"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/forumForumsLabel"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/forumForumsLabel"
+            android:layout_width="wrap_content"
+            android:text="12"
+            android:textColor="@color/main_text"
+            android:textSize="16.0sp"
+            android:textStyle="bold"/>
+        
+        <TextView
+            android:id="@id/forumTopicsLabel"
+            android:layout_alignParentLeft="true"
             android:layout_below="@id/forumForumsLabel"
-            android:layout_alignParentLeft="true" />
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16.0dip"
+            android:layout_marginTop="20.0dip"
+            android:layout_width="wrap_content"
+            android:singleLine="true"
+            android:text="@string/dlg_foruminfo_topics"
+            android:textColor="@color/label_text_csl"
+            android:textSize="16.0sp"/>
+        
         <TextView
-            android:textSize="16.0sp"
-            android:textStyle="bold"
-            android:textColor="@color/main_text"
             android:id="@id/forumTopics"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="123"
-            android:layout_toRightOf="@id/forumForumsLabel"
+            android:layout_alignParentRight="true"
             android:layout_alignTop="@id/forumTopicsLabel"
-            android:layout_alignParentRight="true" />
-        <TextView
-            android:textSize="16.0sp"
-            android:textColor="@color/label_text_csl"
-            android:id="@id/forumPostsLabel"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16.0dip"
-            android:text="@string/dlg_foruminfo_posts"
-            android:singleLine="true"
-            android:layout_below="@id/forumTopicsLabel"
-            android:layout_alignParentLeft="true" />
-        <TextView
-            android:textSize="16.0sp"
-            android:textStyle="bold"
-            android:textColor="@color/main_text"
-            android:id="@id/forumPosts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="123456"
-            android:singleLine="true"
             android:layout_toRightOf="@id/forumForumsLabel"
-            android:layout_alignTop="@id/forumPostsLabel"
-            android:layout_alignParentRight="true" />
-        <TextView
-            android:textSize="16.0sp"
-            android:textColor="@color/label_text_csl"
-            android:id="@id/forumModsLabel"
             android:layout_width="wrap_content"
+            android:text="123"
+            android:textColor="@color/main_text"
+            android:textSize="16.0sp"
+            android:textStyle="bold"/>
+        
+        <TextView
+            android:id="@id/forumPostsLabel"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/forumTopicsLabel"
             android:layout_height="wrap_content"
             android:layout_marginTop="16.0dip"
-            android:text="@string/dlg_foruminfo_mods"
+            android:layout_width="wrap_content"
             android:singleLine="true"
+            android:text="@string/dlg_foruminfo_posts"
+            android:textColor="@color/label_text_csl"
+            android:textSize="16.0sp"/>
+        
+        <TextView
+            android:id="@id/forumPosts"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/forumPostsLabel"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/forumForumsLabel"
+            android:layout_width="wrap_content"
+            android:singleLine="true"
+            android:text="123456"
+            android:textColor="@color/main_text"
+            android:textSize="16.0sp"
+            android:textStyle="bold"/>
+        
+        <TextView
+            android:id="@id/forumModsLabel"
+            android:layout_alignParentLeft="true"
             android:layout_below="@id/forumPostsLabel"
-            android:layout_alignParentLeft="true" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16.0dip"
+            android:layout_width="wrap_content"
+            android:singleLine="true"
+            android:text="@string/dlg_foruminfo_mods"
+            android:textColor="@color/label_text_csl"
+            android:textSize="16.0sp"/>
+        
         <view
             android:id="@id/forumMods"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
             android:layout_below="@id/forumModsLabel"
-            class="ru.fourpda.client.BBDisplay" />
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            class="ru.fourpda.client.BBDisplay"/>
+        
         <TextView
-            android:textSize="12.0sp"
-            android:textStyle="bold"
-            android:textColor="@color/link_color"
             android:id="@id/forumLink"
-            android:layout_width="wrap_content"
+            android:layout_below="@id/forumMods"
             android:layout_height="wrap_content"
             android:layout_marginTop="20.0dip"
+            android:layout_width="wrap_content"
             android:text="123456"
-            android:layout_below="@id/forumMods" />
+            android:textColor="@color/link_color"
+            android:textSize="12.0sp"
+            android:textStyle="bold"/>
+        
+    
     </RelativeLayout>
+    
+
 </ScrollView>

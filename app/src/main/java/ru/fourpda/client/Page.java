@@ -139,7 +139,7 @@ public abstract class Page extends DocumentManager.IGenerateRequest implements L
             q1Var.editText.addTextChangedListener(new C0292a(q1Var));
             q1Var.m620f(new View$OnClickListenerC0293b(q1Var), true);
             q1Var.show(true, true, true);
-            Page.this.mainActivity.mainLayout.m859w(q1Var.editText);
+            Page.this.mainActivity.mainLayout.hideKeyboard(q1Var.editText);
         }
     }
 
@@ -284,7 +284,7 @@ public abstract class Page extends DocumentManager.IGenerateRequest implements L
                 }
                 this.tab.mainLayout.f801I = isUnsuccesCode();
             }
-            this.tab.forumsListView.setOverscrollFooter(Skin.C0353a.f1388i0);
+            this.tab.forumsListView.setOverscrollFooter(Skin.SkinColorModel.f1388i0);
         }
         changeTitleTabError();
     }
@@ -318,7 +318,7 @@ public abstract class Page extends DocumentManager.IGenerateRequest implements L
                 gVar.setSelectionFromTop(gVar.getHeaderViewsCount() + this.f1090x, this.f1089w);
             }
             if (isUnsucces()) {
-                this.tab.forumsListView.setOverscrollFooter(Skin.C0353a.f1388i0);
+                this.tab.forumsListView.setOverscrollFooter(Skin.SkinColorModel.f1388i0);
             }
             boolean z3 = isUnsucces() && m816T();
             this.tab.mainLayout.f800H = z3 && mo140Q() < mo141P();
@@ -332,7 +332,7 @@ public abstract class Page extends DocumentManager.IGenerateRequest implements L
     }
 
     public void m819N(int i, boolean z, String str) {
-        int i2 = Prefs.f1187y;
+        int i2 = Prefs.topicAction;
         if (i2 == 0) {
             if (z) {
                 Tab f1Var = new Tab(this.mainActivity);

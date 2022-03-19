@@ -51,7 +51,7 @@ public class MainLayout extends ViewGroup implements Animation.AnimationListener
     C0232l f815W;
     View f816a;
     C0230j f817a0;
-    TextView f818b;
+    TextView textView;
     C0231k f819b0;
     Widgets$CircleImageView f820c;
     Widgets$CircleImageView f821d;
@@ -161,7 +161,7 @@ public class MainLayout extends ViewGroup implements Animation.AnimationListener
                 invalidate();
             }
             if (z) {
-                ((MainActivity) getContext()).mainLayout.m859w(null);
+                ((MainActivity) getContext()).mainLayout.hideKeyboard(null);
             }
         }
 
@@ -433,17 +433,17 @@ public class MainLayout extends ViewGroup implements Animation.AnimationListener
         }
     }
 
-    public class RunnableC0228h implements Runnable {
-        RunnableC0228h() {
+    public class RunAnimation implements Runnable {
+        RunAnimation() {
         //    MainLayout.this = r1;
         }
 
         @Override
         public void run() {
-            if (4 == MainLayout.this.f818b.getVisibility() && MainLayout.this.f818b.getTag() != null) {
-                MainLayout.this.f818b.setVisibility(0);
+            if (4 == MainLayout.this.textView.getVisibility() && MainLayout.this.textView.getTag() != null) {
+                MainLayout.this.textView.setVisibility(0);
                 MainLayout mainLayout = MainLayout.this;
-                mainLayout.f818b.startAnimation(mainLayout.f841x);
+                mainLayout.textView.startAnimation(mainLayout.f841x);
             }
         }
     }
@@ -779,7 +779,7 @@ public class MainLayout extends ViewGroup implements Animation.AnimationListener
             if (1 == i3) {
                 if (abs3 > abs4 && abs3 > ((float) this.f839v)) {
                     float f3 = this.f837t;
-                    if (x < f3 && Prefs.f1140A && (f1Var3 = this.tab) != null && !f1Var3.f1450h && this.f800H) {
+                    if (x < f3 && Prefs.swipeNextprev && (f1Var3 = this.tab) != null && !f1Var3.f1450h && this.f800H) {
                         this.f836s = 8;
                         if (i >= 11) {
                             this.f821d.setAlpha(0.0f);
@@ -787,7 +787,7 @@ public class MainLayout extends ViewGroup implements Animation.AnimationListener
                         int height = (getHeight() - this.f821d.getMeasuredHeight()) / 2;
                         this.f821d.layout(getWidth(), height, getWidth() + this.f821d.getMeasuredWidth(), this.f821d.getMeasuredHeight() + height);
                         this.f821d.setVisibility(0);
-                    } else if (x > f3 && Prefs.f1140A && (f1Var2 = this.tab) != null && !f1Var2.f1450h && this.f799G) {
+                    } else if (x > f3 && Prefs.swipeNextprev && (f1Var2 = this.tab) != null && !f1Var2.f1450h && this.f799G) {
                         this.f836s = 9;
                         if (i >= 11) {
                             this.f820c.setAlpha(0.0f);
@@ -800,14 +800,14 @@ public class MainLayout extends ViewGroup implements Animation.AnimationListener
                     z = true;
                     z2 = true;
                 } else if (abs4 > abs3 && abs4 > ((float) this.f839v) && this.f801I && !this.f803K && !this.f813U && (f1Var = this.tab) != null && !f1Var.f1450h && (gVar = f1Var.forumsListView) != null && gVar.getChildCount() > 0 && (a0Var = this.tab.page) != null && a0Var.isUnsucces()) {
-                    if (y > this.f838u && Prefs.f1142C && this.tab.forumsListView.getFirstVisiblePosition() == 0 && this.tab.forumsListView.getChildAt(0).getTop() == 0) {
+                    if (y > this.f838u && Prefs.swipeRefreshTop && this.tab.forumsListView.getFirstVisiblePosition() == 0 && this.tab.forumsListView.getChildAt(0).getTop() == 0) {
                         this.f813U = true;
                         m878d(this);
                         m878d(this.f807O);
                         this.f838u = y;
                         this.f836s = 10;
                         this.f805M = 0.0f;
-                    } else if (y < this.f838u && Prefs.f1143D && this.tab.forumsListView.getLastVisiblePosition() == this.tab.page.getCount() && this.tab.page.getCount() > 0) {
+                    } else if (y < this.f838u && Prefs.swipeRefreshBottom && this.tab.forumsListView.getLastVisiblePosition() == this.tab.page.getCount() && this.tab.page.getCount() > 0) {
                         Tab.ForumsListView gVar2 = this.tab.forumsListView;
                         if (gVar2.getChildAt(gVar2.getChildCount() - 1).getBottom() == this.tab.forumsListView.getHeight()) {
                             this.f813U = true;
@@ -913,13 +913,13 @@ public class MainLayout extends ViewGroup implements Animation.AnimationListener
         float f = this.f833p;
         this.f812T = (int) (40.0f * f);
         this.f811S = f * 64.0f;
-        this.f802J = Skin.C0353a.f1374b0;
+        this.f802J = Skin.SkinColorModel.f1374b0;
         this.f807O = new Widgets$CircleImageView(getContext(), this.f802J, 20.0f);
         AnimateDrawable n1Var = new AnimateDrawable(getContext(), this);
         this.f810R = n1Var;
-        int i = Skin.C0353a.f1376c0;
-        int i2 = Skin.C0353a.f1378d0;
-        int i3 = Skin.C0353a.f1380e0;
+        int i = Skin.SkinColorModel.f1376c0;
+        int i2 = Skin.SkinColorModel.f1378d0;
+        int i3 = Skin.SkinColorModel.f1380e0;
         int i4 = 1;
         int[] iArr = new int[(i != 0 ? 1 : 0) + (i2 != 0 ? 1 : 0) + (i3 != 0 ? 1 : 0)];
         if (i != 0) {
@@ -1085,7 +1085,7 @@ public class MainLayout extends ViewGroup implements Animation.AnimationListener
     }
 
     public void m867o(boolean z) {
-        this.f816a.findViewById(R.id.bar_caption).setBackgroundDrawable(z ? null : this.f796D.skin.m736f(R.drawable.button_bg));
+        this.f816a.findViewById(R.id.bar_caption).setBackgroundDrawable(z ? null : this.f796D.skin.getSkinDrawable(R.drawable.button_bg));
         int i = 0;
         this.f827j.setVisibility(z ? 0 : 8);
         TextView textView = this.f826i;
@@ -1129,7 +1129,7 @@ public class MainLayout extends ViewGroup implements Animation.AnimationListener
     protected void onFinishInflate() {
         super.onFinishInflate();
         this.f816a = findViewById(R.id.actionBar);
-        this.f818b = findViewById(R.id.loadingText);
+        this.textView = findViewById(R.id.loadingText);
         this.f820c = findViewById(R.id.prev);
         this.f821d = findViewById(R.id.next);
         this.f822e = findViewById(R.id.fling);
@@ -1160,7 +1160,7 @@ public class MainLayout extends ViewGroup implements Animation.AnimationListener
         if (f1Var != null) {
             f1Var.layout(0, 0, getMeasuredWidth(), getMeasuredHeight());
         }
-        this.f818b.layout(0, getMeasuredHeight() - this.f818b.getMeasuredHeight(), getMeasuredWidth(), getMeasuredHeight());
+        this.textView.layout(0, getMeasuredHeight() - this.textView.getMeasuredHeight(), getMeasuredWidth(), getMeasuredHeight());
         m875g(z, i, i2, i3, i4);
     }
 
@@ -1231,7 +1231,7 @@ public class MainLayout extends ViewGroup implements Animation.AnimationListener
         this.f824g.findViewById(R.id.nav_top).setOnClickListener(new View$OnClickListenerC0222b());
     }
 
-    public void m859w(View view) {
+    public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) this.f796D.getSystemService("input_method");
         if (view != null) {
             view.post(new RunnableC0226f(this, view));
@@ -1243,10 +1243,10 @@ public class MainLayout extends ViewGroup implements Animation.AnimationListener
 
     public void showBageRunningStatus() {
         boolean z;
-        Page a0Var;
+        Page currentPage;
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
         Tab currentTab = this.tab;
-        if (currentTab == null || (a0Var = currentTab.page) == null || TextUtils.isEmpty(a0Var.f1092z)) {
+        if (currentTab == null || (currentPage = currentTab.page) == null || TextUtils.isEmpty(currentPage.f1092z)) {
             z = false;
         } else {
             spannableStringBuilder.append(this.tab.page.f1092z);
@@ -1268,9 +1268,9 @@ public class MainLayout extends ViewGroup implements Animation.AnimationListener
                         unused.printStackTrace();
                       //  ErrorReporter errorReporter = //ACRA.getErrorReporter();
                       //  errorReporter.handleSilentException(new Exception("Got " + valueAt.getClass().getCanonicalName() + " at " + i2 + "/" + sparseArray.size()));
-                        this.f818b.clearAnimation();
-                        this.f818b.setTag(null);
-                        this.f818b.setVisibility(4);
+                        this.textView.clearAnimation();
+                        this.textView.setTag(null);
+                        this.textView.setVisibility(4);
                         return;
                     }
                 }
@@ -1287,25 +1287,25 @@ public class MainLayout extends ViewGroup implements Animation.AnimationListener
                     }
                     int length = spannableStringBuilder.length();
                     spannableStringBuilder.append(String.format("[%02X:%d] ",
-                            U, DocumentManager.documentManager.f2766v));
+                            U, DocumentManager.documentManager.conNumber));
                     int status = DocumentManager.documentManager.conStatus;
-                    int i4 = 0xff808000;
+                    int textColor = 0xff808000;
                     if (status == 0) {
                         spannableStringBuilder.append("Не подключен");
-                        i4 = 0xff800000;
+                        textColor = 0xff800000;
                     } else if (1 == status) {
                         spannableStringBuilder.append("Подключаюсь");
                     } else if (2 == status) {
                         spannableStringBuilder.append("Настраиваюсь");
                     } else if (3 == status) {
                         spannableStringBuilder.append("Подключен");
-                        i4 = 0xff008000;
+                        textColor = 0xff008000;
                     } else if (4 == status) {
                         spannableStringBuilder.append("Проверяю");
                     } else {
-                        i4 = 0;
+                        textColor = 0;
                     }
-                    spannableStringBuilder.setSpan(new ForegroundColorSpan(i4), length, spannableStringBuilder.length(), 33);
+                    spannableStringBuilder.setSpan(new ForegroundColorSpan(textColor), length, spannableStringBuilder.length(), 33);
                     for (int i5 = 0; i5 < sparseArray.size(); i5++) {
                         DocumentManager.IGenerateRequest valueAt2 = sparseArray.valueAt(i5);
                         if (!TextUtils.isEmpty(valueAt2.statusMessage)) {
@@ -1325,14 +1325,14 @@ public class MainLayout extends ViewGroup implements Animation.AnimationListener
         if (!(10 == i6 || 11 == i6)) {
             m870l(z);
         }
-        this.f818b.setText(spannableStringBuilder);
+        this.textView.setText(spannableStringBuilder);
         if (spannableStringBuilder.length() <= 0) {
-            this.f818b.clearAnimation();
-            this.f818b.setTag(null);
-            this.f818b.setVisibility(4);
-        } else if (this.f818b.getTag() == null) {
-            this.f818b.setTag(1);
-            postDelayed(new RunnableC0228h(), z ? 3000 : 100);
+            this.textView.clearAnimation();
+            this.textView.setTag(null);
+            this.textView.setVisibility(4);
+        } else if (this.textView.getTag() == null) {
+            this.textView.setTag(1);
+            postDelayed(new RunAnimation(), z ? 3000 : 100);
         }
     }
 }

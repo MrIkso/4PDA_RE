@@ -193,7 +193,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
         void prepareResult(int status, Document uVar) {
             Document l;
             if (status == 0 && (l = uVar.getDocument(21)) != null && l.count() > 0) {
-                this.dlgSimple.editText.setCompoundDrawablesWithIntrinsicBounds(null, null, this.mainActivity.skin.m736f(R.drawable.ic_spinner_drop_down), null);
+                this.dlgSimple.editText.setCompoundDrawablesWithIntrinsicBounds(null, null, this.mainActivity.skin.getSkinDrawable(R.drawable.ic_spinner_drop_down), null);
                 this.dlgSimple.editText.setCompoundDrawablePadding((int) (this.mainActivity.f731b * 6.0f));
                 this.dlgSimple.editText.setOnTouchListener(new View$OnTouchListenerC0891a(l));
             }
@@ -238,47 +238,47 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
     }
 
     private class TopicInfoSesionsRequest extends MemberSessionsRequest {
-        BBDisplay f3057i;
+        BBDisplay bbDisplay;
 
         TopicInfoSesionsRequest(BBDisplay bBDisplay) {
             super(0, Page_Topic.this.topicId);
-            this.f3057i = bBDisplay;
+            this.bbDisplay = bBDisplay;
         }
 
         @Override
-        public void prepareResult(int status, Document uVar) {
-            int i2;
+        public void prepareResult(int status, Document document) {
+            int memberGroup;
             if (!Page_Topic.this.isLoading && status == 0) {
-                DocumentManager.MemberInfoModel L = DocumentManager.getMemberInfoModel();
-                boolean z = L != null && ((i2 = L.memberGroup) == 9 || i2 == 10 || i2 == 4);
-                Document l = uVar.getDocument(2);
+                DocumentManager.MemberInfoModel memberModel = DocumentManager.getMemberInfoModel();
+                boolean isAdmins = memberModel != null && ((memberGroup = memberModel.memberGroup) == 9 || memberGroup == 10 || memberGroup == 4);
+                Document usersListDocument = document.getDocument(2);
                 StringBuilder sb = new StringBuilder();
-                int intValue = uVar.getInt(0).intValue();
-                int intValue2 = uVar.getInt(1).intValue();
-                sb.append(intValue + "[/b], скрытых пользователей: [b]");
-                sb.append(intValue2 + "[/b]\n[/size]");
-                int d = l.count() + intValue + intValue2;
-                for (int i3 = 0; i3 < l.count(); i3++) {
-                    Document l2 = l.getDocument(i3);
-                    boolean z2 = l2.getInt(3).intValue() == 1;
-                    if (!z2 || (z2 && z)) {
-                        sb.append("[url=https://4pda.ru/forum/index.php?showuser=" + l2.getInt(0) + "]");
-                        sb.append("[color=" + Skin.C0353a.f1398n0[l2.getInt(2).intValue()] + "]");
-                        sb.append(l2.getString(1).replace("[", "&#91;").replace("]", "&#93;"));
-                        if (z2) {
-                            d--;
+                int guestUsers = document.getInt(0).intValue();
+                int hiddenUsers = document.getInt(1).intValue();
+                sb.append(guestUsers + "[/b], скрытых пользователей: [b]");
+                sb.append(hiddenUsers + "[/b]\n[/size]");
+                int allUsersCount = usersListDocument.count() + guestUsers + hiddenUsers;
+                for (int i = 0; i < usersListDocument.count(); i++) {
+                    Document userDocument = usersListDocument.getDocument(i);
+                    boolean isInActivate = userDocument.getInt(3).intValue() == 1;
+                    if (!isInActivate || (isInActivate && isAdmins)) {
+                        sb.append("[url=https://4pda.ru/forum/index.php?showuser=" + userDocument.getInt(0) + "]");
+                        sb.append("[color=" + Skin.SkinColorModel.f1398n0[userDocument.getInt(2).intValue()] + "]");
+                        sb.append(userDocument.getString(1).replace("[", "&#91;").replace("]", "&#93;"));
+                        if (isInActivate) {
+                            allUsersCount--;
                             sb.append("*");
                         }
                         sb.append("[/color][/url] ");
                     }
                 }
-                sb.insert(0, "[size=1][b]" + d + "[/b] чел. читают эту тему\nгостей: [b]");
+                sb.insert(0, "[size=1][b]" + allUsersCount + "[/b] чел. читают эту тему\nгостей: [b]");
                 BBString x = BBString.getBBString(sb.toString(), null);
                 BBString.C0674e eVar = (BBString.C0674e) x.f2246z.clone();
                 x.f2246z = eVar;
                 eVar.f2266j = 0;
                 eVar.f2265i = 0;
-                this.f3057i.setBBString(x);
+                this.bbDisplay.setBBString(x);
             }
         }
     }
@@ -431,7 +431,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
             public void onClick(View view) {
                 C0898f0 f0Var = C0898f0.this;
                 PostModel yVar = f0Var.f3062j;
-                API.ForumModifyRequest.m821p(yVar != null ? yVar.postId : 0, Page_Topic.this.f3023V, 3, ((Integer) this.f3070a.getTag()).intValue(), ((Integer) this.f3071b.getTag()).intValue(), Page_Topic.this, "объединение постов", "", null);
+                API.ForumModifyRequest.modifyForum(yVar != null ? yVar.postId : 0, Page_Topic.this.f3023V, 3, ((Integer) this.f3070a.getTag()).intValue(), ((Integer) this.f3071b.getTag()).intValue(), Page_Topic.this, "объединение постов", "", null);
             }
         }
 
@@ -666,7 +666,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
                     } else if (i3 == 31) {
                         Page_Topic.this.mo129f(this.f3075a, this.f3076b, this.f3077c);
                     } else if (i3 == 30) {
-                        Urls2.m676g(Page_Topic.this.mainActivity, this.f3076b.f2202I.get(this.f3077c.f543a).link);
+                        Urls2.visitPage(Page_Topic.this.mainActivity, this.f3076b.f2202I.get(this.f3077c.f543a).link);
                     } else if (i3 == 22) {
                         Page_Topic.this.mo129f(this.f3075a, this.f3076b, this.f3077c);
                     } else if (i3 == 28) {
@@ -690,13 +690,13 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
                         int i8 = R.style.Dialog_Light;
                         if (i3 == 18) {
                             MainActivity mainActivity2 = Page_Topic.this.mainActivity;
-                            if (!Skin.C0353a.f1392k0) {
+                            if (!Skin.SkinColorModel.f1392k0) {
                                 i8 = R.style.Dialog_Dark;
                             }
                             Dialog dialog = new Dialog(mainActivity2, i8);
                             dialog.requestWindowFeature(1);
                             dialog.setContentView(Page_Topic.this.mainActivity.getLayoutInflater().inflate(R.layout.dlg_reputation2, null));
-                            dialog.getWindow().setBackgroundDrawable(Page_Topic.this.mainActivity.skin.m736f(R.drawable.np_dialog));
+                            dialog.getWindow().setBackgroundDrawable(Page_Topic.this.mainActivity.skin.getSkinDrawable(R.drawable.np_dialog));
                             dialog.getWindow().setLayout(-1, -2);
                             dialog.setCanceledOnTouchOutside(true);
                             ((TextView) dialog.findViewById(R.id.repTitle)).setText("Изменение репутации " + this.f3078d.f3150c);
@@ -708,7 +708,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
                             textView2.setOnClickListener(new View$OnClickListenerC0909c(editText, dialog));
                             dialog.show();
                             CustomDialog.m623c(dialog);
-                            Page_Topic.this.mainActivity.mainLayout.m859w(editText);
+                            Page_Topic.this.mainActivity.mainLayout.hideKeyboard(editText);
                         } else if (i3 == 24) {
                             this.f3075a.m977d(this.f3077c.f545c, true);
                         } else if (i3 == 32) {
@@ -756,49 +756,49 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
                             }
                             Page_Topic.this.m128f0().m196y(Page_Topic.this.f3029b0, Page_Topic.this);
                         } else if (i3 == 7) {
-                            API.ForumModifyRequest.m821p(this.f3078d.postId, null, 1, 1, 1, Page_Topic.this, "закрепление поста", "ЗАКРЕПИТЬ", null);
+                            API.ForumModifyRequest.modifyForum(this.f3078d.postId, null, 1, 1, 1, Page_Topic.this, "закрепление поста", "ЗАКРЕПИТЬ", null);
                         } else if (i3 == 8) {
-                            API.ForumModifyRequest.m821p(this.f3078d.postId, null, 1, 1, 0, Page_Topic.this, "открепление поста", "ОТКРЕПИТЬ", null);
+                            API.ForumModifyRequest.modifyForum(this.f3078d.postId, null, 1, 1, 0, Page_Topic.this, "открепление поста", "ОТКРЕПИТЬ", null);
                         } else if (i3 == 12) {
                             int i9 = this.f3078d.postId;
                             Page_Topic x0Var4 = Page_Topic.this;
-                            API.ForumModifyRequest.m821p(i9, x0Var4.f3023V, 4, 0, 0, x0Var4, "удаление постов", "УДАЛИТЬ", null);
+                            API.ForumModifyRequest.modifyForum(i9, x0Var4.f3023V, 4, 0, 0, x0Var4, "удаление постов", "УДАЛИТЬ", null);
                         } else if (i3 == 35) {
                             int i10 = this.f3078d.postId;
                             Page_Topic x0Var5 = Page_Topic.this;
-                            API.ForumModifyRequest.m821p(i10, x0Var5.f3023V, 5, 0, 0, x0Var5, "восстановление постов", "ВОССТАНОВИТЬ", null);
+                            API.ForumModifyRequest.modifyForum(i10, x0Var5.f3023V, 5, 0, 0, x0Var5, "восстановление постов", "ВОССТАНОВИТЬ", null);
                         } else if (i3 == 13) {
                             new C0898f0(this.f3078d).show(true, true, true);
                         } else if (i3 == 15) {
                             int i11 = this.f3078d.postId;
                             Page_Topic x0Var6 = Page_Topic.this;
-                            API.ForumModifyRequest.m821p(i11, x0Var6.f3023V, 1, 2, 2, x0Var6, "скрытие постов", "СКРЫТЬ", null);
+                            API.ForumModifyRequest.modifyForum(i11, x0Var6.f3023V, 1, 2, 2, x0Var6, "скрытие постов", "СКРЫТЬ", null);
                         } else if (i3 == 14) {
                             int i12 = this.f3078d.postId;
                             Page_Topic x0Var7 = Page_Topic.this;
-                            API.ForumModifyRequest.m821p(i12, x0Var7.f3023V, 1, 2, 0, x0Var7, "отображение постов", "ПОКАЗАТЬ", null);
+                            API.ForumModifyRequest.modifyForum(i12, x0Var7.f3023V, 1, 2, 0, x0Var7, "отображение постов", "ПОКАЗАТЬ", null);
                         } else if (i3 == 6) {
                             Page_Topic x0Var8 = Page_Topic.this;
                             Page_Topic.movePosts(x0Var8, x0Var8.f3023V, this.f3078d.postId);
                         } else if (i3 == 38) {
                             int i13 = this.f3078d.postId;
                             Page_Topic x0Var9 = Page_Topic.this;
-                            API.ForumModifyRequest.m821p(i13, x0Var9.f3023V, 1, 2048, 2048, x0Var9, "защиту поста", "ЗАЩИТИТЬ", null);
+                            API.ForumModifyRequest.modifyForum(i13, x0Var9.f3023V, 1, 2048, 2048, x0Var9, "защиту поста", "ЗАЩИТИТЬ", null);
                         } else if (i3 == 39) {
                             int i14 = this.f3078d.postId;
                             Page_Topic x0Var10 = Page_Topic.this;
-                            API.ForumModifyRequest.m821p(i14, x0Var10.f3023V, 1, 2048, 0, x0Var10, "снятие защиты поста", "СНЯТЬ", null);
+                            API.ForumModifyRequest.modifyForum(i14, x0Var10.f3023V, 1, 2048, 0, x0Var10, "снятие защиты поста", "СНЯТЬ", null);
                         } else if (i3 == 17) {
                             Util.copyToClipboard(Page_Topic.this.mainActivity, "https://4pda.ru/" + Page_Topic.this.m108y0(this.f3078d.postId, i2), "Ссылка скопирована в буфер обмена");
                         } else if (i3 == 19) {
                             MainActivity mainActivity3 = Page_Topic.this.mainActivity;
-                            if (!Skin.C0353a.f1392k0) {
+                            if (!Skin.SkinColorModel.f1392k0) {
                                 i8 = R.style.Dialog_Dark;
                             }
                             Dialog dialog2 = new Dialog(mainActivity3, i8);
                             dialog2.requestWindowFeature(1);
                             dialog2.setContentView(R.layout.dlg_karma);
-                            dialog2.getWindow().setBackgroundDrawable(Page_Topic.this.mainActivity.skin.m736f(R.drawable.np_dialog));
+                            dialog2.getWindow().setBackgroundDrawable(Page_Topic.this.mainActivity.skin.getSkinDrawable(R.drawable.np_dialog));
                             dialog2.getWindow().setLayout(-1, -2);
                             dialog2.setCanceledOnTouchOutside(true);
                             dialog2.findViewById(R.id.karma_down).setOnClickListener(new KarmaDownOnClickListenerC0911e(dialog2));
@@ -891,7 +891,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
                 }
             }
             if (i != 0) {
-                API.ForumModifyRequest.m821p(this.f3100c, this.f3101d, 2, i, 0, this.f3099b, "перемещение постов", "", null);
+                API.ForumModifyRequest.modifyForum(this.f3100c, this.f3101d, 2, i, 0, this.f3099b, "перемещение постов", "", null);
             } else {
                 Toast.makeText(this.f3099b.mainActivity, "Неправильная ссылка", 1).show();
             }
@@ -942,7 +942,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
                 if (i != 0) {
                     int i2 = Page_Topic.this.topicId;
                     boolean checked = this.f3105a.checkboxTextView.getChecked();
-                    API.ForumModifyRequest.m821p(i2, null, 12, i, checked ? 1 : 0, Page_Topic.this, "перемещение темы", "", null);
+                    API.ForumModifyRequest.modifyForum(i2, null, 12, i, checked ? 1 : 0, Page_Topic.this, "перемещение темы", "", null);
                     return;
                 }
                 Toast.makeText(Page_Topic.this.mainActivity, "Неправильная ссылка", 1).show();
@@ -1040,8 +1040,8 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
 
             @Override
             public void onClick(View view) {
-                Integer b = this.f3114a.f2451k.m844b();
-                API.ForumModifyRequest.m821p(Page_Topic.this.topicId, null, 16, b != null ? b.intValue() : 0, 0, Page_Topic.this, "сохранение куратора", "", null);
+                Integer b = this.f3114a.f2451k.getMemberId();
+                API.ForumModifyRequest.modifyForum(Page_Topic.this.topicId, null, 16, b != null ? b.intValue() : 0, 0, Page_Topic.this, "сохранение куратора", "", null);
             }
         }
 
@@ -1054,27 +1054,27 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
             public void mo49a(int i, int i2, int i3) {
                 if (i3 == 12) {
                     Page_Topic x0Var = Page_Topic.this;
-                    API.ForumModifyRequest.m821p(0, x0Var.f3023V, 4, 0, 0, x0Var, "удаление постов", "УДАЛИТЬ", null);
+                    API.ForumModifyRequest.modifyForum(0, x0Var.f3023V, 4, 0, 0, x0Var, "удаление постов", "УДАЛИТЬ", null);
                 } else if (i3 == 35) {
                     Page_Topic x0Var2 = Page_Topic.this;
-                    API.ForumModifyRequest.m821p(0, x0Var2.f3023V, 5, 0, 0, x0Var2, "восстановление постов", "ВОССТАНОВИТЬ", null);
+                    API.ForumModifyRequest.modifyForum(0, x0Var2.f3023V, 5, 0, 0, x0Var2, "восстановление постов", "ВОССТАНОВИТЬ", null);
                 } else if (i3 == 13) {
                     new C0898f0(null).show(true, true, true);
                 } else if (i3 == 15) {
                     Page_Topic x0Var3 = Page_Topic.this;
-                    API.ForumModifyRequest.m821p(0, x0Var3.f3023V, 1, 2, 2, x0Var3, "скрытие постов", "СКРЫТЬ", null);
+                    API.ForumModifyRequest.modifyForum(0, x0Var3.f3023V, 1, 2, 2, x0Var3, "скрытие постов", "СКРЫТЬ", null);
                 } else if (i3 == 14) {
                     Page_Topic x0Var4 = Page_Topic.this;
-                    API.ForumModifyRequest.m821p(0, x0Var4.f3023V, 1, 2, 0, x0Var4, "отображение постов", "ПОКАЗАТЬ", null);
+                    API.ForumModifyRequest.modifyForum(0, x0Var4.f3023V, 1, 2, 0, x0Var4, "отображение постов", "ПОКАЗАТЬ", null);
                 } else if (i3 == 6) {
                     Page_Topic x0Var5 = Page_Topic.this;
                     Page_Topic.movePosts(x0Var5, x0Var5.f3023V, 0);
                 } else if (i3 == 38) {
                     Page_Topic x0Var6 = Page_Topic.this;
-                    API.ForumModifyRequest.m821p(0, x0Var6.f3023V, 1, 2048, 2048, x0Var6, "защиту постов", "ЗАЩИТИТЬ", null);
+                    API.ForumModifyRequest.modifyForum(0, x0Var6.f3023V, 1, 2048, 2048, x0Var6, "защиту постов", "ЗАЩИТИТЬ", null);
                 } else if (i3 == 39) {
                     Page_Topic x0Var7 = Page_Topic.this;
-                    API.ForumModifyRequest.m821p(0, x0Var7.f3023V, 1, 2048, 0, x0Var7, "снятие защиты постов", "СНЯТЬ", null);
+                    API.ForumModifyRequest.modifyForum(0, x0Var7.f3023V, 1, 2048, 0, x0Var7, "снятие защиты постов", "СНЯТЬ", null);
                 }
             }
         }
@@ -1099,7 +1099,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
             @Override
             public void onClick(View view) {
                 MainActivity mainActivity = Page_Topic.this.mainActivity;
-                Urls2.m676g(mainActivity, "https://4pda.ru/" + Page_Topic.this.getLink());
+                Urls2.visitPage(mainActivity, "https://4pda.ru/" + Page_Topic.this.getLink());
             }
         }
 
@@ -1242,10 +1242,10 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
             boolean z = false;
             boolean z2 = true;
             if (i3 == 6) {
-                Dialog dialog = new Dialog(Page_Topic.this.mainActivity, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+                Dialog dialog = new Dialog(Page_Topic.this.mainActivity, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
                 dialog.requestWindowFeature(1);
                 dialog.setContentView(R.layout.dlg_topicinfo);
-                dialog.getWindow().setBackgroundDrawable(Page_Topic.this.mainActivity.skin.m736f(R.drawable.np_dialog));
+                dialog.getWindow().setBackgroundDrawable(Page_Topic.this.mainActivity.skin.getSkinDrawable(R.drawable.np_dialog));
                 dialog.getWindow().setLayout(-1, -2);
                 dialog.setCanceledOnTouchOutside(true);
                 ((TextView) dialog.findViewById(R.id.topicName)).setText(Page_Topic.this.title);
@@ -1302,22 +1302,22 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
                         z2 = false;
                     }
                     Page_Topic x0Var = Page_Topic.this;
-                    API.ForumModifyRequest.m821p(x0Var.topicId, null, 11, 8, z2 ? 8 : 0, x0Var, z2 ? "подписка на тему" : "отписка от темы", "", new RunnableC0929l(z2));
+                    API.ForumModifyRequest.modifyForum(x0Var.topicId, null, 11, 8, z2 ? 8 : 0, x0Var, z2 ? "подписка на тему" : "отписка от темы", "", new RunnableC0929l(z2));
                 } else if (i3 == 13 || i3 == 14) {
                     if (i3 != 14) {
                         z2 = false;
                     }
                     Page_Topic x0Var2 = Page_Topic.this;
-                    API.ForumModifyRequest.m821p(x0Var2.topicId, null, 11, 4, z2 ? 4 : 0, x0Var2, z2 ? "закрытие темы" : "открытие темы", "СОГЛАСЕН", new RunnableC0930m(z2));
+                    API.ForumModifyRequest.modifyForum(x0Var2.topicId, null, 11, 4, z2 ? 4 : 0, x0Var2, z2 ? "закрытие темы" : "открытие темы", "СОГЛАСЕН", new RunnableC0930m(z2));
                 } else if (i3 == 16 || i3 == 15) {
                     if (i3 != 16) {
                         z2 = false;
                     }
                     Page_Topic x0Var3 = Page_Topic.this;
-                    API.ForumModifyRequest.m821p(x0Var3.topicId, null, 11, 2, z2 ? 2 : 0, x0Var3, z2 ? "скрытие темы" : "отображение темы", "СОГЛАСЕН", new RunnableC0931n(z2));
+                    API.ForumModifyRequest.modifyForum(x0Var3.topicId, null, 11, 2, z2 ? 2 : 0, x0Var3, z2 ? "скрытие темы" : "отображение темы", "СОГЛАСЕН", new RunnableC0931n(z2));
                 } else if (i3 == 4) {
                     Page_Topic x0Var4 = Page_Topic.this;
-                    API.ForumModifyRequest.m821p(x0Var4.topicId, null, 14, 0, 0, x0Var4, "удаление темы", "УДАЛИТЬ", null);
+                    API.ForumModifyRequest.modifyForum(x0Var4.topicId, null, 14, 0, 0, x0Var4, "удаление темы", "УДАЛИТЬ", null);
                 } else if (i3 == 17) {
                     DlgSimple q1Var = new DlgSimple(Page_Topic.this.mainActivity, "Введите ссылку на форум", false, null, null);
                     q1Var.checkboxTextView.setText("Оставить ссылку");
@@ -1337,7 +1337,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
                 } else if (i3 == 3) {
                     Page_Topic x0Var6 = Page_Topic.this;
                     MainActivity mainActivity = x0Var6.mainActivity;
-                    int i4 = x0Var6.topicId;
+                    int topicId = x0Var6.topicId;
                     String c = Util.C0427h.UnEscapeString(x0Var6.currentDocument.getString(2));
                     String c2 = Util.C0427h.UnEscapeString(Page_Topic.this.currentDocument.getString(3));
                     Page_Topic x0Var7 = Page_Topic.this;
@@ -1349,7 +1349,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
                     if (uVar3 != null) {
                         uVar = uVar3.getDocument(3);
                     }
-                    new DlgEditTopic(mainActivity, i4, c, c2, z3, true, z4, n2, uVar).show(true, true, true);
+                    new DlgEditTopic(mainActivity, topicId, c, c2, z3, true, z4, n2, uVar).show(true, true, true);
                 } else if (i3 == 23) {
                     String u = Page_Topic.this.getLink();
                     String z0 = Page_Topic.this.m106z0();
@@ -1382,7 +1382,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
                     int intValue = Page_Topic.this.currentDocument.getInt(8).intValue();
                     if (intValue > 0) {
                         String c3 = Util.C0427h.UnEscapeString(Page_Topic.this.currentDocument.getString(9));
-                        p1Var.f2451k.m845a(intValue, c3, true);
+                        p1Var.f2451k.setData(intValue, c3, true);
                         p1Var.f2451k.setSelection(0, c3.length());
                     }
                     p1Var.m620f(new View$OnClickListenerC0922e(p1Var), true);
@@ -1631,11 +1631,11 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
                         BBDisplay bBDisplay = new BBDisplay(Page_Topic.this.mainActivity);
                         scrollView.addView(bBDisplay);
                         bBDisplay.setBBString(x);
-                        Dialog dialog = new Dialog(Page_Topic.this.mainActivity, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+                        Dialog dialog = new Dialog(Page_Topic.this.mainActivity, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
                         bBDisplay.setCallback(new Util.C0423e(Page_Topic.this, dialog));
                         dialog.requestWindowFeature(1);
                         dialog.setContentView(scrollView);
-                        dialog.getWindow().setBackgroundDrawable(Page_Topic.this.mainActivity.skin.m736f(R.drawable.np_dialog));
+                        dialog.getWindow().setBackgroundDrawable(Page_Topic.this.mainActivity.skin.getSkinDrawable(R.drawable.np_dialog));
                         dialog.getWindow().setLayout(-1, -2);
                         dialog.setCanceledOnTouchOutside(true);
                         dialog.show();
@@ -1698,7 +1698,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
             yVar.f3150c = Util.C0427h.UnEscapeString(document.getString(3));
             int intValue = document.getInt(4);
             yVar.f3151d = intValue;
-            yVar.f3152e = Util.C0424f.m646c(Skin.C0353a.f1398n0[intValue], Skin.C0353a.f1370Z);
+            yVar.f3152e = Util.C0424f.m646c(Skin.SkinColorModel.f1398n0[intValue], Skin.SkinColorModel.f1370Z);
             yVar.f3153f = document.getInt(6).toString();
             yVar.f3154g = document.getString(9);
             yVar.f3155h = document.getInt(5);
@@ -1747,7 +1747,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
                 str2 = str2 + str3 + "[/color][/sub][/left]";
             }
             String n3 = document.getString(10);
-            if (Prefs.f1175m && !TextUtils.isEmpty(n3)) {
+            if (Prefs.postShowSign && !TextUtils.isEmpty(n3)) {
                 str2 = str2 + "[left][size=1][color=border_line][seporator][/color]\n[/size][/left][size=1]" + n3 + "[/size]";
             }
             DocumentManager.MemberInfoModel L = DocumentManager.getMemberInfoModel();
@@ -1875,60 +1875,60 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
         }
 
         @Override
-        public void prepareResult(int status, Document uVar) {
-            String str;
-            Page_Topic x0Var = Page_Topic.this;
-            if (!x0Var.isLoading) {
+        public void prepareResult(int status, Document document) {
+            String message;
+            Page_Topic pageTopic = Page_Topic.this;
+            if (!pageTopic.isLoading) {
                 if (status == 0) {
-                    x0Var.f3028a0.remove(this.postId);
+                    pageTopic.f3028a0.remove(this.postId);
                     if (this.postId == 0 && (this.postFlags & 1) != 0) {
-                        Page_Topic.this.f3028a0.remove(uVar.getInt(2));
+                        Page_Topic.this.f3028a0.remove(document.getInt(2));
                     }
                     Page_Topic x0Var2 = Page_Topic.this;
                     if (x0Var2.f3008G <= 0) {
-                        int intValue = uVar.getInt(1);
-                        int i2 = Prefs.f1179q;
-                        int i3 = (intValue / i2) * i2;
-                        int intValue2 = uVar.getInt(0);
+                        int intValue = document.getInt(1);
+                        int i2 = Prefs.memberPostsPerPage;
+                        int topicPage = (intValue / i2) * i2;
+                        int intValue2 = document.getInt(0);
                         Page_Topic x0Var3 = Page_Topic.this;
-                        if (intValue2 == x0Var3.topicId && i3 == x0Var3.topicPage) {
-                            x0Var3.f3012K = uVar.getInt(2).intValue();
+                        if (intValue2 == x0Var3.topicId && topicPage == x0Var3.topicPage) {
+                            x0Var3.f3012K = document.getInt(2).intValue();
                             Page_Topic.this.tabReload();
                         } else {
-                            x0Var3.tab.addPage(new Page_Topic(Page_Topic.this.mainActivity, uVar.getInt(0).intValue(), i3, 0, uVar.getInt(2).intValue(), null, Page_Topic.this.title));
+                            x0Var3.tab.addPage(new Page_Topic(Page_Topic.this.mainActivity, document.getInt(0).intValue(), topicPage, 0, document.getInt(2).intValue(), null, Page_Topic.this.title));
                         }
                     } else if (this.postId != 0) {
-                        x0Var2.f3012K = uVar.getInt(2).intValue();
+                        x0Var2.f3012K = document.getInt(2).intValue();
                         Page_Topic.this.tabReload();
                     } else {
-                        API.ForumTopicPostRequest lVar = new API.ForumTopicPostRequest(x0Var2.mainActivity, 3, uVar.getInt(2).intValue());
-                        lVar.m825t(uVar.getInt(0).intValue());
-                        lVar.m823v(Page_Topic.this.title);
-                        lVar.m824u(Page_Topic.this.tab);
-                        lVar.m822w(Page_Topic.this.f3008G);
-                        lVar.m827r(true);
-                        DocumentManager.getResultRequest(lVar);
+                        API.ForumTopicPostRequest postReqest = new API.ForumTopicPostRequest(x0Var2.mainActivity, 3, document.getInt(2).intValue());
+                        postReqest.m825t(document.getInt(0).intValue());
+                        postReqest.m823v(Page_Topic.this.title);
+                        postReqest.m824u(Page_Topic.this.tab);
+                        postReqest.m822w(Page_Topic.this.f3008G);
+                        postReqest.m827r(true);
+                        DocumentManager.getResultRequest(postReqest);
                     }
-                    str = "Пост отправлен";
+                    message = "Пост отправлен";
                 } else if (status == 4) {
-                    x0Var.f3028a0.remove(this.postId);
-                    str = "Пост отправлен на премодерацию";
+                    pageTopic.f3028a0.remove(this.postId);
+                    message = "Пост отправлен на премодерацию";
                 } else if (status == 5) {
-                    str = "Слишком много букв";
+                    message = "Слишком много букв";
                 } else if (status == 6) {
-                    str = "Этот пост уже был отправлен";
+                    message = "Этот пост уже был отправлен";
                 } else if (status == 7) {
                     DlgSimple q1Var = new DlgSimple(Page_Topic.this.mainActivity, "Прикрепить этот пост к предыдущему?", false, "ДА", "НЕТ");
                     q1Var.editText.setVisibility(8);
                     q1Var.m620f(new View$OnClickListenerC0945a(), true);
                     q1Var.m621e(new View$OnClickListenerC0946b(), true);
                     q1Var.show(true, true, true);
-                    str = null;
+                    message = null;
                 } else {
-                    str = "Ошибка отправки поста";
+                    message = "Ошибка отправки поста";
                 }
-                if (str != null) {
-                    Toast.makeText(Page_Topic.this.mainActivity, str, 0).show();
+                if (message != null) {
+                    Toast.makeText(Page_Topic.this.mainActivity, message, 0).show();
                 }
             }
         }
@@ -1943,14 +1943,14 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
         this.topicPage = topicPage;
         this.f3008G = i3;
         this.iconId = R.drawable.ic_nav_forum;
-        this.title = String.format("тема %d: %d(%d)", topicId, topicPage, Prefs.f1179q);
+        this.title = String.format("тема %d: %d(%d)", topicId, topicPage, Prefs.memberPostsPerPage);
         this.statusMessage = "Загрузка темы " + this.topicId;
         if (this.topicPage == 0) {
             this.f3015N = false;
         } else {
-            this.f3015N = Prefs.f1173k;
+            this.f3015N = Prefs.topicHideHeader;
         }
-        this.f3016O = Prefs.f1174l;
+        this.f3016O = Prefs.topicHidePoll;
         SparseArray<C0888b0> sparseArray = f3004k0.get(this.topicId);
         this.f3023V = sparseArray;
         if (sparseArray == null) {
@@ -2231,19 +2231,19 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
     @Override
     int mo141P() {
         int i = this.f3009H;
-        int i2 = Prefs.f1179q;
+        int i2 = Prefs.memberPostsPerPage;
         int i3 = ((i + i2) - 1) / i2;
         return i3 == 0 ? i3 + 1 : i3;
     }
 
     @Override
     int mo140Q() {
-        return (this.topicPage / Prefs.f1179q) + 1;
+        return (this.topicPage / Prefs.memberPostsPerPage) + 1;
     }
 
     @Override
     Page mo139R(int i) {
-        return new Page_Topic(this.mainActivity, this.topicId, (i - 1) * Prefs.f1179q, this.f3008G, 0, null, this.title);
+        return new Page_Topic(this.mainActivity, this.topicId, (i - 1) * Prefs.memberPostsPerPage, this.f3008G, 0, null, this.title);
     }
 
     @Override
@@ -2375,7 +2375,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
         if (i7 >= 0) {
             BBString.C0681k kVar = pVar.f2202I.get(i7);
             o1Var = o1Var3;
-            o1Var3.addMenuItem(0, 0, 0, Util.C0427h.m640d(kVar.link), true, false);
+            o1Var3.addMenuItem(0, 0, 0, Util.C0427h.urlDecode(kVar.link), true, false);
             o1Var.addMenuItem(0, 0, 26, "Копировать ссылку");
             if (Urls2.is4pdaHost(kVar.link)) {
                 o1Var.addMenuItem(0, 0, 21, "Открыть в новой вкладке");
@@ -2683,7 +2683,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
         int i7 = 0;
         textView.setText(this.f3021T.getString(0));
         textView.setTextSize(20.0f);
-        textView.setTextColor(Skin.C0353a.f1365U);
+        textView.setTextColor(Skin.SkinColorModel.mainTextColor);
         textView.setId(1);
         float f2 = 16.0f;
         int i8 = (int) (f * 16.0f);
@@ -2708,7 +2708,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
                     TextView textView2 = new TextView(this.mainActivity);
                     textView2.setText(n);
                     textView2.setTextSize(f2);
-                    textView2.setTextColor(Skin.C0353a.f1365U);
+                    textView2.setTextColor(Skin.SkinColorModel.mainTextColor);
                     textView2.setTypeface(typeface, 1);
                     int i13 = i12 + 1;
                     textView2.setId(i13);
@@ -2755,9 +2755,9 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
                         z = z2;
                         RadioButton radioButton = new RadioButton(this.mainActivity);
                         radioButton.setButtonDrawable(null);
-                        radioButton.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.m736f(R.drawable.radio_button), null, null, null);
-                        radioButton.setTextColor(Skin.C0353a.f1365U);
-                        radioButton.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.button_bg));
+                        radioButton.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.getSkinDrawable(R.drawable.radio_button), null, null, null);
+                        radioButton.setTextColor(Skin.SkinColorModel.mainTextColor);
+                        radioButton.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.button_bg));
                         radioButton.setText(l3.getString(i14));
                         radioButton.setTextSize(15.0f);
                         int i15 = i12 + 1;
@@ -2781,10 +2781,10 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
                         widgets$CheckboxTextView.setTextSize(15.0f);
                         i10 = i12 + 1;
                         widgets$CheckboxTextView.setId(i10);
-                        widgets$CheckboxTextView.setTextColor(Skin.C0353a.f1365U);
+                        widgets$CheckboxTextView.setTextColor(Skin.SkinColorModel.mainTextColor);
                         widgets$CheckboxTextView.setGravity(16);
                         radioGroup2 = radioGroup;
-                        widgets$CheckboxTextView.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.checkbox_left));
+                        widgets$CheckboxTextView.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.checkbox_left));
                         int i18 = (int) (f * 4.0f);
                         widgets$CheckboxTextView.setPadding(i8, i18, 0, i18);
                         relativeLayout.addView(widgets$CheckboxTextView);
@@ -2815,7 +2815,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
             int i19 = i12 + 1;
             textView3.setId(i19);
             textView3.setPadding(0, (int) (f * 4.0f), 0, i9);
-            textView3.setTextColor(Skin.C0353a.f1386h0);
+            textView3.setTextColor(Skin.SkinColorModel.labelTextCsl);
             relativeLayout.addView(textView3);
             RelativeLayout.LayoutParams layoutParams5 = (RelativeLayout.LayoutParams) textView3.getLayoutParams();
             layoutParams5.addRule(14);
@@ -2826,11 +2826,11 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
             textView4.setTextSize(16.0f);
             textView4.setTypeface(null, 1);
             textView4.setGravity(17);
-            textView4.setTextColor(Skin.C0353a.f1382f0);
+            textView4.setTextColor(Skin.SkinColorModel.btnTextColor);
             i2 = i19 + 1;
             textView4.setId(i2);
             textView4.setPadding(i8, 0, i8, 0);
-            textView4.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.button_bg));
+            textView4.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.button_bg));
             relativeLayout.addView(textView4);
             RelativeLayout.LayoutParams layoutParams6 = (RelativeLayout.LayoutParams) textView4.getLayoutParams();
             layoutParams6.addRule(9);
@@ -2847,9 +2847,9 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
             textView5.setTextSize(16.0f);
             textView5.setTypeface(null, 1);
             textView5.setGravity(17);
-            textView5.setTextColor(Skin.C0353a.f1382f0);
+            textView5.setTextColor(Skin.SkinColorModel.btnTextColor);
             textView5.setPadding(i8, 0, i8, 0);
-            textView5.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.button_bg));
+            textView5.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.button_bg));
             relativeLayout.addView(textView5);
             RelativeLayout.LayoutParams layoutParams7 = (RelativeLayout.LayoutParams) textView5.getLayoutParams();
             layoutParams7.addRule(11);
@@ -2866,7 +2866,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
                 if (!TextUtils.isEmpty(n2)) {
                     TextView textView6 = new TextView(this.mainActivity);
                     textView6.setText(n2);
-                    textView6.setTextColor(Skin.C0353a.f1365U);
+                    textView6.setTextColor(Skin.SkinColorModel.mainTextColor);
                     textView6.setTextSize(16.0f);
                     textView6.setTypeface(null, 1);
                     i23++;
@@ -2887,7 +2887,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
                     TextView textView7 = new TextView(this.mainActivity);
                     textView7.setText(l6.getString(i25));
                     textView7.setTextSize(15.0f);
-                    textView7.setTextColor(Skin.C0353a.f1365U);
+                    textView7.setTextColor(Skin.SkinColorModel.mainTextColor);
                     int i26 = i23 + 1;
                     textView7.setId(i26);
                     textView7.setGravity(16);
@@ -2902,7 +2902,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
                     TextView textView8 = new TextView(this.mainActivity);
                     textView8.setText(m.toString());
                     textView8.setTextSize(16.0f);
-                    textView8.setTextColor(Skin.C0353a.f1365U);
+                    textView8.setTextColor(Skin.SkinColorModel.mainTextColor);
                     textView8.setTypeface(null, 1);
                     i23 = i26 + 1;
                     textView8.setId(i23);
@@ -2915,7 +2915,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
                     layoutParams10.width = (int) (50.0f * f);
                     layoutParams10.leftMargin = i8;
                     View view2 = new View(this.mainActivity);
-                    view2.setBackgroundColor(Skin.C0353a.f1365U);
+                    view2.setBackgroundColor(Skin.SkinColorModel.mainTextColor);
                     relativeLayout.addView(view2);
                     RelativeLayout.LayoutParams layoutParams11 = (RelativeLayout.LayoutParams) view2.getLayoutParams();
                     layoutParams11.addRule(8, i23);
@@ -2936,7 +2936,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
                     objArr[0] = Float.valueOf(intValue > 0 ? (((float) m.intValue()) * 100.0f) / ((float) intValue) : 0.0f);
                     textView9.setText(String.format("%.2f%%", objArr));
                     textView9.setTextSize(16.0f);
-                    textView9.setTextColor(Skin.C0353a.f1365U);
+                    textView9.setTextColor(Skin.SkinColorModel.mainTextColor);
                     textView9.setGravity(21);
                     textView9.setPadding(i28, 0, i28, i27);
                     relativeLayout.addView(textView9);
@@ -2958,7 +2958,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
             i2 = i23 + 1;
             textView10.setId(i2);
             textView10.setPadding(0, (int) (f * 4.0f), 0, i9);
-            textView10.setTextColor(Skin.C0353a.f1386h0);
+            textView10.setTextColor(Skin.SkinColorModel.labelTextCsl);
             relativeLayout.addView(textView10);
             RelativeLayout.LayoutParams layoutParams13 = (RelativeLayout.LayoutParams) textView10.getLayoutParams();
             layoutParams13.addRule(14);
@@ -2970,11 +2970,11 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
                 textView11.setTextSize(16.0f);
                 textView11.setTypeface(null, 1);
                 textView11.setGravity(17);
-                textView11.setTextColor(Skin.C0353a.f1382f0);
+                textView11.setTextColor(Skin.SkinColorModel.btnTextColor);
                 i2++;
                 textView11.setId(i2);
                 textView11.setPadding(i8, 0, i8, 0);
-                textView11.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.button_bg));
+                textView11.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.button_bg));
                 relativeLayout.addView(textView11);
                 RelativeLayout.LayoutParams layoutParams14 = (RelativeLayout.LayoutParams) textView11.getLayoutParams();
                 layoutParams14.addRule(14);
@@ -2985,7 +2985,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
             }
         }
         View view3 = new View(this.mainActivity);
-        view3.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.card_sep));
+        view3.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.card_sep));
         view3.setLayoutParams(new AbsListView.LayoutParams(-1, i8));
         int i29 = i2 + 1;
         view3.setId(i29);
@@ -3147,7 +3147,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
             } else if (itemViewType == 1) {
                 view2 = new View(this.mainActivity);
                 view2.setLayoutParams(new AbsListView.LayoutParams(-1, (int) (this.mainActivity.f731b * 16.0f)));
-                view2.setBackgroundDrawable(Skin.C0353a.f1388i0.getConstantState().newDrawable());
+                view2.setBackgroundDrawable(Skin.SkinColorModel.f1388i0.getConstantState().newDrawable());
             } else if (itemViewType == 2) {
                 view2 = this.mainActivity.getLayoutInflater().inflate(R.layout.topicbuttons, viewGroup, false);
                 view2.findViewById(R.id.topicButtonsPoll).setOnClickListener(new View$OnClickListenerC0933o());
@@ -3159,11 +3159,11 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
             } else if (itemViewType == 5 || itemViewType == 6 || itemViewType == 7) {
                 view2 = this.mainActivity.getLayoutInflater().inflate(R.layout.post, viewGroup, false);
                 if (itemViewType == 6) {
-                    view2.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.post_hidden));
+                    view2.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.post_hidden));
                 } else if (itemViewType == 7) {
-                    view2.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.post_deleted));
+                    view2.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.post_deleted));
                 } else {
-                    view2.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.post_normal));
+                    view2.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.post_normal));
                 }
                 view2.setOnLongClickListener(new View$OnLongClickListenerC0935q());
                 BBDisplay bBDisplay = view2.findViewById(R.id.PostCode);
@@ -3199,19 +3199,19 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
             view2.setTag(yVar);
             TextView textView4 = view2.findViewById(R.id.authorName);
             textView4.setText(yVar.f3150c);
-            textView4.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.m736f((System.currentTimeMillis() / 1000) - ((long) yVar.f3155h) < 900 ? R.drawable.ic_online : R.drawable.ic_offline), null, null, null);
+            textView4.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.getSkinDrawable((System.currentTimeMillis() / 1000) - ((long) yVar.f3155h) < 900 ? R.drawable.ic_online : R.drawable.ic_offline), null, null, null);
             TextView textView5 = view2.findViewById(R.id.authorGroup);
             if (this.currentDocument.getInt(8).intValue() != yVar.f3149b) {
                 textView5.setText(API.userGroups.get(yVar.f3151d));
                 textView5.setTextColor(yVar.f3152e);
             } else if (yVar.f3151d != 20) {
                 SpannableString spannableString = new SpannableString("[K] " + API.userGroups.get(yVar.f3151d));
-                spannableString.setSpan(new ForegroundColorSpan(Util.C0424f.m646c(Skin.C0353a.f1398n0[20], Skin.C0353a.f1370Z)), 0, 3, 0);
-                spannableString.setSpan(new ForegroundColorSpan(Util.C0424f.m646c(Skin.C0353a.f1398n0[yVar.f3151d], Skin.C0353a.f1370Z)), 4, spannableString.length(), 0);
+                spannableString.setSpan(new ForegroundColorSpan(Util.C0424f.m646c(Skin.SkinColorModel.f1398n0[20], Skin.SkinColorModel.f1370Z)), 0, 3, 0);
+                spannableString.setSpan(new ForegroundColorSpan(Util.C0424f.m646c(Skin.SkinColorModel.f1398n0[yVar.f3151d], Skin.SkinColorModel.f1370Z)), 4, spannableString.length(), 0);
                 textView5.setText(spannableString);
             } else {
                 textView5.setText("Куратор темы");
-                textView5.setTextColor(Util.C0424f.m646c(Skin.C0353a.f1398n0[20], Skin.C0353a.f1370Z));
+                textView5.setTextColor(Util.C0424f.m646c(Skin.SkinColorModel.f1398n0[20], Skin.SkinColorModel.f1370Z));
             }
             Widgets$AvatarView avatarView = view2.findViewById(R.id.authorImage);
             boolean isEmpty = TextUtils.isEmpty(yVar.f3154g);
@@ -3224,13 +3224,13 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
                 if (i4 == 0 || i4 == 17927) {
                     i3 = R.drawable.ic_launcher;
                 }
-                avatarView.setImageDrawable(e1Var.m736f(i3));
+                avatarView.setImageDrawable(e1Var.getSkinDrawable(i3));
             } else {
                 PicoImgRequest l = PicoImg.loadUrl(this.mainActivity, yVar.f3154g);
                 l.to(avatarView);
                 z = true;
-                l.disableAnimation(!Prefs.f1146G);
-                l.placeholder(this.mainActivity.skin.m736f(R.drawable.ic_avatar));
+                l.disableAnimation(!Prefs.animAvatars);
+                l.placeholder(this.mainActivity.skin.getSkinDrawable(R.drawable.ic_avatar));
                 l.fade(4, 200, false);
                 l.sizeToView();
                 l.runAsync();
@@ -3238,7 +3238,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
             TextView textView6 = view2.findViewById(R.id.postDate);
             textView6.setText(yVar.f3157j);
             if ((this.f3017P & 512) != 0) {
-                textView6.setCompoundDrawablesWithIntrinsicBounds((yVar.f3159l & 2048) != 0 ? this.mainActivity.skin.m736f(R.drawable.ic_protected) : null, null, null, null);
+                textView6.setCompoundDrawablesWithIntrinsicBounds((yVar.f3159l & 2048) != 0 ? this.mainActivity.skin.getSkinDrawable(R.drawable.ic_protected) : null, null, null, null);
                 textView6.setCompoundDrawablePadding((int) (this.mainActivity.f731b * 4.0f));
             }
             TextView textView7 = view2.findViewById(R.id.postKarma);
@@ -3522,7 +3522,7 @@ public class Page_Topic extends Page implements BBDisplay.IBBDisplayCallback, Fo
     }
 
     public Page_Topic(MainActivity mainActivity, int topicId, int topicPage, int showPostMode, int i4, String str, String str2) {
-        super(mainActivity, 29286, new Document(topicId, topicPage, Prefs.f1179q, showPostMode));
+        super(mainActivity, 29286, new Document(topicId, topicPage, Prefs.memberPostsPerPage, showPostMode));
         this.f3008G = 0;
         this.f3022U = new Stack<>();
         this.f3025X = new C0904g();

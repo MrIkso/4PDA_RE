@@ -70,7 +70,7 @@ public class Page_Search extends Page implements BBDisplay.IBBDisplayCallback {
             } else if (i3 == 22) {
                 this.f2591a.m977d(this.f2593c.f545c, true);
             } else if (i3 == 26) {
-                Urls2.m676g(Page_Search.this.mainActivity, this.f2592b.f2202I.get(this.f2593c.f543a).link);
+                Urls2.visitPage(Page_Search.this.mainActivity, this.f2592b.f2202I.get(this.f2593c.f543a).link);
             } else if (i3 == 1) {
                 Object obj = this.f2592b.f2221a0;
                 if (obj instanceof Page_Topic.PostModel) {
@@ -83,13 +83,13 @@ public class Page_Search extends Page implements BBDisplay.IBBDisplayCallback {
                     Page_Search.this.mainActivity.mainLayout.setCurrentTab(f1Var);
                 }
             } else if (i3 == 5) {
-                API.ForumModifyRequest.m821p(((Page_Topic.PostModel) this.f2592b.f2221a0).postId, null, 4, 0, 0, Page_Search.this, "удаление поста", "УДАЛИТЬ", null);
+                API.ForumModifyRequest.modifyForum(((Page_Topic.PostModel) this.f2592b.f2221a0).postId, null, 4, 0, 0, Page_Search.this, "удаление поста", "УДАЛИТЬ", null);
             } else if (i3 == 6) {
-                API.ForumModifyRequest.m821p(((Page_Topic.PostModel) this.f2592b.f2221a0).postId, null, 5, 0, 0, Page_Search.this, "восстановление поста", "ВОССТАНОВИТЬ", null);
+                API.ForumModifyRequest.modifyForum(((Page_Topic.PostModel) this.f2592b.f2221a0).postId, null, 5, 0, 0, Page_Search.this, "восстановление поста", "ВОССТАНОВИТЬ", null);
             } else if (i3 == 3 || i3 == 4) {
-                API.ForumModifyRequest.m821p(((Page_Topic.PostModel) this.f2592b.f2221a0).postId, null, 1, 2, 3 == i3 ? 2 : 0, Page_Search.this, 3 == i3 ? "удаление поста" : "отображение поста", "ВЫПОЛНИТЬ", null);
+                API.ForumModifyRequest.modifyForum(((Page_Topic.PostModel) this.f2592b.f2221a0).postId, null, 1, 2, 3 == i3 ? 2 : 0, Page_Search.this, 3 == i3 ? "удаление поста" : "отображение поста", "ВЫПОЛНИТЬ", null);
             } else if (i3 == 7 || i3 == 8) {
-                API.ForumModifyRequest.m821p(((Page_Topic.PostModel) this.f2592b.f2221a0).postId, null, 1, 2048, 7 == i3 ? 2048 : 0, Page_Search.this, 7 == i3 ? "защиту поста" : "снятие защиты поста", "ВЫПОЛНИТЬ", null);
+                API.ForumModifyRequest.modifyForum(((Page_Topic.PostModel) this.f2592b.f2221a0).postId, null, 1, 2048, 7 == i3 ? 2048 : 0, Page_Search.this, 7 == i3 ? "защиту поста" : "снятие защиты поста", "ВЫПОЛНИТЬ", null);
             } else if (i3 == 9) {
                 Page_Topic.movePosts(Page_Search.this, null, ((Page_Topic.PostModel) this.f2592b.f2221a0).postId);
             }
@@ -107,22 +107,22 @@ public class Page_Search extends Page implements BBDisplay.IBBDisplayCallback {
             public void mo49a(int i, int i2, int i3) {
                 if (i3 == 5) {
                     Page_Search s0Var = Page_Search.this;
-                    API.ForumModifyRequest.m821p(0, s0Var.f2584N, 4, 0, 0, s0Var, "удаление постов", "УДАЛИТЬ", null);
+                    API.ForumModifyRequest.modifyForum(0, s0Var.f2584N, 4, 0, 0, s0Var, "удаление постов", "УДАЛИТЬ", null);
                 } else if (i3 == 6) {
                     Page_Search s0Var2 = Page_Search.this;
-                    API.ForumModifyRequest.m821p(0, s0Var2.f2584N, 5, 0, 0, s0Var2, "восстановление постов", "ВОССТАНОВИТЬ", null);
+                    API.ForumModifyRequest.modifyForum(0, s0Var2.f2584N, 5, 0, 0, s0Var2, "восстановление постов", "ВОССТАНОВИТЬ", null);
                 } else if (i3 == 3) {
                     Page_Search s0Var3 = Page_Search.this;
-                    API.ForumModifyRequest.m821p(0, s0Var3.f2584N, 1, 2, 2, s0Var3, "скрытие постов", "СКРЫТЬ", null);
+                    API.ForumModifyRequest.modifyForum(0, s0Var3.f2584N, 1, 2, 2, s0Var3, "скрытие постов", "СКРЫТЬ", null);
                 } else if (i3 == 4) {
                     Page_Search s0Var4 = Page_Search.this;
-                    API.ForumModifyRequest.m821p(0, s0Var4.f2584N, 1, 2, 0, s0Var4, "отображение постов", "ПОКАЗАТЬ", null);
+                    API.ForumModifyRequest.modifyForum(0, s0Var4.f2584N, 1, 2, 0, s0Var4, "отображение постов", "ПОКАЗАТЬ", null);
                 } else if (i3 == 7) {
                     Page_Search s0Var5 = Page_Search.this;
-                    API.ForumModifyRequest.m821p(0, s0Var5.f2584N, 1, 2048, 2048, s0Var5, "защиту постов", "ЗАЩИТИТЬ", null);
+                    API.ForumModifyRequest.modifyForum(0, s0Var5.f2584N, 1, 2048, 2048, s0Var5, "защиту постов", "ЗАЩИТИТЬ", null);
                 } else if (i3 == 8) {
                     Page_Search s0Var6 = Page_Search.this;
-                    API.ForumModifyRequest.m821p(0, s0Var6.f2584N, 1, 2048, 0, s0Var6, "снятие защиты постов", "СНЯТЬ", null);
+                    API.ForumModifyRequest.modifyForum(0, s0Var6.f2584N, 1, 2048, 0, s0Var6, "снятие защиты постов", "СНЯТЬ", null);
                 } else if (i3 == 9) {
                     Page_Search s0Var7 = Page_Search.this;
                     Page_Topic.movePosts(s0Var7, s0Var7.f2584N, 0);
@@ -529,19 +529,19 @@ public class Page_Search extends Page implements BBDisplay.IBBDisplayCallback {
     @Override
     int mo141P() {
         int i = this.f2582L;
-        int i2 = Prefs.f1179q;
+        int i2 = Prefs.memberPostsPerPage;
         int i3 = (i / i2) + (i % i2 != 0 ? 1 : 0);
         return i3 == 0 ? i3 + 1 : i3;
     }
 
     @Override
     int mo140Q() {
-        return (this.f2581K / Prefs.f1179q) + 1;
+        return (this.f2581K / Prefs.memberPostsPerPage) + 1;
     }
 
     @Override
     Page mo139R(int i) {
-        Page_Search s0Var = new Page_Search(this.mainActivity, this.searchFlags, this.f2576F, this.f2577G, this.f2578H, this.f2579I, (i - 1) * Prefs.f1179q, this.f2580J);
+        Page_Search s0Var = new Page_Search(this.mainActivity, this.searchFlags, this.f2576F, this.f2577G, this.f2578H, this.f2579I, (i - 1) * Prefs.memberPostsPerPage, this.f2580J);
         s0Var.searchDialog = this.searchDialog;
         s0Var.f2584N = this.f2584N;
         return s0Var;
@@ -580,7 +580,7 @@ public class Page_Search extends Page implements BBDisplay.IBBDisplayCallback {
         int i = cVar.f543a;
         if (i >= 0) {
             BBString.C0681k kVar = pVar.f2202I.get(i);
-            o1Var.addMenuItem(0, 0, 0, Util.C0427h.m640d(kVar.link), true, false);
+            o1Var.addMenuItem(0, 0, 0, Util.C0427h.urlDecode(kVar.link), true, false);
             o1Var.addMenuItem(0, 0, 2, "Копировать ссылку");
             if (Urls2.is4pdaHost(kVar.link)) {
                 o1Var.addMenuItem(0, 0, 21, "Открыть ссылку в новой вкладке");
@@ -782,17 +782,17 @@ public class Page_Search extends Page implements BBDisplay.IBBDisplayCallback {
                 articleLayout = m817S(viewGroup, true);
             } else if (itemViewType == 1) {
                 View view2 = new View(this.mainActivity);
-                view2.setBackgroundDrawable(Skin.C0353a.f1388i0.getConstantState().newDrawable());
+                view2.setBackgroundDrawable(Skin.SkinColorModel.f1388i0.getConstantState().newDrawable());
                 view2.setLayoutParams(new AbsListView.LayoutParams(-1, (int) (this.mainActivity.f731b * 16.0f)));
                 articleLayout = view2;
             } else if (itemViewType == 2 || itemViewType == 3 || itemViewType == 4) {
                 View inflate = this.mainActivity.getLayoutInflater().inflate(R.layout.post, viewGroup, false);
                 if (itemViewType == 3) {
-                    inflate.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.post_hidden));
+                    inflate.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.post_hidden));
                 } else if (itemViewType == 4) {
-                    inflate.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.post_deleted));
+                    inflate.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.post_deleted));
                 } else {
-                    inflate.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.post_normal));
+                    inflate.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.post_normal));
                 }
                 inflate.setOnLongClickListener(new View$OnLongClickListenerC0759d());
                 BBDisplay bBDisplay = (BBDisplay) inflate.findViewById(R.id.PostCode);
@@ -825,7 +825,7 @@ public class Page_Search extends Page implements BBDisplay.IBBDisplayCallback {
                 ((TextView) articleLayout.findViewById(R.id.postTitle)).setText(!TextUtils.isEmpty(yVar.f3165r) ? "<Нет доступа>" : yVar.f3165r);
                 TextView textView2 = (TextView) articleLayout.findViewById(R.id.authorName);
                 textView2.setText(yVar.f3150c);
-                textView2.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.m736f((System.currentTimeMillis() / 1000) - ((long) yVar.f3155h) >= 900 ? R.drawable.ic_online : R.drawable.ic_offline), (Drawable) null, (Drawable) null, (Drawable) null);
+                textView2.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.getSkinDrawable((System.currentTimeMillis() / 1000) - ((long) yVar.f3155h) >= 900 ? R.drawable.ic_online : R.drawable.ic_offline), (Drawable) null, (Drawable) null, (Drawable) null);
                 TextView textView3 = (TextView) articleLayout.findViewById(R.id.authorGroup);
                 textView3.setText(API.userGroups.get(yVar.f3151d));
                 textView3.setTextColor(yVar.f3152e);
@@ -839,12 +839,12 @@ public class Page_Search extends Page implements BBDisplay.IBBDisplayCallback {
                     if (i3 != 0 || i3 == 17927) {
                         i7 = R.drawable.ic_launcher;
                     }
-                    avatarView.setImageDrawable(e1Var.m736f(i7));
+                    avatarView.setImageDrawable(e1Var.getSkinDrawable(i7));
                 } else {
                     PicoImgRequest l = PicoImg.loadUrl(this.mainActivity, yVar.f3154g);
                     l.to(avatarView);
-                    l.disableAnimation(!Prefs.f1146G);
-                    l.placeholder(this.mainActivity.skin.m736f(R.drawable.ic_avatar));
+                    l.disableAnimation(!Prefs.animAvatars);
+                    l.placeholder(this.mainActivity.skin.getSkinDrawable(R.drawable.ic_avatar));
                     l.fade(4, 200, false);
                     l.sizeToView();
                     l.runAsync();
@@ -853,7 +853,7 @@ public class Page_Search extends Page implements BBDisplay.IBBDisplayCallback {
                 textView4.setText(yVar.f3157j);
                 i2 = yVar.f3159l;
                 if ((i2 & 512) != 0) {
-                    textView4.setCompoundDrawablesWithIntrinsicBounds((i2 & 2048) != 0 ? this.mainActivity.skin.m736f(R.drawable.ic_protected) : null, (Drawable) null, (Drawable) null, (Drawable) null);
+                    textView4.setCompoundDrawablesWithIntrinsicBounds((i2 & 2048) != 0 ? this.mainActivity.skin.getSkinDrawable(R.drawable.ic_protected) : null, (Drawable) null, (Drawable) null, (Drawable) null);
                     textView4.setCompoundDrawablePadding((int) (this.mainActivity.f731b * 4.0f));
                 }
                 TextView textView5 = (TextView) articleLayout.findViewById(R.id.postKarma);
@@ -902,7 +902,7 @@ public class Page_Search extends Page implements BBDisplay.IBBDisplayCallback {
                                 textView = new TextView(this.mainActivity);
                                 textView.setSingleLine(true);
                                 textView.setTextAppearance(this.mainActivity, 16973894);
-                                textView.setTextColor(Skin.C0353a.f1386h0);
+                                textView.setTextColor(Skin.SkinColorModel.labelTextCsl);
                                 textView.setGravity(16);
                                 articleLayout3.f509h.addView(textView);
                                 ((LinearLayout.LayoutParams) textView.getLayoutParams()).height = -1;
@@ -949,9 +949,9 @@ public class Page_Search extends Page implements BBDisplay.IBBDisplayCallback {
                 textView7.setEnabled((uVar.getInt(3).intValue() & 4) == 0);
                 if (getItemViewType(i + 1) == 6) {
                     if ((uVar.getInt(3).intValue() & 2) != 0) {
-                        viewGroup2.setBackgroundColor(Skin.C0353a.f1366V);
+                        viewGroup2.setBackgroundColor(Skin.SkinColorModel.f1366V);
                     } else {
-                        viewGroup2.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.border_bottom));
+                        viewGroup2.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.border_bottom));
                     }
                     View findViewById2 = viewGroup2.findViewById(R.id.postSepBottom);
                     if (findViewById2 != null) {
@@ -959,13 +959,13 @@ public class Page_Search extends Page implements BBDisplay.IBBDisplayCallback {
                     }
                 } else {
                     if ((uVar.getInt(3).intValue() & 2) != 0) {
-                        viewGroup2.setBackgroundColor(Skin.C0353a.f1366V);
+                        viewGroup2.setBackgroundColor(Skin.SkinColorModel.f1366V);
                     } else {
                         viewGroup2.setBackgroundResource(0);
                     }
                     View view3 = new View(this.mainActivity);
                     view3.setId(R.id.postSepBottom);
-                    view3.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.card_sep));
+                    view3.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.card_sep));
                     RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(-1, (int) (this.mainActivity.f731b * 16.0f));
                     layoutParams.addRule(3, R.id.topicLastDate);
                     view3.setLayoutParams(layoutParams);
@@ -985,7 +985,7 @@ public class Page_Search extends Page implements BBDisplay.IBBDisplayCallback {
         ((TextView) articleLayout.findViewById(R.id.postTitle)).setText(!TextUtils.isEmpty(yVar.f3165r) ? "<Нет доступа>" : yVar.f3165r);
         TextView textView22 = (TextView) articleLayout.findViewById(R.id.authorName);
         textView22.setText(yVar.f3150c);
-        textView22.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.m736f((System.currentTimeMillis() / 1000) - ((long) yVar.f3155h) >= 900 ? R.drawable.ic_online : R.drawable.ic_offline), (Drawable) null, (Drawable) null, (Drawable) null);
+        textView22.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.getSkinDrawable((System.currentTimeMillis() / 1000) - ((long) yVar.f3155h) >= 900 ? R.drawable.ic_online : R.drawable.ic_offline), (Drawable) null, (Drawable) null, (Drawable) null);
         TextView textView32 = (TextView) articleLayout.findViewById(R.id.authorGroup);
         textView32.setText(API.userGroups.get(yVar.f3151d));
         textView32.setTextColor(yVar.f3152e);
@@ -1000,7 +1000,7 @@ public class Page_Search extends Page implements BBDisplay.IBBDisplayCallback {
         if (i3 != 0) {
         }
         i72 = R.drawable.ic_launcher;
-        avatarView.setImageDrawable(e1Var2.m736f(i72));
+        avatarView.setImageDrawable(e1Var2.getSkinDrawable(i72));
         TextView textView42 = (TextView) articleLayout.findViewById(R.id.postDate);
         textView42.setText(yVar.f3157j);
         i2 = yVar.f3159l;
@@ -1110,7 +1110,7 @@ public class Page_Search extends Page implements BBDisplay.IBBDisplayCallback {
         objArr[3] = uVar3 != null ? uVar3 : new Document(0);
         objArr[4] = str != null ? str : "";
         objArr[5] = Integer.valueOf(i2);
-        objArr[6] = Integer.valueOf(Prefs.f1179q);
+        objArr[6] = Integer.valueOf(Prefs.memberPostsPerPage);
         this.f2580J = null;
         this.iconId = R.drawable.ic_nav_forum;
         this.f2581K = i2;

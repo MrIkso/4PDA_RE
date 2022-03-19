@@ -17,13 +17,13 @@ public class Widgets$CheckboxTextView extends TextView {
 
     public Widgets$CheckboxTextView(Context context) {
         super(context);
-        m852a(context, null);
+        init(context, null);
     }
 
-    void m852a(Context context, AttributeSet attributeSet) {
+    void init(Context context, AttributeSet attributeSet) {
         super.setClickable(true);
         if (!(context == null || attributeSet == null)) {
-            TypedArray obtainStyledAttributes = context.obtainStyledAttributes(attributeSet, C0329c1.f1268a);
+            TypedArray obtainStyledAttributes = context.obtainStyledAttributes(attributeSet,Stylable.boxStyle );
             int indexCount = obtainStyledAttributes.getIndexCount();
             for (int i = 0; i < indexCount; i++) {
                 int index = obtainStyledAttributes.getIndex(i);
@@ -90,7 +90,7 @@ public class Widgets$CheckboxTextView extends TextView {
         if (str.length() > 0) {
             int length = getText().length();
             SpannableString spannableString = new SpannableString(((Object) getText()) + "\n" + this.f883c);
-            spannableString.setSpan(new ForegroundColorSpan(Skin.C0353a.f1370Z), length, spannableString.length(), 33);
+            spannableString.setSpan(new ForegroundColorSpan(Skin.SkinColorModel.f1370Z), length, spannableString.length(), 33);
             spannableString.setSpan(new AbsoluteSizeSpan((int) (getContext().getResources().getDisplayMetrics().scaledDensity * 14.0f)), length, spannableString.length(), 33);
             setText(spannableString);
             return;
@@ -100,6 +100,6 @@ public class Widgets$CheckboxTextView extends TextView {
 
     public Widgets$CheckboxTextView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
-        m852a(context, attributeSet);
+        init(context, attributeSet);
     }
 }

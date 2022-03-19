@@ -238,7 +238,7 @@ public class Page_Vendor extends Page {
                 l.sizeToView();
                 l.runAsync();
             } else {
-                imageView.setImageDrawable(this.mainActivity.skin.m736f(R.drawable.ic_launcher));
+                imageView.setImageDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.ic_launcher));
             }
         }
         return view;

@@ -20,7 +20,7 @@ public class Page_Mention extends Page implements BBDisplay.IBBDisplayCallback {
     int f1692G;
     int f1693H;
     boolean f1694I;
-    boolean f1690E = true;
+    boolean mentionShowPosts = true;
     Util.AbstractC0430k<Boolean, DataDB.C0738c, DataDB.C0738c> f1695J = new C0455i();
 
     class C0447a implements OptionPoupupMenuView.IClickListener {
@@ -36,9 +36,9 @@ public class Page_Mention extends Page implements BBDisplay.IBBDisplayCallback {
                 DataDB.m365l(k0Var.title, k0Var.getLink());
             } else if (i3 == 1) {
                 MainActivity mainActivity = Page_Mention.this.mainActivity;
-                boolean z = true ^ Prefs.f1159T;
-                Prefs.f1159T = z;
-                Prefs.saveBoolean(mainActivity, "mention_show_posts", z);
+                boolean mentionShowPosts = true ^ Prefs.mentionShowPosts;
+                Prefs.mentionShowPosts = mentionShowPosts;
+                Prefs.saveBoolean(mainActivity, "mention_show_posts", mentionShowPosts);
                 Page_Mention.this.tabReload();
             }
         }
@@ -210,7 +210,7 @@ public class Page_Mention extends Page implements BBDisplay.IBBDisplayCallback {
     }
 
     public Page_Mention(MainActivity mainActivity, int i) {
-        super(mainActivity, 28013, new Document(0, 0, Prefs.f1159T ? 1 : 0, i, Prefs.f1179q));
+        super(mainActivity, 28013, new Document(0, 0, Prefs.mentionShowPosts ? 1 : 0, i, Prefs.memberPostsPerPage));
         this.iconId = R.drawable.ic_nav_fav;
         this.title = "Упоминания";
         this.statusMessage = "Загрузка списка упоминаний";
@@ -253,18 +253,18 @@ public class Page_Mention extends Page implements BBDisplay.IBBDisplayCallback {
                 try {
                     Document c = uVar.cloneDocument();
                     c.removeRange(0, 6);
-                    Page_Topic.PostModel a = Page_Topic.PostModel.m99a(c);
-                    if (a != null) {
-                        a.f3168u = uVar.getInt(0).intValue();
-                        a.f3167t = uVar.getInt(4).intValue();
-                        a.f3165r = new SpannableString(Util.C0427h.UnEscapeString(uVar.getString(5)));
-                        a.f3169v = uVar.getInt(1).intValue() != 0;
-                        if (this.f1690E) {
+                    Page_Topic.PostModel postModel = Page_Topic.PostModel.m99a(c);
+                    if (postModel != null) {
+                        postModel.f3168u = uVar.getInt(0).intValue();
+                        postModel.f3167t = uVar.getInt(4).intValue();
+                        postModel.f3165r = new SpannableString(Util.C0427h.UnEscapeString(uVar.getString(5)));
+                        postModel.f3169v = uVar.getInt(1).intValue() != 0;
+                        if (this.mentionShowPosts) {
                             int i2 = Page_Topic.PostModel.f3147z;
-                            SpannableString spannableString = a.f3165r;
-                            a.f3166s = i2 + Util.m672b(spannableString.subSequence(0, spannableString.length()).toString(), width - Page_Topic.PostModel.f3143A, Page_Topic.PostModel.f3146y, false) + Page_Topic.PostModel.f3145x + Util.m663k(this.mainActivity, a.f3162o, width) + Page_Topic.PostModel.f3144w;
+                            SpannableString spannableString = postModel.f3165r;
+                            postModel.f3166s = i2 + Util.m672b(spannableString.subSequence(0, spannableString.length()).toString(), width - Page_Topic.PostModel.f3143A, Page_Topic.PostModel.f3146y, false) + Page_Topic.PostModel.f3145x + Util.m663k(this.mainActivity, postModel.f3162o, width) + Page_Topic.PostModel.f3144w;
                         }
-                        vector.add(a);
+                        vector.add(postModel);
                     }
                 } catch (Exception e3) {
                     e = e3;
@@ -276,7 +276,7 @@ public class Page_Mention extends Page implements BBDisplay.IBBDisplayCallback {
                     errorReporter.handleSilentException(new Exception(sb.toString(), e));*/
                 }
             }
-            if (this.f1690E) {
+            if (this.mentionShowPosts) {
                 boolean T = m816T();
                 int i3 = (T == true ? 1 : 0) + 1;
                 int[] iArr = new int[vector.size() + i3 + (T? 1: 0)];
@@ -309,7 +309,7 @@ public class Page_Mention extends Page implements BBDisplay.IBBDisplayCallback {
             o1Var.addMenuItem(0, 0, 21, "Обновить");
         }
         o1Var.addMenuItem(0, 0, 22, "В закладки", DataDB.m366k(getLink()));
-        o1Var.addMenuItem(0, 0, 1, "Отображать посты", Prefs.f1159T);
+        o1Var.addMenuItem(0, 0, 1, "Отображать посты", Prefs.mentionShowPosts);
         o1Var.show(view);
     }
 
@@ -327,19 +327,19 @@ public class Page_Mention extends Page implements BBDisplay.IBBDisplayCallback {
     @Override
     int mo141P() {
         int i = this.f1693H;
-        int i2 = Prefs.f1179q;
+        int i2 = Prefs.memberPostsPerPage;
         int i3 = (i / i2) + (i % i2 != 0 ? 1 : 0);
         return i3 == 0 ? i3 + 1 : i3;
     }
 
     @Override
     int mo140Q() {
-        return (this.f1692G / Prefs.f1179q) + 1;
+        return (this.f1692G / Prefs.memberPostsPerPage) + 1;
     }
 
     @Override
     Page mo139R(int i) {
-        return new Page_Mention(this.mainActivity, (i - 1) * Prefs.f1179q);
+        return new Page_Mention(this.mainActivity, (i - 1) * Prefs.memberPostsPerPage);
     }
 
     @Override
@@ -434,7 +434,7 @@ public class Page_Mention extends Page implements BBDisplay.IBBDisplayCallback {
         if (!isUnsucces() || (list = this.f1691F) == null || list.size() == 0) {
             return 0;
         }
-        int size = this.f1691F.size() + 1 + (!this.f1690E ? 1 : 0);
+        int size = this.f1691F.size() + 1 + (!this.mentionShowPosts ? 1 : 0);
         if (m816T()) {
             i = 2;
         }
@@ -462,7 +462,7 @@ public class Page_Mention extends Page implements BBDisplay.IBBDisplayCallback {
         if (i == i2) {
             return 1;
         }
-        boolean z = this.f1690E;
+        boolean z = this.mentionShowPosts;
         if (!z && (count - i2) - 1 == i) {
             return 6;
         }
@@ -496,20 +496,20 @@ public class Page_Mention extends Page implements BBDisplay.IBBDisplayCallback {
                 view2 = m817S(viewGroup, true);
             } else if (itemViewType == 1) {
                 view2 = new View(this.mainActivity);
-                view2.setBackgroundDrawable(Skin.C0353a.f1388i0.getConstantState().newDrawable());
+                view2.setBackgroundDrawable(Skin.SkinColorModel.f1388i0.getConstantState().newDrawable());
                 view2.setLayoutParams(new AbsListView.LayoutParams(-1, (int) (this.mainActivity.f731b * 16.0f)));
             } else if (itemViewType == 6) {
                 view2 = new View(this.mainActivity);
-                view2.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.card_sep));
+                view2.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.card_sep));
                 view2.setLayoutParams(new AbsListView.LayoutParams(-1, (int) (this.mainActivity.f731b * 16.0f)));
             } else if (itemViewType == 2 || itemViewType == 3 || itemViewType == 4) {
                 view2 = this.mainActivity.getLayoutInflater().inflate(R.layout.post, viewGroup, false);
                 if (itemViewType == 3) {
-                    view2.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.post_hidden));
+                    view2.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.post_hidden));
                 } else if (itemViewType == 4) {
-                    view2.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.post_deleted));
+                    view2.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.post_deleted));
                 } else {
-                    view2.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.post_normal));
+                    view2.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.post_normal));
                 }
                 view2.setOnLongClickListener(new View$OnLongClickListenerC0448b());
                 BBDisplay bBDisplay = (BBDisplay) view2.findViewById(R.id.PostCode);
@@ -519,7 +519,7 @@ public class Page_Mention extends Page implements BBDisplay.IBBDisplayCallback {
                 ((TextView) view2.findViewById(R.id.authorName)).setOnLongClickListener(new View$OnLongClickListenerC0450d());
                 ((TextView) view2.findViewById(R.id.postAuthorRep)).setOnClickListener(new View$OnClickListenerC0451e());
                 Widgets$CheckboxView widgets$CheckboxView = (Widgets$CheckboxView) view2.findViewById(R.id.postCheckbox);
-                widgets$CheckboxView.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.card_unread));
+                widgets$CheckboxView.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.card_unread));
                 widgets$CheckboxView.setOnClickListener(new View$OnClickListenerC0452f());
                 view2.findViewById(R.id.authorImage).setOnClickListener(new View$OnClickListenerC0453g());
             } else if (itemViewType == 5) {
@@ -533,7 +533,7 @@ public class Page_Mention extends Page implements BBDisplay.IBBDisplayCallback {
                 ((TextView) view2.findViewById(R.id.postTitle)).setText(yVar.f3165r);
                 TextView textView = (TextView) view2.findViewById(R.id.authorName);
                 textView.setText(yVar.f3150c);
-                textView.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.m736f((System.currentTimeMillis() / 1000) - ((long) yVar.f3155h) >= 900 ? R.drawable.ic_online : R.drawable.ic_offline), (Drawable) null, (Drawable) null, (Drawable) null);
+                textView.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.getSkinDrawable((System.currentTimeMillis() / 1000) - ((long) yVar.f3155h) >= 900 ? R.drawable.ic_online : R.drawable.ic_offline), (Drawable) null, (Drawable) null, (Drawable) null);
                 TextView textView2 = (TextView) view2.findViewById(R.id.authorGroup);
                 textView2.setText(API.userGroups.get(yVar.f3151d));
                 textView2.setTextColor(yVar.f3152e);
@@ -542,11 +542,11 @@ public class Page_Mention extends Page implements BBDisplay.IBBDisplayCallback {
                     PicoImg.cancel(avatarView);
                     Skin e1Var = this.mainActivity.skin;
                     int i5 = yVar.f3149b;
-                    avatarView.setImageDrawable(e1Var.m736f((i5 != 0 || i5 == 17927) ? R.drawable.ic_launcher : R.drawable.ic_avatar));
+                    avatarView.setImageDrawable(e1Var.getSkinDrawable((i5 != 0 || i5 == 17927) ? R.drawable.ic_launcher : R.drawable.ic_avatar));
                 } else {
                     PicoImgRequest l = PicoImg.loadUrl(this.mainActivity, yVar.f3154g);
                     l.to(avatarView);
-                    l.disableAnimation(!Prefs.f1146G);
+                    l.disableAnimation(!Prefs.animAvatars);
                     l.runAsync();
                 }
                 ((TextView) view2.findViewById(R.id.postDate)).setText(yVar.f3157j);
@@ -573,7 +573,7 @@ public class Page_Mention extends Page implements BBDisplay.IBBDisplayCallback {
                 }
                 findViewById.setVisibility(i4);
                 if (i3 != this.f1691F.size() - 1) {
-                    drawable = this.mainActivity.skin.m736f(R.drawable.border_bottom);
+                    drawable = this.mainActivity.skin.getSkinDrawable(R.drawable.border_bottom);
                 }
                 view2.setBackgroundDrawable(drawable);
             }
@@ -591,7 +591,7 @@ public class Page_Mention extends Page implements BBDisplay.IBBDisplayCallback {
         ((TextView) view2.findViewById(R.id.postTitle)).setText(yVar.f3165r);
         TextView textView4 = (TextView) view2.findViewById(R.id.authorName);
         textView4.setText(yVar.f3150c);
-        textView4.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.m736f((System.currentTimeMillis() / 1000) - ((long) yVar.f3155h) >= 900 ? R.drawable.ic_online : R.drawable.ic_offline), (Drawable) null, (Drawable) null, (Drawable) null);
+        textView4.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.getSkinDrawable((System.currentTimeMillis() / 1000) - ((long) yVar.f3155h) >= 900 ? R.drawable.ic_online : R.drawable.ic_offline), (Drawable) null, (Drawable) null, (Drawable) null);
         TextView textView22 = (TextView) view2.findViewById(R.id.authorGroup);
         textView22.setText(API.userGroups.get(yVar.f3151d));
         textView22.setTextColor(yVar.f3152e);
@@ -601,7 +601,7 @@ public class Page_Mention extends Page implements BBDisplay.IBBDisplayCallback {
         PicoImg.cancel(avatarView);
         Skin e1Var2 = this.mainActivity.skin;
         int i52 = yVar.f3149b;
-        avatarView.setImageDrawable(e1Var2.m736f((i52 != 0 || i52 == 17927) ? R.drawable.ic_launcher : R.drawable.ic_avatar));
+        avatarView.setImageDrawable(e1Var2.getSkinDrawable((i52 != 0 || i52 == 17927) ? R.drawable.ic_launcher : R.drawable.ic_avatar));
         ((TextView) view2.findViewById(R.id.postDate)).setText(yVar.f3157j);
         TextView textView32 = (TextView) view2.findViewById(R.id.postKarma);
         if (yVar.f3160m != null) {
@@ -636,8 +636,8 @@ public class Page_Mention extends Page implements BBDisplay.IBBDisplayCallback {
 
     @Override
     public void tabReload() {
-        this.f1690E = Prefs.f1159T;
-        this.rootDocument = new Document(0, 0, this.f1690E ? 1 : 0, this.f1692G, Prefs.f1179q);
+        this.mentionShowPosts = Prefs.mentionShowPosts;
+        this.rootDocument = new Document(0, 0, this.mentionShowPosts ? 1 : 0, this.f1692G, Prefs.memberPostsPerPage);
         this.f1694I = false;
         super.tabReload();
     }

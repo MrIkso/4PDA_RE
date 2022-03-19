@@ -27,7 +27,7 @@ public class DlgMemberEditor extends CustomDialog {
         @Override
         public void afterTextChanged(Editable editable) {
             if (editable.length() == 0) {
-                DlgMemberEditor.this.f2451k.m845a(0, null, false);
+                DlgMemberEditor.this.f2451k.setData(0, null, false);
             }
         }
 
@@ -47,7 +47,7 @@ public class DlgMemberEditor extends CustomDialog {
         textView.setText(str);
         Widgets$MemberView widgets$MemberView = (Widgets$MemberView) this.rootView.findViewById(R.id.memberEdit);
         this.f2451k = widgets$MemberView;
-        widgets$MemberView.m842d();
+        widgets$MemberView.resetData();
         Widgets$MemberView widgets$MemberView2 = this.f2451k;
         widgets$MemberView2.f903c = new C0723a();
         widgets$MemberView2.addTextChangedListener(new C0724b());

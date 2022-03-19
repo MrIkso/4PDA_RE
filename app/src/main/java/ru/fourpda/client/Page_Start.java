@@ -23,7 +23,7 @@ import java.util.Vector;
 public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
     private static List<Integer> f2801N;
     private int f2805H;
-    private List<DataDB.C0736a> f2806I;
+    private List<DataDB.UserBookMarkModel> f2806I;
     Widgets$StartButtonsLayout f2802E = null;
     List<BBString> f2803F = new Vector(5);
     List<BBString> f2804G = new Vector(5);
@@ -45,8 +45,8 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
                 Prefs.saveInt(Page_Start.this.mainActivity, "globals_norm_count", 0);
             } else if (i3 == 2) {
                 MainActivity mainActivity = Page_Start.this.mainActivity;
-                boolean z = true ^ Prefs.f1172j;
-                Prefs.f1172j = z;
+                boolean z = true ^ Prefs.notifySilence;
+                Prefs.notifySilence = z;
                 Prefs.saveBoolean(mainActivity, "notify_silence", z);
             } else if (i3 == 3) {
               //  ImageDialog.m918a(Page_Start.this.mainActivity);
@@ -303,7 +303,7 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
         public void onClick(View view) {
             DocumentManager.MemberInfoModel L = DocumentManager.getMemberInfoModel();
             if (L != null && L.memberGroup == 1) {
-                DocumentManager.getResultRequest(new MainActivity.C0187e0(Page_Start.this.mainActivity, 0, 0, 0, "", ""));
+                DocumentManager.getResultRequest(new MainActivity.MemberAuthorizationRequest(Page_Start.this.mainActivity, 0, 0, 0, "", ""));
             }
         }
     }
@@ -372,7 +372,7 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
         private View f2831g;
         private View f2832h;
         private boolean f2833i;
-        private DataDB.C0736a f2834j;
+        private DataDB.UserBookMarkModel f2834j;
         private int f2835k;
 
         public class C0835a implements OptionPoupupMenuView.IClickListener {
@@ -392,12 +392,12 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
 
                 @Override
                 public void onClick(View view) {
-                    DataDB.C0736a aVar;
+                    DataDB.UserBookMarkModel aVar;
                     int i;
                     int i2;
                     int i3;
                     C0835a aVar2 = C0835a.this;
-                    if (aVar2.f2837a >= Page_Start.this.f2806I.size() || (aVar = (DataDB.C0736a) Page_Start.this.f2806I.get(C0835a.this.f2837a)) == null || aVar.f2503h.hashCode() != C0835a.this.f2838b) {
+                    if (aVar2.f2837a >= Page_Start.this.f2806I.size() || (aVar = (DataDB.UserBookMarkModel) Page_Start.this.f2806I.get(C0835a.this.f2837a)) == null || aVar.f2503h.hashCode() != C0835a.this.f2838b) {
                         Toast.makeText(Page_Start.this.mainActivity, "Вмешалась синхронизация и ничего не вышло. Повторите действие, пожалуйста.", 1).show();
                         return;
                     }
@@ -407,7 +407,7 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
                             int i4 = aVar.f2500e;
                             int i5 = aVar.f2501f;
                             for (int i6 = C0835a.this.f2837a; i6 < Page_Start.this.f2806I.size(); i6++) {
-                                DataDB.C0736a aVar3 = (DataDB.C0736a) Page_Start.this.f2806I.get(i6);
+                                DataDB.UserBookMarkModel aVar3 = (DataDB.UserBookMarkModel) Page_Start.this.f2806I.get(i6);
                                 if (aVar3.f2500e == i4 && (i3 = aVar3.f2501f) >= i5) {
                                     aVar3.f2501f = i3 + 1;
                                     DataDB.m370g(aVar3, true);
@@ -420,9 +420,9 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
                             i = DataDB.m371f(i7) + 1;
                             i2 = i7;
                         }
-                        int n = DataDB.m363n(4, 0) + 1;
-                        DataDB.m362o(4, n);
-                        DataDB.m370g(new DataDB.C0736a(n, 0, false, 1, i2, i, obj, "folder"), true);
+                        int n = DataDB.getPropsId(4, 0) + 1;
+                        DataDB.makeProps(4, n);
+                        DataDB.m370g(new DataDB.UserBookMarkModel(n, 0, false, 1, i2, i, obj, "folder"), true);
                         DocumentManager.f2748E.m655c(null);
                     }
                 }
@@ -438,11 +438,11 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
 
                 @Override
                 public void onClick(View view) {
-                    DataDB.C0736a aVar;
+                    DataDB.UserBookMarkModel aVar;
                     String obj = this.f2844a.editText.getText().toString();
                     if (!TextUtils.isEmpty(obj)) {
                         C0835a aVar2 = C0835a.this;
-                        if (aVar2.f2837a >= Page_Start.this.f2806I.size() || (aVar = (DataDB.C0736a) Page_Start.this.f2806I.get(C0835a.this.f2837a)) == null || aVar.f2503h.hashCode() != C0835a.this.f2838b) {
+                        if (aVar2.f2837a >= Page_Start.this.f2806I.size() || (aVar = (DataDB.UserBookMarkModel) Page_Start.this.f2806I.get(C0835a.this.f2837a)) == null || aVar.f2503h.hashCode() != C0835a.this.f2838b) {
                             Toast.makeText(Page_Start.this.mainActivity, "Вмешалась синхронизация и ничего не вышло. Повторите действие, пожалуйста.", 1).show();
                             return;
                         }
@@ -462,16 +462,16 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
 
             @Override
             public void mo49a(int i, int i2, int i3) {
-                DataDB.C0736a aVar;
+                DataDB.UserBookMarkModel aVar;
                 int i4;
-                DataDB.C0736a aVar2;
+                DataDB.UserBookMarkModel aVar2;
                 if (i3 == 0 || 1 == i3) {
                     DlgSimple q1Var = new DlgSimple(Page_Start.this.mainActivity, "Создание папки", false, "СОЗДАТЬ", null);
                     q1Var.editText.setText("Новая папка");
                     q1Var.m620f(new View$OnClickListenerC0836a(q1Var, i3), true);
                     q1Var.show(true, true, true);
                 } else if (2 == i3) {
-                    if (this.f2837a >= Page_Start.this.f2806I.size() || (aVar2 = (DataDB.C0736a) Page_Start.this.f2806I.get(this.f2837a)) == null || aVar2.f2503h.hashCode() != this.f2838b) {
+                    if (this.f2837a >= Page_Start.this.f2806I.size() || (aVar2 = (DataDB.UserBookMarkModel) Page_Start.this.f2806I.get(this.f2837a)) == null || aVar2.f2503h.hashCode() != this.f2838b) {
                         Toast.makeText(Page_Start.this.mainActivity, "Вмешалась синхронизация и ничего не вышло. Повторите действие, пожалуйста.", 1).show();
                         return;
                     }
@@ -481,12 +481,12 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
                     q1Var2.show(true, true, true);
                 } else if (3 != i3) {
                 } else {
-                    if (this.f2837a >= Page_Start.this.f2806I.size() || (aVar = (DataDB.C0736a) Page_Start.this.f2806I.get(this.f2837a)) == null || aVar.f2503h.hashCode() != this.f2838b) {
+                    if (this.f2837a >= Page_Start.this.f2806I.size() || (aVar = (DataDB.UserBookMarkModel) Page_Start.this.f2806I.get(this.f2837a)) == null || aVar.f2503h.hashCode() != this.f2838b) {
                         Toast.makeText(Page_Start.this.mainActivity, "Вмешалась синхронизация и ничего не вышло. Повторите действие, пожалуйста.", 1).show();
                         return;
                     }
                     DataDB.m374c(aVar);
-                    if ((aVar.f2499d & 17) == 17 && Page_Start.this.f2806I.size() > this.f2837a + 1 && ((DataDB.C0736a) Page_Start.this.f2806I.get(this.f2837a + 1)).f2500e == (i4 = aVar.f2496a)) {
+                    if ((aVar.f2499d & 17) == 17 && Page_Start.this.f2806I.size() > this.f2837a + 1 && ((DataDB.UserBookMarkModel) Page_Start.this.f2806I.get(this.f2837a + 1)).f2500e == (i4 = aVar.f2496a)) {
                         Page_Start.this.m226p0(i4, this.f2837a + 1);
                     }
                     Page_Start.this.f2806I.remove(this.f2837a);
@@ -519,7 +519,7 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
 
         @Override
         public void onClick(View view) {
-            DataDB.C0736a aVar = (DataDB.C0736a) view.getTag();
+            DataDB.UserBookMarkModel aVar = (DataDB.UserBookMarkModel) view.getTag();
             int i = aVar.f2499d;
             if ((i & 1) != 0) {
                 if ((i & 16) != 0) {
@@ -562,7 +562,7 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
             if (action == 0) {
                 this.f2830f = motionEvent.getY();
             } else if (this.f2825a) {
-                DataDB.C0736a aVar = (DataDB.C0736a) view.getTag();
+                DataDB.UserBookMarkModel aVar = (DataDB.UserBookMarkModel) view.getTag();
                 int indexOf2 = Page_Start.this.f2806I.indexOf(aVar);
                 int hashCode = aVar.f2503h.hashCode();
                 int i4 = 3;
@@ -588,13 +588,13 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
                             View view2 = this.f2831g;
                             if (!(view2 == null || view2 == view)) {
                                 Object tag = view2.getTag();
-                                if (tag instanceof DataDB.C0736a) {
+                                if (tag instanceof DataDB.UserBookMarkModel) {
                                     int top = this.f2831g.getTop();
                                     int bottom = this.f2831g.getBottom();
                                     int top2 = view.getTop();
                                     int bottom2 = view.getBottom();
                                     int i8 = bottom - top;
-                                    if ((((DataDB.C0736a) tag).f2499d & 1) != 0) {
+                                    if ((((DataDB.UserBookMarkModel) tag).f2499d & 1) != 0) {
                                         i4 = 2;
                                     }
                                     int i9 = i8 / i4;
@@ -626,7 +626,7 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
                                 }
                             }
                         }
-                    } else if ((aVar.f2499d & 17) == 17 && Page_Start.this.f2806I.size() > (indexOf = Page_Start.this.f2806I.indexOf(aVar) + 1) && ((DataDB.C0736a) Page_Start.this.f2806I.get(indexOf)).f2500e == (i3 = aVar.f2496a)) {
+                    } else if ((aVar.f2499d & 17) == 17 && Page_Start.this.f2806I.size() > (indexOf = Page_Start.this.f2806I.indexOf(aVar) + 1) && ((DataDB.UserBookMarkModel) Page_Start.this.f2806I.get(indexOf)).f2500e == (i3 = aVar.f2496a)) {
                         Page_Start.this.m226p0(i3, indexOf);
                         aVar.f2499d &= -17;
                         DataDB.m370g(aVar, false);
@@ -637,7 +637,7 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
                         TextView textView = (TextView) view.findViewById(R.id.startEntryTitle);
                         Drawable background = textView.getBackground();
                         view.setDrawingCacheEnabled(true);
-                        textView.setBackgroundDrawable(Page_Start.this.mainActivity.skin.m736f(R.drawable.main_background));
+                        textView.setBackgroundDrawable(Page_Start.this.mainActivity.skin.getSkinDrawable(R.drawable.main_background));
                         ImageView imageView2 = new ImageView(view.getContext());
                         this.f2826b = imageView2;
                         imageView2.setPadding(0, 0, 0, 0);
@@ -675,7 +675,7 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
                         this.f2826b = null;
                         ((TextView) view.findViewById(R.id.startEntryTitle)).setText(aVar.f2502g);
                         if ((aVar.f2499d & 1) != 0) {
-                            ((ImageView) view.findViewById(R.id.startEntryStatus)).setImageDrawable(Page_Start.this.mainActivity.skin.m736f(R.drawable.ic_expand_close));
+                            ((ImageView) view.findViewById(R.id.startEntryStatus)).setImageDrawable(Page_Start.this.mainActivity.skin.getSkinDrawable(R.drawable.ic_expand_close));
                         }
                         if (1 == action) {
                             int i14 = aVar.f2500e;
@@ -684,7 +684,7 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
                             if (view4 == view) {
                                 View view5 = this.f2832h;
                                 if (view5 != null) {
-                                    DataDB.C0736a aVar2 = (DataDB.C0736a) view5.getTag();
+                                    DataDB.UserBookMarkModel aVar2 = (DataDB.UserBookMarkModel) view5.getTag();
                                     if (this.f2833i) {
                                         if (17 == (aVar2.f2499d & 17)) {
                                             i2 = aVar2.f2496a;
@@ -704,8 +704,8 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
                             } else {
                                 if (view4 != null) {
                                     Object tag2 = view4.getTag();
-                                    if (tag2 instanceof DataDB.C0736a) {
-                                        DataDB.C0736a aVar3 = (DataDB.C0736a) tag2;
+                                    if (tag2 instanceof DataDB.UserBookMarkModel) {
+                                        DataDB.UserBookMarkModel aVar3 = (DataDB.UserBookMarkModel) tag2;
                                         if ((aVar3.f2499d & 1) != 0) {
                                             i14 = aVar3.f2496a;
                                             i15 = Integer.MAX_VALUE;
@@ -734,7 +734,7 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
                                 int i17 = 0;
                                 int i18 = 0;
                                 for (int i19 = 0; i19 < Page_Start.this.f2806I.size(); i19++) {
-                                    DataDB.C0736a aVar4 = (DataDB.C0736a) Page_Start.this.f2806I.get(i19);
+                                    DataDB.UserBookMarkModel aVar4 = (DataDB.UserBookMarkModel) Page_Start.this.f2806I.get(i19);
                                     if (aVar4.f2496a == i14) {
                                         aVar.f2504i = aVar4.f2504i + 1;
                                         if ((aVar4.f2499d & 16) != 0) {
@@ -836,9 +836,9 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
     }
 
     public int m228n0(int i, int i2, int i3) {
-        DataDB.C0736a[] e = DataDB.m372e(i);
+        DataDB.UserBookMarkModel[] e = DataDB.m372e(i);
         if (e != null) {
-            for (DataDB.C0736a aVar : e) {
+            for (DataDB.UserBookMarkModel aVar : e) {
                 aVar.f2504i = i3;
                 int i4 = i2 + 1;
                 this.f2806I.add(i2, aVar);
@@ -850,7 +850,7 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
 
     public void m227o0() {
         int size = this.f2803F.size() + 1 + this.f2804G.size() + 1;
-        List<DataDB.C0736a> list = this.f2806I;
+        List<DataDB.UserBookMarkModel> list = this.f2806I;
         int size2 = size + (list != null ? list.size() : 0) + 1;
         int[] iArr = this.f1071B;
         if (iArr == null || iArr.length != size2) {
@@ -883,7 +883,7 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
 
     public void m226p0(int i, int i2) {
         while (i2 < this.f2806I.size()) {
-            DataDB.C0736a aVar = this.f2806I.get(i2);
+            DataDB.UserBookMarkModel aVar = this.f2806I.get(i2);
             if (aVar.f2500e == i) {
                 this.f2806I.remove(i2);
                 if ((aVar.f2499d & 17) == 17) {
@@ -918,7 +918,7 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
             o1Var.addMenuItem(0, 0, 1, "Показать обьявления");
         }
         if (Build.VERSION.SDK_INT < 26) {
-            o1Var.addMenuItem(0, 0, 2, "В тихий режим", false, false, true, Prefs.f1172j);
+            o1Var.addMenuItem(0, 0, 2, "В тихий режим", false, false, true, Prefs.notifySilence);
         }
         o1Var.addMenuItem(0, 0, 3, "Мини-гид", false, false, false, false);
         o1Var.show(view);
@@ -992,7 +992,7 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
             return 0;
         }
         int size = this.f2803F.size() + 1 + this.f2804G.size() + 1;
-        List<DataDB.C0736a> list = this.f2806I;
+        List<DataDB.UserBookMarkModel> list = this.f2806I;
         if (list != null) {
             i = list.size();
         }
@@ -1155,10 +1155,10 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
                         bBDisplay2.setBBString(pVar2);
                         view.findViewById(R.id.globalClose).setTag(Integer.valueOf(size));*/
                     } else if (4 == itemViewType) {
-                        DataDB.C0736a aVar = this.f2806I.get((((i - 1) - this.f2803F.size()) - this.f2804G.size()) - 1);
+                        DataDB.UserBookMarkModel aVar = this.f2806I.get((((i - 1) - this.f2803F.size()) - this.f2804G.size()) - 1);
                         TextView textView4 = (TextView) view.findViewById(R.id.startEntryTitle);
                         if (i + 2 < getCount()) {
-                            textView4.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.border_bottom));
+                            textView4.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.border_bottom));
                         } else {
                             textView4.setBackgroundResource(0);
                         }
@@ -1168,7 +1168,7 @@ public class Page_Start extends Page implements BBDisplay.IBBDisplayCallback {
                         int i2 = aVar.f2499d;
                         Drawable r0 = null;
                         if ((i2 & 1) != 0) {
-                            r0 = this.mainActivity.skin.m736f((16 & i2) != 0 ? R.drawable.ic_expand_open : R.drawable.ic_expand_close);
+                            r0 = this.mainActivity.skin.getSkinDrawable((16 & i2) != 0 ? R.drawable.ic_expand_open : R.drawable.ic_expand_close);
                         
                             //r0 = 0;
 

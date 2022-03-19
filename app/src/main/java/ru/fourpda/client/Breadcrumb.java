@@ -37,7 +37,7 @@ class Breadcrumb extends Dialog implements View.OnClickListener {
     }
 
     public Breadcrumb(MainActivity mainActivity, Tab f1Var) {
-        super(mainActivity, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+        super(mainActivity, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
         boolean z;
         this.f2455b = mainActivity;
         this.f2454a = f1Var;
@@ -84,7 +84,7 @@ class Breadcrumb extends Dialog implements View.OnClickListener {
         this.f2456c = linearLayout;
         m398e(linearLayout.getChildCount() - 1, 0, 0, z);
         m399d(this.f2456c.getChildCount() - 1, 0, 0);
-        getWindow().setBackgroundDrawable(this.f2455b.skin.m736f(R.drawable.np_dialog));
+        getWindow().setBackgroundDrawable(this.f2455b.skin.getSkinDrawable(R.drawable.np_dialog));
         getWindow().setLayout(-1, -2);
         setCanceledOnTouchOutside(true);
     }
@@ -98,30 +98,30 @@ class Breadcrumb extends Dialog implements View.OnClickListener {
         } else {
             i = aVar.f2465f ? R.drawable.bc_tree_msc : aVar.f2464e ? R.drawable.bc_tree_ms : R.drawable.bc_tree_m;
         }
-        ((ImageView) view.findViewById(R.id.bc_line_img)).setImageDrawable(this.f2455b.skin.m736f(i));
+        ((ImageView) view.findViewById(R.id.bc_line_img)).setImageDrawable(this.f2455b.skin.getSkinDrawable(i));
         if (!z) {
-            view.findViewById(R.id.bc_line_text).setBackgroundDrawable(z2 ? null : this.f2455b.skin.m736f(R.drawable.border_bottom));
+            view.findViewById(R.id.bc_line_text).setBackgroundDrawable(z2 ? null : this.f2455b.skin.getSkinDrawable(R.drawable.border_bottom));
         }
     }
 
     private int m401b(int i, int i2, int i3) {
-        DataDB.C0736a[] e = DataDB.m372e(i2);
+        DataDB.UserBookMarkModel[] e = DataDB.m372e(i2);
         if (e != null) {
             if (i2 == 0) {
                 this.f2455b.getLayoutInflater().inflate(R.layout.bc_bm_sep, this.f2456c);
                 i++;
             } else {
-                ((DataDB.C0736a) this.f2456c.getChildAt(i).getTag()).f2499d |= 16;
-                ((ImageView) this.f2456c.getChildAt(i).findViewById(R.id.bc_line_img)).setImageDrawable(this.f2455b.skin.m736f(R.drawable.ic_expand_open));
+                ((DataDB.UserBookMarkModel) this.f2456c.getChildAt(i).getTag()).f2499d |= 16;
+                ((ImageView) this.f2456c.getChildAt(i).findViewById(R.id.bc_line_img)).setImageDrawable(this.f2455b.skin.getSkinDrawable(R.drawable.ic_expand_open));
             }
-            for (DataDB.C0736a aVar : e) {
+            for (DataDB.UserBookMarkModel aVar : e) {
                 View inflate = this.f2455b.getLayoutInflater().inflate(R.layout.bc_bm_line, (ViewGroup) this.f2456c, false);
                 inflate.setTag(aVar);
                 aVar.f2504i = i3;
                 inflate.setPadding((int) (this.f2455b.f731b * 8.0f * ((float) i3)), 0, 0, 0);
                 int i4 = aVar.f2499d;
                 if ((i4 & 1) != 0 && (i4 & 16) == 0) {
-                    ((ImageView) inflate.findViewById(R.id.bc_line_img)).setImageDrawable(this.f2455b.skin.m736f(R.drawable.ic_expand_close));
+                    ((ImageView) inflate.findViewById(R.id.bc_line_img)).setImageDrawable(this.f2455b.skin.getSkinDrawable(R.drawable.ic_expand_close));
                 }
                 TextView textView = (TextView) inflate.findViewById(R.id.bc_line_text);
                 textView.setText(aVar.f2502g);
@@ -181,15 +181,15 @@ class Breadcrumb extends Dialog implements View.OnClickListener {
         boolean z = i2 == 0 || i == childCount;
         if (z) {
             View childAt = this.f2456c.getChildAt(childCount);
-            if (childAt.getTag() instanceof DataDB.C0736a) {
-                childAt.findViewById(R.id.bc_line_text).setBackgroundDrawable(this.f2455b.skin.m736f(R.drawable.border_bottom));
+            if (childAt.getTag() instanceof DataDB.UserBookMarkModel) {
+                childAt.findViewById(R.id.bc_line_text).setBackgroundDrawable(this.f2455b.skin.getSkinDrawable(R.drawable.border_bottom));
             }
         }
         m401b(i, i2, i3);
         if (z) {
             LinearLayout linearLayout = this.f2456c;
             View childAt2 = linearLayout.getChildAt(linearLayout.getChildCount() - 1);
-            if (childAt2.getTag() instanceof DataDB.C0736a) {
+            if (childAt2.getTag() instanceof DataDB.UserBookMarkModel) {
                 childAt2.findViewById(R.id.bc_line_text).setBackgroundDrawable(null);
             }
         }
@@ -214,11 +214,11 @@ class Breadcrumb extends Dialog implements View.OnClickListener {
     }
 
     private void m397f(int i, int i2) {
-        ((DataDB.C0736a) this.f2456c.getChildAt(i).getTag()).f2499d &= -17;
-        ((ImageView) this.f2456c.getChildAt(i).findViewById(R.id.bc_line_img)).setImageDrawable(this.f2455b.skin.m736f(R.drawable.ic_expand_close));
+        ((DataDB.UserBookMarkModel) this.f2456c.getChildAt(i).getTag()).f2499d &= -17;
+        ((ImageView) this.f2456c.getChildAt(i).findViewById(R.id.bc_line_img)).setImageDrawable(this.f2455b.skin.getSkinDrawable(R.drawable.ic_expand_close));
         int i3 = i + 1;
         while (i3 < this.f2456c.getChildCount()) {
-            DataDB.C0736a aVar = (DataDB.C0736a) this.f2456c.getChildAt(i3).getTag();
+            DataDB.UserBookMarkModel aVar = (DataDB.UserBookMarkModel) this.f2456c.getChildAt(i3).getTag();
             if (aVar.f2500e == i2) {
                 if ((aVar.f2499d & 16) != 0) {
                     m397f(i3, aVar.f2496a);
@@ -281,8 +281,8 @@ class Breadcrumb extends Dialog implements View.OnClickListener {
                 m398e(this.f2456c.indexOfChild(view2), aVar.f2460a, aVar.f2468i + 1, false);
             }
             this.f2459f = currentTimeMillis;
-        } else if (tag instanceof DataDB.C0736a) {
-            DataDB.C0736a aVar2 = (DataDB.C0736a) tag;
+        } else if (tag instanceof DataDB.UserBookMarkModel) {
+            DataDB.UserBookMarkModel aVar2 = (DataDB.UserBookMarkModel) tag;
             int i = aVar2.f2499d;
             if ((i & 1) == 0) {
                 MainActivity mainActivity2 = this.f2455b;

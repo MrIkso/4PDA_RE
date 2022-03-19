@@ -13,61 +13,61 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ProgressBar;
 
 public class Widgets$MemberView extends AutoCompleteTextView implements Handler.Callback {
-    Handler f901a;
-    ProgressBar f902b;
+    Handler handler;
+    ProgressBar progressBar;
     public Util.AbstractC0429j<Boolean, Boolean> f903c;
-    Integer f904d;
+    Integer memberId;
 
     public class C0238a extends MemberInfoRequest {
-        Widgets$MemberView f905h;
+        Widgets$MemberView memberView;
 
         class RunnableC0239a implements Runnable {
-            final int f906a;
-            final String f907b;
+            final int memberId;
+            final String memberUserName;
 
-            RunnableC0239a(int i, String str) {
+            RunnableC0239a(int memberId, String memberUserName) {
                // C0238a.this = r1;
-                this.f906a = i;
-                this.f907b = str;
+                this.memberId = memberId;
+                this.memberUserName = memberUserName;
             }
 
             @Override
             public void run() {
-                C0238a.this.f905h.m845a(this.f906a, this.f907b, true);
+                C0238a.this.memberView.setData(this.memberId, this.memberUserName, true);
             }
         }
 
-        public C0238a(Widgets$MemberView widgets$MemberView, Widgets$MemberView widgets$MemberView2, int memberId) {
+        public C0238a(Widgets$MemberView memberView, Widgets$MemberView widgets$MemberView2, int memberId) {
             super(memberId);
-            this.f905h = widgets$MemberView2;
+            this.memberView = widgets$MemberView2;
         }
 
         @Override
-        public void prepareResult(int status, Document uVar) {
+        public void prepareResult(int status, Document document) {
             if (status == 0) {
-                ((Activity) this.f905h.getContext()).runOnUiThread(new RunnableC0239a(uVar.getInt(0).intValue(), Util.C0427h.UnEscapeString(uVar.getString(1))));
+                ((Activity) this.memberView.getContext()).runOnUiThread(new RunnableC0239a(document.getInt(0).intValue(), Util.C0427h.UnEscapeString(document.getString(1))));
             }
         }
     }
 
     public Widgets$MemberView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
-        m843c(context);
+        init(context);
     }
 
-    public void m845a(int i, String str, boolean z) {
-        this.f904d = Integer.valueOf(i);
+    public void setData(int memberId, String userName, boolean z) {
+        this.memberId = Integer.valueOf(memberId);
         int i2 = 0;
         if (z) {
             if (Build.VERSION.SDK_INT >= 17) {
-                setText((CharSequence) str, false);
+                setText((CharSequence) userName, false);
             } else {
-                setText(str);
+                setText(userName);
             }
         }
         View findViewById = ((View) getParent()).findViewById(R.id.memberLink);
         if (findViewById != null) {
-            if (i == 0) {
+            if (memberId == 0) {
                 i2 = 8;
             }
             findViewById.setVisibility(i2);
@@ -78,21 +78,21 @@ public class Widgets$MemberView extends AutoCompleteTextView implements Handler.
         }
     }
 
-    public Integer m844b() {
-        return this.f904d;
+    public Integer getMemberId() {
+        return this.memberId;
     }
 
-    void m843c(Context context) {
-        this.f901a = new Handler(context.getMainLooper(), this);
-        FilterAdapter k1Var = new FilterAdapter(context, this);
-        setAdapter(k1Var);
-        setOnItemClickListener(k1Var);
+    void init(Context context) {
+        this.handler = new Handler(context.getMainLooper(), this);
+        FilterAdapter filterAdapter = new FilterAdapter(context, this);
+        setAdapter(filterAdapter);
+        setOnItemClickListener(filterAdapter);
         setThreshold(3);
     }
 
-    public void m842d() {
+    public void resetData() {
         setText("");
-        this.f904d = null;
+        this.memberId = null;
         Util.AbstractC0429j<Boolean, Boolean> jVar = this.f903c;
         if (jVar != null) {
             jVar.mo222a(Boolean.FALSE);
@@ -101,17 +101,17 @@ public class Widgets$MemberView extends AutoCompleteTextView implements Handler.
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent motionEvent) {
-        Integer num = this.f904d;
+        Integer num = this.memberId;
         if (num != null && num != 0 && 1 == motionEvent.getAction() && motionEvent.getX() > ((float) (getWidth() - getHeight()))) {
             MainActivity mainActivity = (MainActivity) getContext();
-            mainActivity.mainLayout.tab.addPage(new Page_Profile(mainActivity, this.f904d, 0));
+            mainActivity.mainLayout.tab.addPage(new Page_Profile(mainActivity, this.memberId, 0));
             CustomDialog.dismiss();
         }
         return super.dispatchTouchEvent(motionEvent);
     }
 
     public void m841e(int i) {
-        this.f904d = i;
+        this.memberId = i;
         DocumentManager.getResultRequest(new C0238a(this, this, i));
         Util.AbstractC0429j<Boolean, Boolean> jVar = this.f903c;
         if (jVar != null) {
@@ -136,7 +136,7 @@ public class Widgets$MemberView extends AutoCompleteTextView implements Handler.
     @SuppressLint("WrongConstant")
     @Override
     public void onFilterComplete(int i) {
-        ProgressBar progressBar = this.f902b;
+        ProgressBar progressBar = this.progressBar;
         if (progressBar != null) {
             progressBar.setVisibility(8);
         }
@@ -147,7 +147,7 @@ public class Widgets$MemberView extends AutoCompleteTextView implements Handler.
     @Override
     protected void performFiltering(CharSequence charSequence, int i) {
         ProgressBar progressBar = (ProgressBar) ((View) getParent()).findViewById(R.id.memberProgress);
-        this.f902b = progressBar;
+        this.progressBar = progressBar;
         if (progressBar != null) {
             progressBar.setVisibility(0);
         }
@@ -155,14 +155,14 @@ public class Widgets$MemberView extends AutoCompleteTextView implements Handler.
         if (findViewById != null) {
             findViewById.setVisibility(8);
         }
-        this.f904d = null;
+        this.memberId = null;
         Util.AbstractC0429j<Boolean, Boolean> jVar = this.f903c;
         if (jVar != null) {
             jVar.mo222a(Boolean.FALSE);
         }
-        this.f901a.removeMessages(28018);
+        this.handler.removeMessages(28018);
         String charSequence2 = charSequence.toString();
-        Handler handler = this.f901a;
+        Handler handler = this.handler;
         handler.sendMessageDelayed(handler.obtainMessage(28018, i, 0, charSequence2), 1200);
     }
 }

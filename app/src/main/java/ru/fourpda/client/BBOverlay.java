@@ -387,7 +387,7 @@ public class BBOverlay extends View implements Drawable.Callback {
                 }
 
                 public void m923b(Canvas canvas, int i, int i2) {
-                    this.f626a.f620g.setColor(Skin.C0353a.f1365U);
+                    this.f626a.f620g.setColor(Skin.SkinColorModel.mainTextColor);
                     String str = this.f628c;
                     int i3 = i + this.f629d;
                     C0153a aVar = this.f626a;
@@ -569,7 +569,7 @@ public class BBOverlay extends View implements Drawable.Callback {
                         C0154a aVar = this.f614a.get(i3 - 1);
                         aVar.m923b(canvas, this.f623j, this.f624k);
                         if (i3 != size) {
-                            this.f620g.setColor(Skin.C0353a.f1365U);
+                            this.f620g.setColor(Skin.SkinColorModel.mainTextColor);
                             int i4 = 1;
                             while (true) {
                                 int i5 = this.f619f;
@@ -902,7 +902,7 @@ public class BBOverlay extends View implements Drawable.Callback {
                         if (gVar4 == bBOverlay.f555b.f571a) {
                         }
                     } else {
-                        sb.append(Util.SmileClass.smilesList.get(oVarArr[i3].f2329f).f1654a);
+                        sb.append(Util.SmileClass.smilesList.get(oVarArr[i3].f2329f).code);
                     }
                     str = str2;
                     gVar = gVar4;

@@ -40,7 +40,7 @@ public class Page_Login extends Page {
 
         @Override
         public void onClick(View view) {
-            Page_Login.this.m635f0();
+            Page_Login.this.resetPassword();
         }
     }
 
@@ -51,7 +51,7 @@ public class Page_Login extends Page {
 
         @Override
         public void onClick(View view) {
-            Page_Login.this.m637d0();
+            Page_Login.this.login();
         }
     }
 
@@ -66,16 +66,16 @@ public class Page_Login extends Page {
         }
     }
 
-    public class C0438e implements TextWatcher {
-        final CustomDialog f1675a;
+    public class PasswordWatcher implements TextWatcher {
+        final CustomDialog dialog;
 
-        C0438e(Page_Login j0Var, CustomDialog l1Var) {
-            this.f1675a = l1Var;
+        PasswordWatcher(Page_Login j0Var, CustomDialog l1Var) {
+            this.dialog = l1Var;
         }
 
         @Override
         public void afterTextChanged(Editable editable) {
-            this.f1675a.f1804b.setEnabled(!TextUtils.isEmpty(editable.toString()));
+            this.dialog.f1804b.setEnabled(!TextUtils.isEmpty(editable.toString()));
         }
 
         @Override
@@ -87,10 +87,10 @@ public class Page_Login extends Page {
         }
     }
 
-    public class View$OnClickListenerC0439f implements View.OnClickListener {
+    public class ResetPasswordOnClickListener implements View.OnClickListener {
         final EditText f1676a;
 
-        View$OnClickListenerC0439f(EditText editText) {
+        ResetPasswordOnClickListener(EditText editText) {
 //            Page_Login.this
             this.f1676a = editText;
         }
@@ -99,7 +99,7 @@ public class Page_Login extends Page {
         public void onClick(View view) {
             String login = this.f1676a.getText().toString();
             if (!TextUtils.isEmpty(login)) {
-                DocumentManager.getResultRequest(new MainActivity.C0187e0(Page_Login.this.mainActivity, 5, 0, 0, login, ""));
+                DocumentManager.getResultRequest(new MainActivity.MemberAuthorizationRequest(Page_Login.this.mainActivity, 5, 0, 0, login, ""));
             } else {
                 Toast.makeText(Page_Login.this.mainActivity, "Введите логин", 0).show();
             }
@@ -170,10 +170,10 @@ public class Page_Login extends Page {
             }
         }
 
-        class View$OnClickListenerC0445b implements View.OnClickListener {
+        class SetCaptchOnClickListener implements View.OnClickListener {
             final CaptchaDialog f1683a;
 
-            View$OnClickListenerC0445b(CaptchaDialog iVar) {
+            SetCaptchOnClickListener(CaptchaDialog iVar) {
 //                CaptchaRequest.this
                 this.f1683a = iVar;
             }
@@ -209,7 +209,7 @@ public class Page_Login extends Page {
                 } else if (4 == status) {
                     CaptchaDialog iVar = new CaptchaDialog(Page_Login.this.mainActivity, document.getString(0));
                     iVar.m621e(new View$OnClickListenerC0444a(), true);
-                    iVar.m620f(new View$OnClickListenerC0445b(iVar), true);
+                    iVar.m620f(new SetCaptchOnClickListener(iVar), true);
                     iVar.show(true, true, false);
                 } else {
                     Toast.makeText(pageLogin.mainActivity, "Неверный логин или пароль.", 1).show();
@@ -252,7 +252,7 @@ public class Page_Login extends Page {
             mainLayout.f798F = false;
             mainLayout.m868n(false);
             if (this.resetPassword) {
-                m635f0();
+                resetPassword();
             }
         }
         this.f1670G.mo222a(null);
@@ -276,7 +276,7 @@ public class Page_Login extends Page {
         return true;
     }
 
-    void m637d0() {
+    void login() {
         if (DocumentManager.isLoggined()) {
             DlgSimple q1Var = new DlgSimple(this.mainActivity, "Будут закрыты все вкладки.", false, null, null);
             q1Var.editText.setVisibility(8);
@@ -313,15 +313,15 @@ public class Page_Login extends Page {
         f1Var.m722d();
     }
 
-    public void m635f0() {
+    public void resetPassword() {
         this.resetPassword = false;
-        View inflate = this.mainActivity.getLayoutInflater().inflate(R.layout.dlg_forgot_pass, (ViewGroup) null);
-        EditText editText = (EditText) inflate.findViewById(R.id.forgotpassMsg);
-        CustomDialog l1Var = new CustomDialog(this.mainActivity, inflate, "СБРОСИТЬ", null);
-        l1Var.m625a(false);
-        editText.addTextChangedListener(new C0438e(this, l1Var));
-        l1Var.m620f(new View$OnClickListenerC0439f(editText), true);
-        l1Var.show(true, true, true);
+        View dlgForgotPass = this.mainActivity.getLayoutInflater().inflate(R.layout.dlg_forgot_pass, (ViewGroup) null);
+        EditText editText = (EditText) dlgForgotPass.findViewById(R.id.forgotpassMsg);
+        CustomDialog dialog = new CustomDialog(this.mainActivity, dlgForgotPass, "СБРОСИТЬ", null);
+        dialog.m625a(false);
+        editText.addTextChangedListener(new PasswordWatcher(this, dialog));
+        dialog.m620f(new ResetPasswordOnClickListener(editText), true);
+        dialog.show(true, true, true);
     }
 
     void initLoginData(boolean z) {

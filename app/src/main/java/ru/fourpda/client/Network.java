@@ -94,7 +94,7 @@ public abstract class Network {
                     resultStream = dataInputStream;
                 } else
 
-                // create connection to app.4pda.to
+                // create imaps connection to app.4pda.to
                 {
                     isConnected = false;
                     altPath = false;
@@ -118,8 +118,8 @@ public abstract class Network {
                         tcpSocket = null;
                         tcpSocketStream = null;
                     }
-					
-					// create websocket connection
+                    
+                    // create  tcp websocket connection
                    if (isWebSocketConnected && tcpSocket == null) {
                         Log.d("NETWORK", "try another connection!");
                         altPath = true;
@@ -219,7 +219,7 @@ public abstract class Network {
                                     throw new IOException();
                                 }
                             }
-                            Log.d("NETWORK", String.format("header %s", new String(Base64.encode(headerBytes, 0, 10, 2))));
+                        //    Log.d("NETWORK", String.format("header %s", new String(Base64.encode(headerBytes, 0, 10, 2))));
                             resultStream.readFully(contentBytes, 0, dataSize);
                             if (8 == (cmd & 15)) {
                                 sendDocument(8, true, false, contentBytes, dataSize);
@@ -256,12 +256,12 @@ public abstract class Network {
                                 }
                                 Log.d("NETWORK","start parsing bytearray");
                                 Document document = new Document();
-                             //   Exception e6 = null;
+                                Exception e6 = null;
                                 try {
                                     isDocumentParsed = document.fromStream(byteArrayInputStream);
                                     Log.d("NETWORK","parse: "+ isDocumentParsed);
                                 } catch (Exception e7) {
-                                   // e6 = e7;
+                                    e6 = e7;
                                     isDocumentParsed = false;
                                 }
                                 if (!isDocumentParsed) {
@@ -326,7 +326,7 @@ public abstract class Network {
     }
 
     public boolean sendDocument(int cmd, boolean isFile, boolean isCompress, byte[] data, int size) {
-        Log.d("NETWORK", "sending document");
+        
         int dataSize;
         synchronized (this.locker) {
             if (!isConnected()) {
@@ -394,6 +394,7 @@ public abstract class Network {
                 return false;
             }
             Document requestDocument = request.getDocument();
+			      // Log.d("NETWORK", "sending document " + requestDocument.toString());
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             requestDocument.toStream(byteArrayOutputStream);
             if (!sendDocument(1, request.isFileSize() == 0, true, byteArrayOutputStream.toByteArray(), byteArrayOutputStream.size())) {
@@ -507,7 +508,7 @@ public abstract class Network {
                 try {
                     tcpSocket.close();
                 } catch (Exception ex) {
-					ex.printStackTrace();
+                    ex.printStackTrace();
                 }
             }
             if (this.connectionThread != null) {

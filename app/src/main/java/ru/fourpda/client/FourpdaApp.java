@@ -26,7 +26,7 @@ public class FourpdaApp extends Application {
             }
         }
         Prefs.initPreference(this);
-        DataDB.m376a(this);
+        DataDB.mkdirDB(this);
         DocumentManager.syncBookmarks(this);
         Notify.createNotificationChannel(this);
     }

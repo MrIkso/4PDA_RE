@@ -156,7 +156,7 @@ public class BBEditor {
                 oVar2.f2029c = oVar2.f2030d.getSelectionEnd();
                 this.f2045a.editText.setText("");
                 this.f2045a.show(true, true, true);
-                BBEditor.this.f2031e.mainLayout.m859w(this.f2045a.editText);
+                BBEditor.this.f2031e.mainLayout.hideKeyboard(this.f2045a.editText);
             }
         }
     }
@@ -184,78 +184,78 @@ public class BBEditor {
     public static class C0618g0 {
         public static int f2049e;
         Dialog f2050a;
-        BBEditor f2051b;
+        BBEditor bbEditor;
         int f2052c;
         int f2053d;
 
         class C0619a implements AdapterView.OnItemClickListener {
-            final C0620b f2054a;
+            final BBColorListAdapter bbColorListAdapter;
 
-            C0619a(C0620b bVar) {
-                this.f2054a = bVar;
+            C0619a(BBColorListAdapter bVar) {
+                this.bbColorListAdapter = bVar;
             }
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long j) {
-                BBEditor oVar = C0618g0.this.f2051b;
-                String str = this.f2054a.f2056a.get(i).f2060b;
+                BBEditor oVar = C0618g0.this.bbEditor;
+                String colorName = this.bbColorListAdapter.bbColorList.get(i).colorName;
                 C0618g0 g0Var = C0618g0.this;
-                oVar.m511n("COLOR", str, g0Var.f2052c, g0Var.f2053d, false);
+                oVar.m511n("COLOR", colorName, g0Var.f2052c, g0Var.f2053d, false);
                 C0618g0.this.f2050a.cancel();
             }
         }
 
-        public class C0620b extends BaseAdapter {
-            public List<C0621a> f2056a;
-            MainActivity f2057b;
-            AbsListView.LayoutParams f2058c;
+        public class BBColorListAdapter extends BaseAdapter {
+            public List<BBColorModel> bbColorList;
+            MainActivity mainActivity;
+            AbsListView.LayoutParams layoutParams;
 
-            public class C0621a {
-                public int f2059a;
-                public String f2060b;
+            public class BBColorModel {
+                public int htmlColor;
+                public String colorName;
 
-                public C0621a(C0620b bVar, int i, String str) {
-                    this.f2059a = i;
-                    this.f2060b = str;
+                public BBColorModel(BBColorListAdapter adapter, int htmlColor, String colorName) {
+                    this.htmlColor = htmlColor;
+                    this.colorName = colorName;
                 }
             }
 
-            public C0620b(C0618g0 g0Var, MainActivity mainActivity) {
-                this.f2057b = mainActivity;
+            public BBColorListAdapter(C0618g0 g0Var, MainActivity mainActivity) {
+                this.mainActivity = mainActivity;
                 int i = C0618g0.f2049e;
-                this.f2058c = new AbsListView.LayoutParams(i, i);
+                this.layoutParams = new AbsListView.LayoutParams(i, i);
                 Vector vector = new Vector(30);
-                this.f2056a = vector;
-                vector.add(new C0621a(this, -16777216, "Black"));
-                this.f2056a.add(new C0621a(this, -1, "White"));
-                this.f2056a.add(new C0621a(this, -7876885, "SkyBlue"));
-                this.f2056a.add(new C0621a(this, -12490271, "RoyalBlue"));
-                this.f2056a.add(new C0621a(this, -16776961, "Blue"));
-                this.f2056a.add(new C0621a(this, -16777077, "DarkBlue"));
-                this.f2056a.add(new C0621a(this, -23296, "Orange"));
-                this.f2056a.add(new C0621a(this, -47872, "OrangeRed"));
-                this.f2056a.add(new C0621a(this, -2354116, "Crimson"));
-                this.f2056a.add(new C0621a(this, -65536, "Red"));
-                this.f2056a.add(new C0621a(this, -7667712, "DarkRed"));
-                this.f2056a.add(new C0621a(this, -16711936, "Green"));
-                this.f2056a.add(new C0621a(this, -13447886, "LimeGreen"));
-                this.f2056a.add(new C0621a(this, -13726889, "SeaGreen"));
-                this.f2056a.add(new C0621a(this, -60269, "DeepPink"));
-                this.f2056a.add(new C0621a(this, -40121, "Tomato"));
-                this.f2056a.add(new C0621a(this, -32944, "Coral"));
-                this.f2056a.add(new C0621a(this, -8388480, "Purple"));
-                this.f2056a.add(new C0621a(this, -11861886, "Indigo"));
-                this.f2056a.add(new C0621a(this, -2180985, "BurlyWood"));
-                this.f2056a.add(new C0621a(this, -5952982, "SandyBrown"));
-                this.f2056a.add(new C0621a(this, -7852777, "Sienna"));
-                this.f2056a.add(new C0621a(this, -2987746, "Chocolate"));
-                this.f2056a.add(new C0621a(this, -16744320, "Teal"));
-                this.f2056a.add(new C0621a(this, -4144960, "Silver"));
+                this.bbColorList = vector;
+                vector.add(new BBColorModel(this, -16777216, "Black"));
+                this.bbColorList.add(new BBColorModel(this, -1, "White"));
+                this.bbColorList.add(new BBColorModel(this, -7876885, "SkyBlue"));
+                this.bbColorList.add(new BBColorModel(this, -12490271, "RoyalBlue"));
+                this.bbColorList.add(new BBColorModel(this, -16776961, "Blue"));
+                this.bbColorList.add(new BBColorModel(this, -16777077, "DarkBlue"));
+                this.bbColorList.add(new BBColorModel(this, -23296, "Orange"));
+                this.bbColorList.add(new BBColorModel(this, -47872, "OrangeRed"));
+                this.bbColorList.add(new BBColorModel(this, -2354116, "Crimson"));
+                this.bbColorList.add(new BBColorModel(this, -65536, "Red"));
+                this.bbColorList.add(new BBColorModel(this, -7667712, "DarkRed"));
+                this.bbColorList.add(new BBColorModel(this, -16711936, "Green"));
+                this.bbColorList.add(new BBColorModel(this, -13447886, "LimeGreen"));
+                this.bbColorList.add(new BBColorModel(this, -13726889, "SeaGreen"));
+                this.bbColorList.add(new BBColorModel(this, -60269, "DeepPink"));
+                this.bbColorList.add(new BBColorModel(this, -40121, "Tomato"));
+                this.bbColorList.add(new BBColorModel(this, -32944, "Coral"));
+                this.bbColorList.add(new BBColorModel(this, -8388480, "Purple"));
+                this.bbColorList.add(new BBColorModel(this, -11861886, "Indigo"));
+                this.bbColorList.add(new BBColorModel(this, -2180985, "BurlyWood"));
+                this.bbColorList.add(new BBColorModel(this, -5952982, "SandyBrown"));
+                this.bbColorList.add(new BBColorModel(this, -7852777, "Sienna"));
+                this.bbColorList.add(new BBColorModel(this, -2987746, "Chocolate"));
+                this.bbColorList.add(new BBColorModel(this, -16744320, "Teal"));
+                this.bbColorList.add(new BBColorModel(this, -4144960, "Silver"));
             }
 
             @Override
             public int getCount() {
-                return this.f2056a.size();
+                return this.bbColorList.size();
             }
 
             @Override
@@ -271,31 +271,31 @@ public class BBEditor {
             @Override
             public View getView(int i, View view, ViewGroup viewGroup) {
                 if (view == null) {
-                    view = new View(this.f2057b);
-                    view.setLayoutParams(this.f2058c);
+                    view = new View(this.mainActivity);
+                    view.setLayoutParams(this.layoutParams);
                 }
-                view.setBackgroundColor(this.f2056a.get(i).f2059a);
+                view.setBackgroundColor(this.bbColorList.get(i).htmlColor);
                 return view;
             }
         }
 
         @SuppressLint("WrongConstant")
         public C0618g0(BBEditor oVar) {
-            this.f2051b = oVar;
-            LinearLayout linearLayout = new LinearLayout(this.f2051b.f2031e);
+            this.bbEditor = oVar;
+            LinearLayout linearLayout = new LinearLayout(this.bbEditor.f2031e);
             linearLayout.setOrientation(1);
-            float f = this.f2051b.f2031e.f731b;
+            float f = this.bbEditor.f2031e.f731b;
             int i = (int) (24.0f * f);
             linearLayout.setPadding(i, i, i, i);
-            TextView textView = new TextView(this.f2051b.f2031e);
+            TextView textView = new TextView(this.bbEditor.f2031e);
             textView.setText("Выберите цвет");
-            textView.setTextColor(Skin.C0353a.f1365U);
+            textView.setTextColor(Skin.SkinColorModel.mainTextColor);
             textView.setPadding(0, 0, 0, (int) (20.0f * f));
             textView.setTextSize(22.0f);
             textView.setTypeface(null, 1);
             linearLayout.addView(textView);
-            GridView gridView = new GridView(this.f2051b.f2031e);
-            C0620b bVar = new C0620b(this, this.f2051b.f2031e);
+            GridView gridView = new GridView(this.bbEditor.f2031e);
+            BBColorListAdapter bVar = new BBColorListAdapter(this, this.bbEditor.f2031e);
             gridView.setAdapter((ListAdapter) bVar);
             gridView.setNumColumns(-1);
             gridView.setColumnWidth(f2049e);
@@ -304,17 +304,17 @@ public class BBEditor {
             gridView.setVerticalSpacing(i2);
             gridView.setOnItemClickListener(new C0619a(bVar));
             linearLayout.addView(gridView);
-            Dialog dialog = new Dialog(this.f2051b.f2031e, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+            Dialog dialog = new Dialog(this.bbEditor.f2031e, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
             this.f2050a = dialog;
             dialog.setContentView(linearLayout);
             this.f2050a.setCanceledOnTouchOutside(true);
             this.f2050a.getWindow().setLayout(-1, -2);
-            this.f2050a.getWindow().setBackgroundDrawable(this.f2051b.f2031e.skin.m736f(R.drawable.np_dialog));
+            this.f2050a.getWindow().setBackgroundDrawable(this.bbEditor.f2031e.skin.getSkinDrawable(R.drawable.np_dialog));
         }
 
         public void m510a() {
-            this.f2052c = this.f2051b.f2030d.getSelectionStart();
-            this.f2053d = this.f2051b.f2030d.getSelectionEnd();
+            this.f2052c = this.bbEditor.f2030d.getSelectionStart();
+            this.f2053d = this.bbEditor.f2030d.getSelectionEnd();
             this.f2050a.getWindow().getAttributes().gravity = 17;
             this.f2050a.show();
             CustomDialog.m623c(this.f2050a);
@@ -366,7 +366,7 @@ public class BBEditor {
             textView.setText("Выберите размер текста");
             textView.setTextSize(22.0f);
             textView.setTypeface(null, 1);
-            textView.setTextColor(Skin.C0353a.f1365U);
+            textView.setTextColor(Skin.SkinColorModel.mainTextColor);
             textView.setPadding(0, 0, 0, i);
             linearLayout.addView(textView);
             ((LinearLayout.LayoutParams) textView.getLayoutParams()).width = -1;
@@ -379,10 +379,10 @@ public class BBEditor {
                 TextView textView2 = new TextView(this.f2063b.f2031e);
                 textView2.setClickable(true);
                 textView2.setTypeface(null, 1);
-                textView2.setTextColor(Skin.C0353a.f1382f0);
+                textView2.setTextColor(Skin.SkinColorModel.btnTextColor);
                 textView2.setTextSize(16.0f);
                 textView2.setGravity(17);
-                textView2.setBackgroundDrawable(oVar.f2031e.skin.m736f(R.drawable.button_flat));
+                textView2.setBackgroundDrawable(oVar.f2031e.skin.getSkinDrawable(R.drawable.button_flat));
                 textView2.setText(Integer.valueOf(i2).toString());
                 textView2.setOnClickListener(new View$OnClickListenerC0624a(oVar, i2));
                 linearLayout2.addView(textView2);
@@ -394,12 +394,12 @@ public class BBEditor {
                     layoutParams.leftMargin = (int) (8.0f * f);
                 }
             }
-            Dialog dialog = new Dialog(this.f2063b.f2031e, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+            Dialog dialog = new Dialog(this.f2063b.f2031e, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
             this.f2062a = dialog;
             dialog.setContentView(linearLayout);
             this.f2062a.setCanceledOnTouchOutside(true);
             this.f2062a.getWindow().setLayout(-1, -2);
-            this.f2062a.getWindow().setBackgroundDrawable(oVar.f2031e.skin.m736f(R.drawable.np_dialog));
+            this.f2062a.getWindow().setBackgroundDrawable(oVar.f2031e.skin.getSkinDrawable(R.drawable.np_dialog));
         }
 
         public void m509a() {
@@ -442,12 +442,12 @@ public class BBEditor {
                     int i2 = C0626i0.this.f2072c;
                     StringBuilder sb = new StringBuilder();
                     sb.append(C0626i0.this.f2072c > 0 ? " " : "");
-                    sb.append(this.f2073a.f2075a.get(i).f1654a);
+                    sb.append(this.f2073a.f2075a.get(i).code);
                     sb.append(" ");
                     text.insert(i2, sb.toString());
                 }
                 BBEditor oVar = C0626i0.this.f2071b;
-                oVar.f2031e.mainLayout.m859w(oVar.f2030d);
+                oVar.f2031e.mainLayout.hideKeyboard(oVar.f2030d);
                 C0626i0.this.f2070a.cancel();
             }
         }
@@ -499,7 +499,7 @@ public class BBEditor {
                 float f = this.f2076b.f731b;
                 k.size((int) (((float) mVar.f1656c) * f), (int) (((float) mVar.f1657d) * f));
                 k.scale(32);
-                k.disableAnimation(!Prefs.f1147H);
+                k.disableAnimation(!Prefs.animSmiles);
                 k.runAsync();
                 return imageView;
             }
@@ -519,7 +519,7 @@ public class BBEditor {
             textView.setPadding(0, 0, 0, (int) (20.0f * f));
             textView.setTextSize(22.0f);
             textView.setTypeface(null, 1);
-            textView.setTextColor(Skin.C0353a.f1365U);
+            textView.setTextColor(Skin.SkinColorModel.mainTextColor);
             linearLayout.addView(textView);
             GridView gridView = new GridView(this.f2071b.f2031e);
             C0628b bVar = new C0628b(this, this.f2071b.f2031e);
@@ -531,12 +531,12 @@ public class BBEditor {
             gridView.setVerticalSpacing(i2);
             gridView.setOnItemClickListener(new C0627a(bVar));
             linearLayout.addView(gridView);
-            Dialog dialog = new Dialog(this.f2071b.f2031e, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+            Dialog dialog = new Dialog(this.f2071b.f2031e, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
             this.f2070a = dialog;
             dialog.setContentView(linearLayout);
             this.f2070a.setCanceledOnTouchOutside(true);
             this.f2070a.getWindow().setLayout(-1, -2);
-            this.f2070a.getWindow().setBackgroundDrawable(this.f2071b.f2031e.skin.m736f(R.drawable.np_dialog));
+            this.f2070a.getWindow().setBackgroundDrawable(this.f2071b.f2031e.skin.getSkinDrawable(R.drawable.np_dialog));
         }
 
         public void m508a() {
@@ -594,7 +594,7 @@ public class BBEditor {
                 oVar2.f2029c = oVar2.f2030d.getSelectionEnd();
                 this.f2080a.editText.setText("");
                 this.f2080a.show(true, true, true);
-                BBEditor.this.f2031e.mainLayout.m859w(this.f2080a.editText);
+                BBEditor.this.f2031e.mainLayout.hideKeyboard(this.f2080a.editText);
             }
         }
     }
@@ -764,7 +764,7 @@ public class BBEditor {
             public void run() {
                 View$OnClickListenerC0644y.this.f2097a.show(true, true, true);
                 View$OnClickListenerC0644y yVar = View$OnClickListenerC0644y.this;
-                BBEditor.this.f2031e.mainLayout.m859w(yVar.f2097a.editText);
+                BBEditor.this.f2031e.mainLayout.hideKeyboard(yVar.f2097a.editText);
             }
         }
 
@@ -878,7 +878,7 @@ public class BBEditor {
             DlgSimple q1Var = new DlgSimple(this.f2031e, "Введите содержание 1 пункта списка", false, "СЛЕДУЮЩИЙ", "ЗАВЕРШИТЬ");
             q1Var.m625a(false);
             q1Var.editText.addTextChangedListener(new C0643x(this, q1Var));
-            this.f2031e.mainLayout.m859w(q1Var.editText);
+            this.f2031e.mainLayout.hideKeyboard(q1Var.editText);
             View$OnClickListenerC0644y yVar = new View$OnClickListenerC0644y(q1Var, text);
             q1Var.m620f(yVar, true);
             q1Var.m621e(yVar, true);
@@ -957,7 +957,7 @@ public class BBEditor {
                 this.f2030d.setSelection(i + sb2.length(), i2 + sb2.length());
                 return true;
             } else {
-                this.f2031e.mainLayout.m859w(this.f2030d);
+                this.f2031e.mainLayout.hideKeyboard(this.f2030d);
             }
         }
         return false;

@@ -321,7 +321,7 @@ public class Form_Wizard {
                             MainActivity mainActivity = Form_Wizard.this.mainActivity;
                             int intValue = uVar.getInt(0).intValue();
                             int intValue2 = uVar.getInt(1).intValue();
-                            int i3 = Prefs.f1179q;
+                            int i3 = Prefs.memberPostsPerPage;
                             f1Var.addPage(new Page_Topic(mainActivity, intValue, (intValue2 / i3) * i3, 0, uVar.getInt(2).intValue(), null, null));
                             return;
                         }
@@ -415,7 +415,7 @@ public class Form_Wizard {
 
     public void m180F(BBString pVar) {
         if (pVar != null) {
-            this.mainActivity.mainLayout.m859w(null);
+            this.mainActivity.mainLayout.hideKeyboard(null);
             this.wizardSmiles.setVisibility(8);
             this.wizardAttach.setVisibility(8);
             this.wizardAttachCount.setVisibility(8);
@@ -464,7 +464,7 @@ public class Form_Wizard {
         }
         if (spannableStringBuilder.length() > 0) {
             TextView textView = new TextView(this.mainActivity);
-            textView.setTextColor(Skin.C0353a.f1365U);
+            textView.setTextColor(Skin.SkinColorModel.mainTextColor);
             textView.setText(spannableStringBuilder);
             textView.setTextSize(10.0f);
             textView.setPadding(((int) this.mainActivity.f731b) * 2, 0, 0, 0);
@@ -472,8 +472,8 @@ public class Form_Wizard {
         }
         TextView textView2 = new TextView(this.mainActivity);
         textView2.setClickable(true);
-        textView2.setTextColor(this.mainActivity.skin.m738d(R.color.button_flat_text));
-        textView2.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.button_flat));
+        textView2.setTextColor(this.mainActivity.skin.getSkinColor(R.color.button_flat_text));
+        textView2.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.button_flat));
         textView2.setTextSize(16.0f);
         textView2.setTypeface(null, 1);
         textView2.setText("ФАЙЛЫ...");
@@ -583,10 +583,10 @@ public class Form_Wizard {
             Widgets$CheckboxTextView widgets$CheckboxTextView = new Widgets$CheckboxTextView(this.mainActivity);
             widgets$CheckboxTextView.setClickable(true);
             widgets$CheckboxTextView.setText(aVar.f2998h[i2]);
-            widgets$CheckboxTextView.setTextColor(Skin.C0353a.f1365U);
+            widgets$CheckboxTextView.setTextColor(Skin.SkinColorModel.mainTextColor);
             widgets$CheckboxTextView.setTextSize(18.0f);
             widgets$CheckboxTextView.setGravity(16);
-            widgets$CheckboxTextView.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.checkbox_left));
+            widgets$CheckboxTextView.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.checkbox_left));
             float f = this.mainActivity.f731b;
             widgets$CheckboxTextView.setPadding(0, (int) (4.0f * f), 0, (int) (f * 6.0f));
             if (0 != (aVar.f3000j & (1 << i2))) {
@@ -605,9 +605,9 @@ public class Form_Wizard {
         textView.setSingleLine(true);
         textView.setTextSize(18.0f);
         textView.setCompoundDrawablePadding((int) (this.mainActivity.f731b * 6.0f));
-        textView.setTextColor(Skin.C0353a.f1365U);
-        textView.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.edit_text_material));
-        textView.setCompoundDrawablesWithIntrinsicBounds((Drawable) null, (Drawable) null, this.mainActivity.skin.m736f(R.drawable.ic_spinner_drop_down), (Drawable) null);
+        textView.setTextColor(Skin.SkinColorModel.mainTextColor);
+        textView.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.edit_text_material));
+        textView.setCompoundDrawablesWithIntrinsicBounds((Drawable) null, (Drawable) null, this.mainActivity.skin.getSkinDrawable(R.drawable.ic_spinner_drop_down), (Drawable) null);
         textView.setTag(Integer.valueOf(aVar.f2999i));
         textView.setText(aVar.f2998h[aVar.f2999i]);
         textView.setOnClickListener(new View$OnClickListenerC0875g(textView, aVar));
@@ -640,7 +640,7 @@ public class Form_Wizard {
             }
         }
         this.f2959i[i] = new TextView(this.mainActivity);
-        this.f2959i[i].setTextColor(this.mainActivity.skin.m738d(R.color.moderator_text));
+        this.f2959i[i].setTextColor(this.mainActivity.skin.getSkinColor(R.color.moderator_text));
         linearLayout.addView(this.f2959i[i]);
         View view = new View(this.mainActivity);
         linearLayout.addView(view);
@@ -668,8 +668,8 @@ public class Form_Wizard {
     void m155y(int i, C0883n.C0884a aVar, LinearLayout linearLayout) {
         m156x(i, aVar, linearLayout);
         EditText editText = new EditText(this.mainActivity);
-        editText.setTextColor(Skin.C0353a.f1365U);
-        editText.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.edit_text_material));
+        editText.setTextColor(Skin.SkinColorModel.mainTextColor);
+        editText.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.edit_text_material));
         if (aVar.f2999i > 1) {
             editText.setSingleLine(false);
             editText.setImeOptions(1);

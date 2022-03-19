@@ -76,8 +76,8 @@ public class CustomDialog {
         this.f1805c.setSingleLine(true);
         this.f1805c.setTextSize(16.0f);
         this.f1805c.setTypeface(null, 1);
-        this.f1805c.setTextColor(Skin.C0353a.f1382f0);
-        this.f1805c.setBackgroundDrawable(mainActivity.skin.m736f(R.drawable.button_bg));
+        this.f1805c.setTextColor(Skin.SkinColorModel.btnTextColor);
+        this.f1805c.setBackgroundDrawable(mainActivity.skin.getSkinDrawable(R.drawable.button_bg));
         this.f1805c.setGravity(17);
         this.f1805c.setOnClickListener(new View$OnClickListenerC0533a());
         linearLayout2.addView(this.f1805c);
@@ -94,8 +94,8 @@ public class CustomDialog {
         this.f1804b.setSingleLine(true);
         this.f1804b.setTextSize(16.0f);
         this.f1804b.setTypeface(null, 1);
-        this.f1804b.setTextColor(Skin.C0353a.f1382f0);
-        this.f1804b.setBackgroundDrawable(mainActivity.skin.m736f(R.drawable.button_bg));
+        this.f1804b.setTextColor(Skin.SkinColorModel.btnTextColor);
+        this.f1804b.setBackgroundDrawable(mainActivity.skin.getSkinDrawable(R.drawable.button_bg));
         this.f1804b.setGravity(17);
         this.f1804b.setOnClickListener(new View$OnClickListenerC0534b());
         linearLayout2.addView(this.f1804b);
@@ -104,11 +104,11 @@ public class CustomDialog {
         layoutParams2.height = i2;
         ScrollView scrollView = new ScrollView(mainActivity);
         scrollView.addView(linearLayout);
-        Dialog dialog = new Dialog(mainActivity, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+        Dialog dialog = new Dialog(mainActivity, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
         this.dialog = dialog;
         dialog.setContentView(scrollView);
         this.dialog.getWindow().setLayout(-1, -2);
-        this.dialog.getWindow().setBackgroundDrawable(mainActivity.skin.m736f(R.drawable.np_dialog));
+        this.dialog.getWindow().setBackgroundDrawable(mainActivity.skin.getSkinDrawable(R.drawable.np_dialog));
     }
 
     public static void m623c(Dialog dialog) {

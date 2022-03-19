@@ -43,8 +43,8 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
     List<C0325n> f1201P;
     boolean f1202Q;
     boolean f1203R;
-    private Form_Post.ForumPostModel f1204S;
-    private Form_Post f1205T;
+    private Form_Post.ForumPostModel forumPostModel;
+    private Form_Post forumPost;
     private String f1206U;
 
     class View$OnClickListenerC0307a implements View.OnClickListener {
@@ -155,7 +155,7 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
             } else if (i3 == 3) {
                 this.f1213a.f528e.m950j(false);
             } else if (i3 == 26) {
-                Urls2.m676g(Page_Article.this.mainActivity, this.f1214b.f2202I.get(this.f1215c.f543a).link);
+                Urls2.visitPage(Page_Article.this.mainActivity, this.f1214b.f2202I.get(this.f1215c.f543a).link);
             } else if (i3 == 27) {
                 Util.copyToClipboard(Page_Article.this.mainActivity, this.f1214b.f2202I.get(this.f1215c.f543a).link, "Ссылка скопирована в буфер");
             } else if (i3 == 24) {
@@ -210,7 +210,7 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
             public void onClick(View view) {
                 if (this.f1221a.editText.getText().length() > 0) {
                     Page_Article c0Var = Page_Article.this;
-                    DocumentManager.getResultRequest(new C0322k(c0Var.f1190E, this.f1222b, this.f1221a.editText.getText().toString(), "Отправка нового комментария"));
+                    DocumentManager.getResultRequest(new SiteCommentReqest(c0Var.f1190E, this.f1222b, this.f1221a.editText.getText().toString(), "Отправка нового комментария"));
                     return;
                 }
                 Toast.makeText(Page_Article.this.mainActivity, "Введите комментарий", 1).show();
@@ -239,7 +239,7 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
                 q1Var.show(true, true, true);
                 EditText editText = q1Var.editText;
                 editText.setSelection(editText.getText().length());
-                Page_Article.this.mainActivity.mainLayout.m859w(q1Var.editText);
+                Page_Article.this.mainActivity.mainLayout.hideKeyboard(q1Var.editText);
             } else if (i3 == 2) {
                 Tab f1Var = new Tab(Page_Article.this.mainActivity);
                 Page_Article c0Var = Page_Article.this;
@@ -278,7 +278,7 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
                 Util.copyToClipboard(mainActivity, "https://4pda.ru/" + Page_Article.this.getLink(), "Ссылка скопирована");
             } else if (i3 == 2) {
                 MainActivity mainActivity2 = Page_Article.this.mainActivity;
-                Urls2.m676g(mainActivity2, "https://4pda.ru/" + Page_Article.this.getLink());
+                Urls2.visitPage(mainActivity2, "https://4pda.ru/" + Page_Article.this.getLink());
             }
         }
     }
@@ -454,7 +454,7 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
             public void onClick(View view) {
                 if (this.f1253a.editText.length() > 0) {
                     View$OnClickListenerC0319j jVar = View$OnClickListenerC0319j.this;
-                    DocumentManager.getResultRequest(new C0322k(jVar.f1250a.f1190E, 0, this.f1253a.editText.getText().toString(), "Отправка нового комментария"));
+                    DocumentManager.getResultRequest(new SiteCommentReqest(jVar.f1250a.f1190E, 0, this.f1253a.editText.getText().toString(), "Отправка нового комментария"));
                     return;
                 }
                 Toast.makeText(View$OnClickListenerC0319j.this.f1250a.mainActivity, "Введите комментарий", 1).show();
@@ -480,7 +480,7 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
                 q1Var.show(true, true, true);
                 EditText editText = q1Var.editText;
                 editText.setSelection(editText.getText().length());
-                Page_Article.this.mainActivity.mainLayout.m859w(q1Var.editText);
+                Page_Article.this.mainActivity.mainLayout.hideKeyboard(q1Var.editText);
                 return;
             }
             C0318i iVar = this.f1250a.f1200O.get(((Integer) view.getTag()).intValue());
@@ -502,40 +502,40 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
         }
     }
 
-    class C0322k extends API.SiteCommentRequest {
-        C0322k(int i, int i2, String str, String str2) {
-            super(i, i2, str);
+    class SiteCommentReqest extends API.SiteCommentRequest {
+        SiteCommentReqest(int articleId, int parentId, String msg, String statusMessage) {
+            super(articleId, parentId, msg);
 //            Page_Article.this = r1;
-            this.statusMessage = str2;
+            this.statusMessage = statusMessage;
         }
 
         @Override
-        void prepareResult(int status, Document uVar) {
+        void prepareResult(int status, Document document) {
             Page_Article c0Var = Page_Article.this;
             if (!c0Var.isLoading) {
-                String str = "Комментарий отправлен на премодерацию";
+                String message = "Комментарий отправлен на премодерацию";
                 if (status == 0) {
-                    str = "Комментарий добавлен";
+                    message = "Комментарий добавлен";
                 } else if (status == 4) {
-                    str = "Ошибка: Вам запрещено комментировать";
+                    message = "Ошибка: Вам запрещено комментировать";
                 } else if (status == 5) {
-                    str = "Ошибка: Нет текста комментария";
+                    message = "Ошибка: Нет текста комментария";
                 } else if (status == 6) {
-                    str = "Ошибка: Комментирование этого поста окончено";
+                    message = "Ошибка: Комментирование этого поста окончено";
                 } else if (status == 7) {
-                    str = "Ошибка: Вы не можете ответить на свернутый вами комментарий";
+                    message = "Ошибка: Вы не можете ответить на свернутый вами комментарий";
                 } else if (status == 8) {
-                    str = "Ошибка: Вы достигли кармического лимита комментирования";
+                    message = "Ошибка: Вы достигли кармического лимита комментирования";
                 } else if (status == 9) {
-                    str = "Ошибка: Повторный комментарий";
+                    message = "Ошибка: Повторный комментарий";
                 } else if (status == 10) {
-                    str = "Ошибка: Вы достигли часового лимита комментирования";
+                    message = "Ошибка: Вы достигли часового лимита комментирования";
                 } else if (status == 11) {
-                    str = "Ошибка: Вы достигли дневного лимита комментирования";
+                    message = "Ошибка: Вы достигли дневного лимита комментирования";
                 } else if (!(status == 12 || status == 13)) {
-                    str = "Ошибка при добавлении комментария";
+                    message = "Ошибка при добавлении комментария";
                 }
-                Toast.makeText(c0Var.mainActivity, str, 0).show();
+                Toast.makeText(c0Var.mainActivity, message, 0).show();
                 if (status == 0) {
                     Page_Article.this.tabReload();
                 }
@@ -543,11 +543,11 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
         }
     }
 
-    class C0323l extends API.SiteJumpRequest {
-        C0323l(int i, boolean z, int i2, String str) {
-            super(i, z, i2);
+    class SiteJumpRequest extends API.SiteJumpRequest {
+        SiteJumpRequest(int time, boolean next, int category, String statusMessage) {
+            super(time, next, category);
 //            Page_Article.this = r1;
-            this.statusMessage = str;
+            this.statusMessage = statusMessage;
         }
 
         @Override
@@ -652,12 +652,12 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
     }
 
     public static int m761d0(List<Breadcrumb.C0725a> list, int i, int i2, int i3) {
-        DataDB.C0737b[] q = DataDB.m360q(i);
+        DataDB.BookMarkModel[] q = DataDB.m360q(i);
         if (q == null) {
             return 0;
         }
         int i4 = 0;
-        for (DataDB.C0737b bVar : q) {
+        for (DataDB.BookMarkModel bVar : q) {
             if (!bVar.f2509e || bVar.f2505a == i2) {
                 i4++;
                 list.add(new Breadcrumb.C0725a(bVar.f2505a, bVar.f2506b > 0 ? "tag/" + bVar.f2506b : null, bVar.f2508d, bVar.f2510f, true, bVar.f2505a == i3));
@@ -673,26 +673,26 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
     }
 
     public void m756i0(int i) {
-        Form_Post.ForumPostModel kVar = this.f1204S;
+        Form_Post.ForumPostModel kVar = this.forumPostModel;
         if (kVar == null || kVar.postId != i) {
-            this.f1204S = new Form_Post.ForumPostModel(0, "Жалоба: " + this.title, this.f1190E, i, false, false, false, false, false, "", "", null);
+            this.forumPostModel = new Form_Post.ForumPostModel(0, "Жалоба: " + this.title, this.f1190E, i, false, false, false, false, false, "", "", null);
         }
-        if (this.f1205T == null) {
-            this.f1205T = new Form_Post(this.mainActivity, this);
+        if (this.forumPost == null) {
+            this.forumPost = new Form_Post(this.mainActivity, this);
         }
-        this.f1205T.m196y(this.f1204S, this);
+        this.forumPost.m196y(this.forumPostModel, this);
     }
 
     @Override
     public boolean mo145B() {
-        Form_Post wVar = this.f1205T;
+        Form_Post wVar = this.forumPost;
         if (wVar == null || !wVar.m201t()) {
             return false;
         }
-        if (this.f1205T.m205p()) {
+        if (this.forumPost.m205p()) {
             return true;
         }
-        this.f1205T.m202s();
+        this.forumPost.m202s();
         return true;
     }
 
@@ -701,7 +701,7 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
         if (isUnsucces()) {
             List<C0316h> list = this.f1198M;
             if (list == null || this.f1199N >= list.size() - 1) {
-                DocumentManager.getResultRequest(new C0323l(this.currentDocument.getInt(1).intValue(), false, -1, "К предыдущему..."));
+                DocumentManager.getResultRequest(new SiteJumpRequest(this.currentDocument.getInt(1).intValue(), false, -1, "К предыдущему..."));
             } else {
                 this.tab.addPage(new Page_Article(this.mainActivity, this.f1198M.get(this.f1199N + 1), this.f1198M));
             }
@@ -714,7 +714,7 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
         if (isUnsucces()) {
             List<C0316h> list = this.f1198M;
             if (list == null || (i = this.f1199N) <= 0) {
-                DocumentManager.getResultRequest(new C0323l(this.currentDocument.getInt(1).intValue(), true, -1, "К следующему..."));
+                DocumentManager.getResultRequest(new SiteJumpRequest(this.currentDocument.getInt(1).intValue(), true, -1, "К следующему..."));
             } else {
                 this.tab.addPage(new Page_Article(this.mainActivity, list.get(i - 1), this.f1198M));
             }
@@ -723,9 +723,9 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
 
     @Override
     public void onSearchBar() {
-        Form_Post wVar = this.f1205T;
+        Form_Post wVar = this.forumPost;
         if (wVar != null && wVar.m201t()) {
-            this.f1205T.m200u();
+            this.forumPost.m200u();
         }
         super.onSearchBar();
     }
@@ -1015,9 +1015,9 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
                 mainLayout.f800H = true;
                 mainLayout.f799G = true;
             }
-            Form_Post wVar = this.f1205T;
+            Form_Post wVar = this.forumPost;
             if (wVar != null && wVar.m201t()) {
-                this.f1205T.m199v();
+                this.forumPost.m199v();
             }
         }
     }
@@ -1032,7 +1032,7 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
         if (!TextUtils.isEmpty(kVar.postMessage)) {
             DocumentManager.getResultRequest(new API.ReportRequest(this.mainActivity, 1, kVar.postId, kVar.postMessage));
         }
-        this.f1204S = null;
+        this.forumPostModel = null;
     }
 
     @Override
@@ -1044,7 +1044,7 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
         OptionPoupupMenuView o1Var = new OptionPoupupMenuView(this.mainActivity, new C0311e(bBDisplay, pVar, cVar), true);
         int i = cVar.f543a;
         if (i >= 0) {
-            o1Var.addMenuItem(0, 0, 0, Util.C0427h.m640d(pVar.f2202I.get(i).link), true, false);
+            o1Var.addMenuItem(0, 0, 0, Util.C0427h.urlDecode(pVar.f2202I.get(i).link), true, false);
             o1Var.addMenuItem(0, 0, 27, "Копировать ссылку");
             if (Urls2.is4pdaHost(pVar.f2202I.get(cVar.f543a).link)) {
                 o1Var.addMenuItem(0, 0, 21, "Открыть в новой вкладке");
@@ -1131,7 +1131,7 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
             TextView textView = new TextView(this.mainActivity);
             textView.setText(nVar.f1259b);
             textView.setTextSize(20.0f);
-            textView.setTextColor(Skin.C0353a.f1365U);
+            textView.setTextColor(Skin.SkinColorModel.mainTextColor);
             int i9 = i8 + 1;
             textView.setId(i9);
             int i10 = (int) (f * 16.0f);
@@ -1157,7 +1157,7 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
                     TextView textView2 = new TextView(this.mainActivity);
                     textView2.setText(nVar.f1262e[i16].f1264b);
                     textView2.setTextSize(f3);
-                    textView2.setTextColor(Skin.C0353a.f1365U);
+                    textView2.setTextColor(Skin.SkinColorModel.mainTextColor);
                     int i17 = i9 + 1;
                     textView2.setId(i17);
                     textView2.setGravity(i14);
@@ -1172,7 +1172,7 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
                     TextView textView3 = new TextView(this.mainActivity);
                     textView3.setText(valueOf.toString());
                     textView3.setTextSize(16.0f);
-                    textView3.setTextColor(Skin.C0353a.f1365U);
+                    textView3.setTextColor(Skin.SkinColorModel.mainTextColor);
                     textView3.setTypeface(null, 1);
                     i9 = i17 + 1;
                     textView3.setId(i9);
@@ -1185,7 +1185,7 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
                     layoutParams3.width = (int) (50.0f * f);
                     layoutParams3.leftMargin = i10;
                     View view = new View(this.mainActivity);
-                    view.setBackgroundColor(Skin.C0353a.f1365U);
+                    view.setBackgroundColor(Skin.SkinColorModel.mainTextColor);
                     relativeLayout.addView(view);
                     RelativeLayout.LayoutParams layoutParams4 = (RelativeLayout.LayoutParams) view.getLayoutParams();
                     layoutParams4.addRule(8, i9);
@@ -1206,7 +1206,7 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
                     objArr[0] = Float.valueOf(i15 > 0 ? (((float) valueOf.intValue()) * 100.0f) / ((float) i15) : 0.0f);
                     textView4.setText(String.format("%.2f%%", objArr));
                     textView4.setTextSize(16.0f);
-                    textView4.setTextColor(Skin.C0353a.f1365U);
+                    textView4.setTextColor(Skin.SkinColorModel.mainTextColor);
                     textView4.setGravity(21);
                     textView4.setPadding(i19, 0, i19, i18);
                     relativeLayout.addView(textView4);
@@ -1229,7 +1229,7 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
                 i2 = i9 + 1;
                 textView5.setId(i2);
                 textView5.setPadding(0, (int) (f * 4.0f), 0, i11);
-                textView5.setTextColor(Skin.C0353a.f1386h0);
+                textView5.setTextColor(Skin.SkinColorModel.labelTextCsl);
                 relativeLayout.addView(textView5);
                 RelativeLayout.LayoutParams layoutParams6 = (RelativeLayout.LayoutParams) textView5.getLayoutParams();
                 layoutParams6.addRule(14);
@@ -1247,9 +1247,9 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
                         widgets$CheckboxTextView.setTextSize(15.0f);
                         int i21 = i9 + 1;
                         widgets$CheckboxTextView.setId(i21);
-                        widgets$CheckboxTextView.setTextColor(Skin.C0353a.f1365U);
+                        widgets$CheckboxTextView.setTextColor(Skin.SkinColorModel.mainTextColor);
                         widgets$CheckboxTextView.setGravity(16);
-                        widgets$CheckboxTextView.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.checkbox_left));
+                        widgets$CheckboxTextView.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.checkbox_left));
                         int i22 = (int) (f * 4.0f);
                         widgets$CheckboxTextView.setPadding(i10, i22, 0, i22);
                         nVar.f1262e[i20].f1266d = widgets$CheckboxTextView;
@@ -1278,9 +1278,9 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
                     for (int i25 = 0; i25 < nVar.f1262e.length; i25++) {
                         RadioButton radioButton = new RadioButton(this.mainActivity);
                         radioButton.setButtonDrawable((Drawable) null);
-                        radioButton.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.m736f(R.drawable.radio_button), (Drawable) null, (Drawable) null, (Drawable) null);
-                        radioButton.setTextColor(Skin.C0353a.f1365U);
-                        radioButton.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.button_bg));
+                        radioButton.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.getSkinDrawable(R.drawable.radio_button), (Drawable) null, (Drawable) null, (Drawable) null);
+                        radioButton.setTextColor(Skin.SkinColorModel.mainTextColor);
+                        radioButton.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.button_bg));
                         radioButton.setText(nVar.f1262e[i25].f1264b);
                         radioButton.setTextSize(15.0f);
                         i24++;
@@ -1305,11 +1305,11 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
                 textView6.setTextSize(16.0f);
                 textView6.setTypeface(null, 1);
                 textView6.setGravity(17);
-                textView6.setTextColor(Skin.C0353a.f1382f0);
+                textView6.setTextColor(Skin.SkinColorModel.btnTextColor);
                 i2 = i9 + 1;
                 textView6.setId(i2);
                 textView6.setPadding(i10, 0, i10, 0);
-                textView6.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.button_bg));
+                textView6.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.button_bg));
                 relativeLayout.addView(textView6);
                 RelativeLayout.LayoutParams layoutParams9 = (RelativeLayout.LayoutParams) textView6.getLayoutParams();
                 layoutParams9.addRule(9);
@@ -1436,7 +1436,7 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
                             textView = new TextView(this.mainActivity);
                             textView.setSingleLine(true);
                             textView.setTextAppearance(this.mainActivity, 16973894);
-                            textView.setTextColor(Skin.C0353a.f1386h0);
+                            textView.setTextColor(Skin.SkinColorModel.labelTextCsl);
                             textView.setGravity(16);
                             articleLayout3.f509h.addView(textView);
                             ((LinearLayout.LayoutParams) textView.getLayoutParams()).height = -1;
@@ -1593,7 +1593,7 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
             i2 = 0;
             i = 0;
             for (int i4 = 0; i4 < this.f1193H.f1235j.size(); i4++) {
-                DataDB.C0737b s = DataDB.m358s(this.f1193H.f1235j.keyAt(i4));
+                DataDB.BookMarkModel s = DataDB.m358s(this.f1193H.f1235j.keyAt(i4));
                 if (s != null) {
                     i3 = s.f2505a;
                     i = s.f2510f;
@@ -1609,7 +1609,7 @@ public class Page_Article extends Page implements BBDisplay.IBBDisplayCallback, 
             i = 0;
         }
         while (i2 != 0 && i != 0) {
-            DataDB.C0737b r = DataDB.m359r(i);
+            DataDB.BookMarkModel r = DataDB.m359r(i);
             if (r == null) {
                 break;
             }

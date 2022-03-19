@@ -191,9 +191,9 @@ public class ArticleLayout extends RelativeLayout {
         }
         if (!this.f515n) {
             ((RelativeLayout.LayoutParams) this.f507f.getLayoutParams()).height = this.f513l ? -1 : (size * 160) / 400;
-            if (f501z == null || f490A != Skin.C0353a.f1363S) {
-                f501z = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, new int[]{Skin.C0353a.f1364T, Skin.C0353a.f1363S});
-                f490A = Skin.C0353a.f1363S;
+            if (f501z == null || f490A != Skin.SkinColorModel.mainBgColor) {
+                f501z = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, new int[]{Skin.SkinColorModel.f1364T, Skin.SkinColorModel.mainBgColor});
+                f490A = Skin.SkinColorModel.mainBgColor;
             }
             View findViewById = findViewById(R.id.articleGradient);
             findViewById.setBackgroundDrawable(f501z);

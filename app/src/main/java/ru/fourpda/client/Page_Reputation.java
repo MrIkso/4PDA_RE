@@ -22,8 +22,8 @@ public class Page_Reputation extends Page implements BBDisplay.IBBDisplayCallbac
     boolean f2530L;
     int mode;
     int f2532N;
-    private Form_Post.ForumPostModel f2533O;
-    private Form_Post f2534P;
+    private Form_Post.ForumPostModel forumPostModel;
+    private Form_Post formPost;
 
     public class C0739a implements OptionPoupupMenuView.IClickListener {
         final Document f2535a;
@@ -60,7 +60,7 @@ public class Page_Reputation extends Page implements BBDisplay.IBBDisplayCallbac
             } else if (i3 == 2) {
                 Page_Reputation.this.m343e0(this.f2535a.getInt(0).intValue());
             } else if (i3 == 3) {
-                if (Prefs.f1151L) {
+                if (Prefs.confirmAction) {
                     DlgSimple q1Var = new DlgSimple(Page_Reputation.this.mainActivity, "Подтвердите удаление репутации", false, "УДАЛИТЬ", null);
                     q1Var.editText.setVisibility(8);
                     q1Var.m620f(new View$OnClickListenerC0740a(), true);
@@ -115,73 +115,73 @@ public class Page_Reputation extends Page implements BBDisplay.IBBDisplayCallbac
     }
 
     static class LoadMemberReputationRequest extends MemberReputationRequest {
-        Page_Reputation f2540k;
+        Page_Reputation pageReputation;
         boolean f2541l;
 
-        LoadMemberReputationRequest(Page_Reputation r0Var, int votesCount) {
-            super(r0Var.userId, r0Var.mode, votesCount, 200);
-            this.f2540k = r0Var;
-            r0Var.f2530L = true;
+        LoadMemberReputationRequest(Page_Reputation page, int votesCount) {
+            super(page.userId, page.mode, votesCount, 200);
+            this.pageReputation = page;
+            page.f2530L = true;
             this.statusMessage = "загрузка репутации";
         }
 
         @Override
         public void prepareResult(int status, Document uVar) {
-            Page_Reputation r0Var = this.f2540k;
+            Page_Reputation r0Var = this.pageReputation;
             if (!r0Var.isLoading) {
                 r0Var.f2530L = false;
                 r0Var.tabLoaded(this.f2541l);
                 if (status != 0) {
-                    Toast.makeText(this.f2540k.mainActivity, "Ошибка загрузки", 0).show();
+                    Toast.makeText(this.pageReputation.mainActivity, "Ошибка загрузки", 0).show();
                 }
             }
         }
 
         @Override
-        public void getResult(int status, Document uVar) {
-            Document l;
-            Page_Reputation r0Var = this.f2540k;
-            if (!r0Var.isLoading && status == 0 && r0Var.isUnsucces() && (l = uVar.getDocument(1)) != null) {
-                float f = this.f2540k.mainActivity.f731b;
-                Vector<BBString> vector = new Vector<>(l.count());
-                this.f2540k.mainActivity.mainLayout.getWidth();
-                for (int i2 = 0; i2 < l.count(); i2++) {
+        public void getResult(int status, Document document) {
+            Document reputationsDocument;
+            Page_Reputation r0Var = this.pageReputation;
+            if (!r0Var.isLoading && status == 0 && r0Var.isUnsucces() && (reputationsDocument = document.getDocument(1)) != null) {
+                float f = this.pageReputation.mainActivity.f731b;
+                Vector<BBString> reputationList = new Vector<>(reputationsDocument.count());
+                this.pageReputation.mainActivity.mainLayout.getWidth();
+                for (int i = 0; i < reputationsDocument.count(); i++) {
                     try {
-                        Document l2 = l.getDocument(i2);
-                        l2.addString(4, Util.C0427h.UnEscapeString(l2.getString(4)));
-                        l2.addString(5, Util.C0427h.UnEscapeString(l2.getString(5)));
-                        l2.addString(8, Util.C0427h.UnEscapeString(l2.getString(8)));
-                        StringBuilder sb = new StringBuilder();
-                        if (l2.getInt(11) != 0) {
-                            sb.append("[backgroud=darkred][color=white](");
-                            sb.append((l2.getInt(6) & 2) != 0 ? "отменено " : "восстановлено ");
-                            sb.append(Util.formatDate(l2.getInt(11), false, true));
-                            sb.append(" [url=https://4pda.ru/forum/index.php?showuser=");
-                            sb.append(l2.getInt(12));
-                            sb.append("][color=white]");
-                            sb.append(l2.getString(13).replace("[", "&#91;").replace("]", "&#93;"));
-                            sb.append("[/color][/url])[/color][/background]\n");
+                        Document reputationDocument = reputationsDocument.getDocument(i);
+                        reputationDocument.addString(4, Util.C0427h.UnEscapeString(reputationDocument.getString(4)));
+                        reputationDocument.addString(5, Util.C0427h.UnEscapeString(reputationDocument.getString(5)));
+                        reputationDocument.addString(8, Util.C0427h.UnEscapeString(reputationDocument.getString(8)));
+                        StringBuilder bbCodeReputation = new StringBuilder();
+                        if (reputationDocument.getInt(11) != 0) {
+                            bbCodeReputation.append("[backgroud=darkred][color=white](");
+                            bbCodeReputation.append((reputationDocument.getInt(6) & 2) != 0 ? "отменено " : "восстановлено ");
+                            bbCodeReputation.append(Util.formatDate(reputationDocument.getInt(11), false, true));
+                            bbCodeReputation.append(" [url=https://4pda.ru/forum/index.php?showuser=");
+                            bbCodeReputation.append(reputationDocument.getInt(12));
+                            bbCodeReputation.append("][color=white]");
+                            bbCodeReputation.append(reputationDocument.getString(13).replace("[", "&#91;").replace("]", "&#93;"));
+                            bbCodeReputation.append("[/color][/url])[/color][/background]\n");
                         }
-                        sb.append(l2.getString(10));
-                        BBString x = BBString.getBBString(l2.getString(10), null);
-                        if (x != null) {
-                            BBString.C0674e eVar = x.f2246z;
+                        bbCodeReputation.append(reputationDocument.getString(10));
+                        BBString bbReputation = BBString.getBBString(reputationDocument.getString(10), null);
+                        if (bbReputation != null) {
+                            BBString.C0674e eVar = bbReputation.f2246z;
                             int i3 = (int) (16.0f * f);
                             eVar.f2266j = i3;
                             eVar.f2265i = i3;
                             eVar.f2263g = (float) ((int) (8.0f * f));
                             eVar.f2264h = (float) i3;
-                            x.f2221a0 = l2;
-                            vector.add(x);
-                            this.f2540k.currentDocument.append(l2);
+                            bbReputation.f2221a0 = reputationDocument;
+                            reputationList.add(bbReputation);
+                            this.pageReputation.currentDocument.append(reputationDocument);
                         } else {
-                            this.f2540k.allVotesCount++;
+                            this.pageReputation.allVotesCount++;
                         }
                     } catch (Exception unused) {
-                        this.f2540k.allVotesCount++;
+                        this.pageReputation.allVotesCount++;
                     }
                 }
-                this.f2540k.votesList.addAll(vector);
+                this.pageReputation.votesList.addAll(reputationList);
                 this.f2541l = true;
             }
         }
@@ -237,34 +237,34 @@ public class Page_Reputation extends Page implements BBDisplay.IBBDisplayCallbac
     }
 
     public void m343e0(int i) {
-        Form_Post.ForumPostModel kVar = this.f2533O;
+        Form_Post.ForumPostModel kVar = this.forumPostModel;
         if (kVar == null || kVar.postId != i) {
-            this.f2533O = new Form_Post.ForumPostModel(0, "Жалоба: " + this.title, this.userId, i, false, false, false, false, false, "", "", null);
+            this.forumPostModel = new Form_Post.ForumPostModel(0, "Жалоба: " + this.title, this.userId, i, false, false, false, false, false, "", "", null);
         }
-        if (this.f2534P == null) {
-            this.f2534P = new Form_Post(this.mainActivity, this);
+        if (this.formPost == null) {
+            this.formPost = new Form_Post(this.mainActivity, this);
         }
-        this.f2534P.m196y(this.f2533O, this);
+        this.formPost.m196y(this.forumPostModel, this);
     }
 
     @Override
     public boolean mo145B() {
-        Form_Post wVar = this.f2534P;
+        Form_Post wVar = this.formPost;
         if (wVar == null || !wVar.m201t()) {
             return false;
         }
-        if (this.f2534P.m205p()) {
+        if (this.formPost.m205p()) {
             return true;
         }
-        this.f2534P.m202s();
+        this.formPost.m202s();
         return true;
     }
 
     @Override
     public void onSearchBar() {
-        Form_Post wVar = this.f2534P;
+        Form_Post wVar = this.formPost;
         if (wVar != null && wVar.m201t()) {
-            this.f2534P.m200u();
+            this.formPost.m200u();
         }
         this.tab.mainLayout.findViewById(R.id.bar_search).getLayoutParams().width = (int) (this.mainActivity.f731b * 42.0f);
         super.onSearchBar();
@@ -376,9 +376,9 @@ public class Page_Reputation extends Page implements BBDisplay.IBBDisplayCallbac
         if (!z) {
             this.tab.mainLayout.findViewById(R.id.bar_search).getLayoutParams().width = 0;
             this.tab.mainLayout.f801I = false;
-            Form_Post wVar = this.f2534P;
+            Form_Post wVar = this.formPost;
             if (wVar != null && wVar.m201t()) {
-                this.f2534P.m199v();
+                this.formPost.m199v();
             }
         }
     }
@@ -392,7 +392,7 @@ public class Page_Reputation extends Page implements BBDisplay.IBBDisplayCallbac
         if (!TextUtils.isEmpty(kVar.postMessage)) {
             DocumentManager.getResultRequest(new API.ReportRequest(this.mainActivity, 2, kVar.postId, kVar.postMessage));
         }
-        this.f2533O = null;
+        this.forumPostModel = null;
     }
 
     @Override
@@ -472,11 +472,11 @@ public class Page_Reputation extends Page implements BBDisplay.IBBDisplayCallbac
         if (view == null) {
             if (itemViewType == 0) {
                 view = new View(this.mainActivity);
-                view.setBackgroundDrawable(Skin.C0353a.f1388i0.getConstantState().newDrawable());
+                view.setBackgroundDrawable(Skin.SkinColorModel.f1388i0.getConstantState().newDrawable());
                 view.setLayoutParams(new AbsListView.LayoutParams(-1, (int) (this.mainActivity.f731b * 16.0f)));
             } else if (itemViewType == 2) {
                 view = new View(this.mainActivity);
-                view.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.card_sep));
+                view.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.card_sep));
                 view.setLayoutParams(new AbsListView.LayoutParams(-1, (int) (this.mainActivity.f731b * 16.0f)));
             } else if (itemViewType == 1) {
                 view = this.mainActivity.getLayoutInflater().inflate(R.layout.vote, viewGroup, false);
@@ -494,7 +494,7 @@ public class Page_Reputation extends Page implements BBDisplay.IBBDisplayCallbac
             TextView textView = (TextView) view.findViewById(R.id.voteUser);
             textView.setTag(i2);
             textView.setText(l.getString(this.mode == 3 ? 5 : 4));
-            textView.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.m736f((l.getInt(6) & 1) == 0 ? R.drawable.ic_thumb_c_down : R.drawable.ic_thumb_c_up), (Drawable) null, (Drawable) null, (Drawable) null);
+            textView.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.getSkinDrawable((l.getInt(6) & 1) == 0 ? R.drawable.ic_thumb_c_down : R.drawable.ic_thumb_c_up), (Drawable) null, (Drawable) null, (Drawable) null);
             TextView textView2 = (TextView) view.findViewById(R.id.voteWhere);
             textView2.setTag(i2);
             if (l.getInt(7) == 0) {
@@ -508,7 +508,7 @@ public class Page_Reputation extends Page implements BBDisplay.IBBDisplayCallbac
             if ((i + 1) - 1 == this.votesList.size()) {
                 view.setBackgroundResource(0);
             } else {
-                view.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.border_bottom));
+                view.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.border_bottom));
             }
             if (!this.f2530L && i > this.votesList.size() - 100 && this.votesList.size() + this.allVotesCount < this.f2528J) {
                 DocumentManager.getResultRequest(new LoadMemberReputationRequest(this, this.votesList.size() + this.allVotesCount));

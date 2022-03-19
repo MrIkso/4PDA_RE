@@ -64,7 +64,7 @@ public class Page_Reg extends Page {
             @Override
             public void onClick(View view) {
                 if (!TextUtils.isEmpty(this.f2479a.getText().toString())) {
-                    DocumentManager.getResultRequest(new MainActivity.C0187e0(Page_Reg.this.mainActivity, 5, 0, 0, "", this.f2479a.getText().toString()));
+                    DocumentManager.getResultRequest(new MainActivity.MemberAuthorizationRequest(Page_Reg.this.mainActivity, 5, 0, 0, "", this.f2479a.getText().toString()));
                 } else {
                     Toast.makeText(Page_Reg.this.mainActivity, "Введите логин", 0).show();
                 }

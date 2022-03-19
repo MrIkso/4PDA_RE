@@ -26,7 +26,7 @@ import in.cpp.picoimg.PicoImgRequest;
 
 public class BBDisplay extends View implements View.OnClickListener, View.OnLongClickListener, PicoImgRequest.TargetCallback {
     public static Bitmap f517p;
-    public static Drawable f518q;
+    public static Drawable iconSnapback;
     static float[] f519r = new float[100000];
     static int f520s;
     static int f521t;
@@ -246,7 +246,7 @@ public class BBDisplay extends View implements View.OnClickListener, View.OnLong
         BBString.C0677h hVar = this.f527d.f2208O[i];
         int i2 = hVar.f2280d;
         if (i2 == R.drawable.ic_snapback) {
-            this.f531h[i] = f518q.getConstantState().newDrawable();
+            this.f531h[i] = iconSnapback.getConstantState().newDrawable();
         } else {
             int i3 = 0;
             if (i2 != 0) {
@@ -254,7 +254,7 @@ public class BBDisplay extends View implements View.OnClickListener, View.OnLong
                 k.callback(this);
                 k.setAppId(i);
                 k.setAppObj(hVar);
-                k.disableAnimation(!Prefs.f1147H);
+                k.disableAnimation(!Prefs.animSmiles);
                 int i4 = hVar.f2286j > 0.0f ? (int) hVar.f2281e : 0;
                 if (hVar.f2287k > 0.0f) {
                     i3 = (int) hVar.f2282f;
@@ -267,8 +267,8 @@ public class BBDisplay extends View implements View.OnClickListener, View.OnLong
                     l.callback(this);
                     l.setAppId(i);
                     l.setAppObj(hVar);
-                    l.disableAnimation(!hVar.f2289m ? !Prefs.f1148I : !Prefs.f1147H);
-                    l.cachedOnly(!Prefs.f1145F && !z);
+                    l.disableAnimation(!hVar.f2289m ? !Prefs.animImages : !Prefs.animSmiles);
+                    l.cachedOnly(!Prefs.loadImages && !z);
                     int i5 = hVar.f2286j > 0.0f ? (int) hVar.f2281e : 0;
                     if (hVar.f2287k > 0.0f) {
                         i3 = (int) hVar.f2282f;
@@ -1492,7 +1492,7 @@ public class BBDisplay extends View implements View.OnClickListener, View.OnLong
                 if (i5 == j2) {
                     BBString pVar3 = this.f527d;
                     int i26 = pVar3.f2220a[i25].f2328e;
-                    if (!Prefs.f1149J) {
+                    if (!Prefs.scaleImages) {
                         BBString.C0677h[] hVarArr2 = pVar3.f2208O;
                         if (hVarArr2[i26].f2285i == f5 && f15 >= pVar3.f2215V) {
                             float f18 = hVarArr2[i26].f2287k > f5 ? hVarArr2[i26].f2287k : BBString.f2167K0;
@@ -1538,7 +1538,7 @@ public class BBDisplay extends View implements View.OnClickListener, View.OnLong
                                 f11 = f9 / f21;
                                 f12 = f10 / f21;
                             } else {
-                                boolean z5 = Prefs.f1149J;
+                                boolean z5 = Prefs.scaleImages;
                                 if (z5 || hVarArr[i26].f2285i == 0.0f) {
                                     if (!z5 || pVar6.f2220a[i25].m443k(8388608) || f9 < 80.0f || f10 < 80.0f) {
                                         f11 = f9;
@@ -2337,7 +2337,7 @@ public class BBDisplay extends View implements View.OnClickListener, View.OnLong
                                                 } else if (this.f527d.f2220a[i8].m451c()) {
                                                     m975f(this.f527d.f2220a[i8].f2328e - 1, i8, canvas, true, true);
                                                 } else if (i9 == 9216 || i9 == 9728) {
-                                                    this.f525b.setColor(Skin.C0353a.f1359O);
+                                                    this.f525b.setColor(Skin.SkinColorModel.f1359O);
                                                     m975f(i8, i8, canvas, i9 == 9216, i9 == 9728);
                                                     this.f525b.setColor(-1);
                                                 } else if (i9 == 5376 || i9 == 5632 || i9 == 5888) {

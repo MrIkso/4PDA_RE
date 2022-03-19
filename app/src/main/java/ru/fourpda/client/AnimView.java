@@ -54,7 +54,7 @@ public class AnimView extends View {
         this.f2545a = getContext().getResources().getDisplayMetrics().density;
         Paint paint = new Paint();
         this.f2546b = paint;
-        paint.setColor(Skin.C0353a.f1372a0);
+        paint.setColor(Skin.SkinColorModel.f1372a0);
         this.f2546b.setStrokeWidth(this.f2545a);
         C0748b bVar = new C0748b();
         this.f2548d = bVar;

@@ -9,13 +9,13 @@ import java.io.File;
 import java.util.zip.CRC32;
 
 public class DataDB {
-    private static File f2491a;
-    private static SQLiteDatabase f2492b;
+    private static File dataDbFile;
+    private static SQLiteDatabase database;
     private static String[] f2493c = {"utype", "uid", "uactive", "utitle", "aid", "aname", "uver", "uverdisc", "uext1", "uext2", "uext3", "uext4"};
     private static String[] f2494d = {"id", "upd", "del", "flg", "par", "ord", "title", "url"};
     private static String[] f2495e = {"id", "tid", "loc", "title", "hid", "par"};
 
-    public static class C0736a {
+    public static class UserBookMarkModel {
         int f2496a;
         int f2497b;
         boolean f2498c;
@@ -26,7 +26,7 @@ public class DataDB {
         String f2503h;
         int f2504i;
 
-        public C0736a(int i, int i2, boolean z, int i3, int i4, int i5, String str, String str2) {
+        public UserBookMarkModel(int i, int i2, boolean z, int i3, int i4, int i5, String str, String str2) {
             this.f2496a = i;
             this.f2497b = i2;
             this.f2498c = z;
@@ -37,12 +37,12 @@ public class DataDB {
             this.f2503h = str2;
         }
 
-        public static C0736a m349b(Cursor cursor) {
-            return new C0736a(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2) != 0, cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getString(6), cursor.getString(7));
+        public static UserBookMarkModel m349b(Cursor cursor) {
+            return new UserBookMarkModel(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2) != 0, cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getString(6), cursor.getString(7));
         }
     }
 
-    public static class C0737b {
+    public static class BookMarkModel {
         int f2505a;
         int f2506b;
         String f2507c;
@@ -50,7 +50,7 @@ public class DataDB {
         boolean f2509e;
         int f2510f;
 
-        public C0737b(int i, int i2, String str, String str2, boolean z, int i3) {
+        public BookMarkModel(int i, int i2, String str, String str2, boolean z, int i3) {
             this.f2505a = i;
             this.f2506b = i2;
             this.f2507c = str;
@@ -59,43 +59,43 @@ public class DataDB {
             this.f2510f = i3;
         }
 
-        public static C0737b m347b(Cursor cursor) {
-            return new C0737b(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4) != 0, cursor.getInt(5));
+        public static BookMarkModel m347b(Cursor cursor) {
+            return new BookMarkModel(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4) != 0, cursor.getInt(5));
         }
     }
 
     public static int m383A(int i) {
         int i2 = 0;
-        m364m(false);
+        makeTable(false);
         try {
-            Cursor query = f2492b.query("unread", new String[]{"COUNT(*)"}, "utype=" + i + " AND uactive=1", null, null, null, null);
+            Cursor query = database.query("unread", new String[]{"COUNT(*)"}, "utype=" + i + " AND uactive=1", null, null, null, null);
             if (query.moveToFirst()) {
                 i2 = query.getInt(0);
             }
             query.close();
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
         return i2;
     }
 
     public static void m382B(int i, int i2) {
-        m364m(false);
+        makeTable(false);
         try {
-            SQLiteDatabase sQLiteDatabase = f2492b;
+            SQLiteDatabase sQLiteDatabase = database;
             sQLiteDatabase.delete("unread", "utype=" + i + " AND uid=" + i2, null);
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
     }
 
     public static C0738c m381C(int i, int i2) {
-        m364m(false);
+        makeTable(false);
         C0738c cVar = null;
         try {
-            SQLiteDatabase sQLiteDatabase = f2492b;
+            SQLiteDatabase sQLiteDatabase = database;
             String[] strArr = f2493c;
             Cursor query = sQLiteDatabase.query("unread", strArr, "utype=" + i + " AND uid=" + i2, null, null, null, null);
             if (query.moveToFirst()) {
@@ -104,17 +104,17 @@ public class DataDB {
             query.close();
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
         return cVar;
     }
 
     public static C0738c[] m380D(int i) {
         int i2 = 0;
-        m364m(false);
+        makeTable(false);
         C0738c[] cVarArr = null;
         try {
-            SQLiteDatabase sQLiteDatabase = f2492b;
+            SQLiteDatabase sQLiteDatabase = database;
             String[] strArr = f2493c;
             Cursor query = sQLiteDatabase.query("unread", strArr, "utype=" + i + " AND uactive=1", null, null, null, null);
             if (query.moveToFirst()) {
@@ -131,14 +131,14 @@ public class DataDB {
             query.close();
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
         return cVarArr;
     }
 
     public static C0738c[] m379E(int i, int[] iArr) {
         int i2 = 0;
-        m364m(false);
+        makeTable(false);
         C0738c[] cVarArr = null;
         try {
             StringBuilder sb = new StringBuilder();
@@ -152,7 +152,7 @@ public class DataDB {
                 sb.append(iArr[i3]);
             }
             sb.append(")");
-            Cursor query = f2492b.query("unread", f2493c, sb.toString(), null, null, null, null);
+            Cursor query = database.query("unread", f2493c, sb.toString(), null, null, null, null);
             if (query.moveToFirst()) {
                 cVarArr = new C0738c[query.getCount()];
                 while (true) {
@@ -167,14 +167,14 @@ public class DataDB {
             query.close();
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
         return cVarArr;
     }
 
     public static void m378F(C0738c cVar) {
         int i = 0;
-        m364m(false);
+        makeTable(false);
         try {
             ContentValues contentValues = new ContentValues();
             contentValues.put("cln", (Integer) 0);
@@ -193,18 +193,18 @@ public class DataDB {
             contentValues.put("uext2", Integer.valueOf(cVar.f2520j));
             contentValues.put("uext3", Integer.valueOf(cVar.f2521k));
             contentValues.put("uext4", Integer.valueOf(cVar.f2522l));
-            f2492b.insertWithOnConflict("unread", null, contentValues, 5);
+            database.insertWithOnConflict("unread", null, contentValues, 5);
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
     }
 
     public static int m377G(int i, String str) {
         int i2 = 0;
-        m364m(false);
+        makeTable(false);
         try {
-            SQLiteDatabase sQLiteDatabase = f2492b;
+            SQLiteDatabase sQLiteDatabase = database;
             String[] strArr = {"SUM(" + str + ")"};
             Cursor query = sQLiteDatabase.query("unread", strArr, "utype=" + i + " AND uactive=1", null, null, null, null);
             if (query.moveToFirst()) {
@@ -213,15 +213,15 @@ public class DataDB {
             query.close();
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
         return i2;
     }
 
-    public static synchronized void m376a(Context context) {
+    public static synchronized void mkdirDB(Context context) {
         synchronized (DataDB.class) {
             File file = new File(context.getFilesDir(), "data.db");
-            f2491a = file;
+            dataDbFile = file;
             try {
                 file.getParentFile().mkdirs();
             } catch (Exception e) {
@@ -231,22 +231,22 @@ public class DataDB {
     }
 
     public static void clearBookmarks(boolean z) {
-        m364m(false);
+        makeTable(false);
         try {
-            f2492b.delete("bookmarks", z ? "(flg & 2) != 0" : "", null);
-            m362o(3, 0);
-            m362o(4, 0);
+            database.delete("bookmarks", z ? "(flg & 2) != 0" : "", null);
+            makeProps(3, 0);
+            makeProps(4, 0);
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
     }
 
-    public static boolean m374c(C0736a aVar) {
-        C0736a[] e;
-        m364m(false);
+    public static boolean m374c(UserBookMarkModel aVar) {
+        UserBookMarkModel[] e;
+        makeTable(false);
         if (!((aVar.f2499d & 1) == 0 || (e = m372e(aVar.f2496a)) == null)) {
-            for (C0736a aVar2 : e) {
+            for (UserBookMarkModel aVar2 : e) {
                 m374c(aVar2);
             }
         }
@@ -254,30 +254,30 @@ public class DataDB {
             ContentValues contentValues = new ContentValues();
             contentValues.put("del", (Integer) 1);
             contentValues.put("upd", Integer.valueOf((int) (System.currentTimeMillis() / 1000)));
-            if (f2492b.update("bookmarks", contentValues, "id=" + aVar.f2496a + " AND del=0", null) > 0) {
+            if (database.update("bookmarks", contentValues, "id=" + aVar.f2496a + " AND del=0", null) > 0) {
                 return true;
             }
             return false;
         } catch (Exception e2) {
             //ACRA.getErrorReporter().handleSilentException(e2);
-            m364m(true);
+            makeTable(true);
             return false;
         }
     }
 
-    public static C0736a[] m373d() {
+    public static UserBookMarkModel[] m373d() {
         int i = 0;
-        m364m(false);
-        C0736a[] aVarArr = null;
+        makeTable(false);
+        UserBookMarkModel[] aVarArr = null;
         try {
-            SQLiteDatabase sQLiteDatabase = f2492b;
+            SQLiteDatabase sQLiteDatabase = database;
             String[] strArr = f2494d;
-            Cursor query = sQLiteDatabase.query("bookmarks", strArr, "upd>" + m363n(3, 0), null, null, null, null);
+            Cursor query = sQLiteDatabase.query("bookmarks", strArr, "upd>" + getPropsId(3, 0), null, null, null, null);
             if (query.moveToFirst()) {
-                aVarArr = new C0736a[query.getCount()];
+                aVarArr = new UserBookMarkModel[query.getCount()];
                 while (true) {
                     int i2 = i + 1;
-                    aVarArr[i] = C0736a.m349b(query);
+                    aVarArr[i] = UserBookMarkModel.m349b(query);
                     if (!query.moveToNext()) {
                         break;
                     }
@@ -287,24 +287,24 @@ public class DataDB {
             query.close();
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
         return aVarArr;
     }
 
-    public static C0736a[] m372e(int i) {
+    public static UserBookMarkModel[] m372e(int i) {
         int i2 = 0;
-        m364m(false);
-        C0736a[] aVarArr = null;
+        makeTable(false);
+        UserBookMarkModel[] aVarArr = null;
         try {
-            SQLiteDatabase sQLiteDatabase = f2492b;
+            SQLiteDatabase sQLiteDatabase = database;
             String[] strArr = f2494d;
             Cursor query = sQLiteDatabase.query("bookmarks", strArr, "par=" + i + " AND del=0", null, null, null, "ord ASC");
             if (query.moveToFirst()) {
-                aVarArr = new C0736a[query.getCount()];
+                aVarArr = new UserBookMarkModel[query.getCount()];
                 while (true) {
                     int i3 = i2 + 1;
-                    aVarArr[i2] = C0736a.m349b(query);
+                    aVarArr[i2] = UserBookMarkModel.m349b(query);
                     if (!query.moveToNext()) {
                         break;
                     }
@@ -314,16 +314,16 @@ public class DataDB {
             query.close();
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
         return aVarArr;
     }
 
     public static int m371f(int i) {
         int i2 = 0;
-        m364m(false);
+        makeTable(false);
         try {
-            SQLiteDatabase sQLiteDatabase = f2492b;
+            SQLiteDatabase sQLiteDatabase = database;
             Cursor query = sQLiteDatabase.query("bookmarks", new String[]{"MAX(ord)"}, "par=" + i + " and del=0", null, null, null, null);
             if (query.moveToFirst()) {
                 i2 = query.getInt(0);
@@ -331,20 +331,20 @@ public class DataDB {
             query.close();
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
         return i2;
     }
 
-    public static void m370g(C0736a aVar, boolean z) {
-        m364m(false);
+    public static void m370g(UserBookMarkModel aVar, boolean z) {
+        makeTable(false);
         if (z) {
             try {
                 aVar.f2497b = (int) (System.currentTimeMillis() / 1000);
                 aVar.f2499d &= -3;
             } catch (Exception e) {
                 //ACRA.getErrorReporter().handleSilentException(e);
-                m364m(true);
+                makeTable(true);
                 return;
             }
         }
@@ -360,33 +360,33 @@ public class DataDB {
         contentValues.put("url", aVar.f2503h);
         crc32.update(aVar.f2503h.getBytes());
         contentValues.put("crc", Long.valueOf(crc32.getValue()));
-        f2492b.insertWithOnConflict("bookmarks", null, contentValues, 5);
+        database.insertWithOnConflict("bookmarks", null, contentValues, 5);
         if (z) {
             DocumentManager.syncBookmarks(false);
         }
     }
 
-    public static void m369h(int i, int i2) {
-        m364m(false);
+    public static void updateBookmarks(int i, int i2) {
+        makeTable(false);
         try {
             ContentValues contentValues = new ContentValues();
             contentValues.put("id", Integer.valueOf(i2));
-            SQLiteDatabase sQLiteDatabase = f2492b;
+            SQLiteDatabase sQLiteDatabase = database;
             sQLiteDatabase.update("bookmarks", contentValues, "id=" + i, null);
             ContentValues contentValues2 = new ContentValues();
             contentValues2.put("par", Integer.valueOf(i2));
-            SQLiteDatabase sQLiteDatabase2 = f2492b;
+            SQLiteDatabase sQLiteDatabase2 = database;
             sQLiteDatabase2.update("bookmarks", contentValues2, "par=" + i, null);
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
     }
 
     public static void m368i(String str, String str2) {
-        int n = m363n(4, 0) + 1;
-        m362o(4, n);
-        m370g(new C0736a(n, 0, false, str2.equals("folder") ? 1 : 0, 0, m371f(0) + 1, str, str2), true);
+        int n = getPropsId(4, 0) + 1;
+        makeProps(4, n);
+        m370g(new UserBookMarkModel(n, 0, false, str2.equals("folder") ? 1 : 0, 0, m371f(0) + 1, str, str2), true);
         DocumentManager.f2748E.m655c(null);
     }
 
@@ -397,7 +397,7 @@ public class DataDB {
             contentValues.put("upd", Integer.valueOf((int) (System.currentTimeMillis() / 1000)));
             CRC32 crc32 = new CRC32();
             crc32.update(str.getBytes());
-            SQLiteDatabase sQLiteDatabase = f2492b;
+            SQLiteDatabase sQLiteDatabase = database;
             sQLiteDatabase.update("bookmarks", contentValues, "crc=" + crc32.getValue() + " AND del=0", null);
         } catch (Exception unused) {
         }
@@ -406,11 +406,11 @@ public class DataDB {
 
     public static boolean m366k(String str) {
         boolean z = false;
-        m364m(false);
+        makeTable(false);
         try {
             CRC32 crc32 = new CRC32();
             crc32.update(str.getBytes());
-            SQLiteDatabase sQLiteDatabase = f2492b;
+            SQLiteDatabase sQLiteDatabase = database;
             String[] strArr = f2494d;
             Cursor query = sQLiteDatabase.query("bookmarks", strArr, "crc=" + crc32.getValue() + " AND del=0", null, null, null, null);
             z = query.moveToFirst();
@@ -418,7 +418,7 @@ public class DataDB {
             return z;
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
             return z;
         }
     }
@@ -431,98 +431,98 @@ public class DataDB {
         }
     }
 
-    private static synchronized void m364m(boolean z) {
+    private static synchronized void makeTable(boolean z) {
         synchronized (DataDB.class) {
             if (z) {
-                SQLiteDatabase sQLiteDatabase = f2492b;
+                SQLiteDatabase sQLiteDatabase = database;
                 if (sQLiteDatabase != null) {
                     sQLiteDatabase.close();
-                    f2492b = null;
+                    database = null;
                 }
-                f2491a.delete();
+                dataDbFile.delete();
             }
-            if (f2492b == null) {
-                @SuppressLint("WrongConstant") SQLiteDatabase openDatabase = SQLiteDatabase.openDatabase(f2491a.getPath(), null, 268435472);
-                f2492b = openDatabase;
+            if (database == null) {
+                @SuppressLint("WrongConstant") SQLiteDatabase openDatabase = SQLiteDatabase.openDatabase(dataDbFile.getPath(), null, 268435472);
+                database = openDatabase;
                 Cursor rawQuery = openDatabase.rawQuery("PRAGMA journal_mode = TRUNCATE", null);
                 rawQuery.moveToNext();
                 rawQuery.getString(0);
                 rawQuery.close();
-                f2492b.execSQL("CREATE TABLE IF NOT EXISTS props (id INTEGER PRIMARY KEY, value INTEGER);");
-                f2492b.execSQL("CREATE TABLE IF NOT EXISTS unread (id INTEGER PRIMARY KEY, cln INTEGER, utype INTEGER, uid INTEGER, uactive INTEGER, utitle TEXT, aid INTEGER, aname TEXT, uver INTEGER, uverdisc INTEGER, uext1 INTEGER, uext2 INTEGER, uext3 INTEGER, uext4 INTEGER);");
-                f2492b.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS i_unread_ti ON unread(utype, uid);");
-                f2492b.execSQL("CREATE INDEX IF NOT EXISTS i_unread_ta ON unread(utype, uactive);");
-                f2492b.execSQL("CREATE TABLE IF NOT EXISTS bookmarks (id INTEGER PRIMARY KEY, upd INTEGER, del INTEGER, flg INTEGER, par INTEGER, ord INTEGER, title TEXT, url TEXT, crc INTEGER);");
-                f2492b.execSQL("CREATE INDEX IF NOT EXISTS i_bm_view ON bookmarks(par, del);");
-                f2492b.execSQL("CREATE INDEX IF NOT EXISTS i_bm_sync ON bookmarks(upd);");
-                f2492b.execSQL("CREATE INDEX IF NOT EXISTS i_bm_chk ON bookmarks(crc, del);");
-                f2492b.execSQL("CREATE TABLE IF NOT EXISTS sitemenu (id INTEGER PRIMARY KEY, tid INTEGER, loc TEXT, title TEXT, hid INTEGER, par INTEGER);");
-                f2492b.execSQL("CREATE INDEX IF NOT EXISTS i_sm_tid ON sitemenu(tid);");
-                f2492b.execSQL("CREATE INDEX IF NOT EXISTS i_sm_par ON sitemenu(par);");
-                f2492b.execSQL("CREATE TABLE IF NOT EXISTS trackurls (id INTEGER PRIMARY KEY, url TEXT, sum INTEGER);");
-                f2492b.execSQL("CREATE INDEX IF NOT EXISTS i_sum ON trackurls(sum);");
-                int n = m363n(1, 0);
+                database.execSQL("CREATE TABLE IF NOT EXISTS props (id INTEGER PRIMARY KEY, value INTEGER);");
+                database.execSQL("CREATE TABLE IF NOT EXISTS unread (id INTEGER PRIMARY KEY, cln INTEGER, utype INTEGER, uid INTEGER, uactive INTEGER, utitle TEXT, aid INTEGER, aname TEXT, uver INTEGER, uverdisc INTEGER, uext1 INTEGER, uext2 INTEGER, uext3 INTEGER, uext4 INTEGER);");
+                database.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS i_unread_ti ON unread(utype, uid);");
+                database.execSQL("CREATE INDEX IF NOT EXISTS i_unread_ta ON unread(utype, uactive);");
+                database.execSQL("CREATE TABLE IF NOT EXISTS bookmarks (id INTEGER PRIMARY KEY, upd INTEGER, del INTEGER, flg INTEGER, par INTEGER, ord INTEGER, title TEXT, url TEXT, crc INTEGER);");
+                database.execSQL("CREATE INDEX IF NOT EXISTS i_bm_view ON bookmarks(par, del);");
+                database.execSQL("CREATE INDEX IF NOT EXISTS i_bm_sync ON bookmarks(upd);");
+                database.execSQL("CREATE INDEX IF NOT EXISTS i_bm_chk ON bookmarks(crc, del);");
+                database.execSQL("CREATE TABLE IF NOT EXISTS sitemenu (id INTEGER PRIMARY KEY, tid INTEGER, loc TEXT, title TEXT, hid INTEGER, par INTEGER);");
+                database.execSQL("CREATE INDEX IF NOT EXISTS i_sm_tid ON sitemenu(tid);");
+                database.execSQL("CREATE INDEX IF NOT EXISTS i_sm_par ON sitemenu(par);");
+                database.execSQL("CREATE TABLE IF NOT EXISTS trackurls (id INTEGER PRIMARY KEY, url TEXT, sum INTEGER);");
+                database.execSQL("CREATE INDEX IF NOT EXISTS i_sum ON trackurls(sum);");
+                int n = getPropsId(1, 0);
                 if (n == 0) {
-                    m362o(1, 3);
+                    makeProps(1, 3);
                 } else if (3 != n && !z) {
-                    m364m(true);
+                    makeTable(true);
                 }
             }
         }
     }
 
-    public static int m363n(int i, int i2) {
-        m364m(false);
+    public static int getPropsId(int i, int i2) {
+        makeTable(false);
         try {
-            Cursor query = f2492b.query("props", new String[]{"value"}, "id=" + i, null, null, null, null);
+            Cursor query = database.query("props", new String[]{"value"}, "id=" + i, null, null, null, null);
             if (query.moveToFirst()) {
                 i2 = query.getInt(0);
             }
             query.close();
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
         return i2;
     }
 
-    public static void m362o(int i, int i2) {
-        m364m(false);
+    public static void makeProps(int i, int i2) {
+        makeTable(false);
         try {
             ContentValues contentValues = new ContentValues();
             contentValues.put("id", i);
             contentValues.put("value", i2);
-            f2492b.insertWithOnConflict("props", null, contentValues, 5);
+            database.insertWithOnConflict("props", null, contentValues, 5);
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
     }
 
-    public static void m361p() {
-        m364m(false);
+    public static void clearSiteMenu() {
+        makeTable(false);
         try {
-            f2492b.delete("sitemenu", "", null);
-            m362o(5, 0);
+            database.delete("sitemenu", "", null);
+            makeProps(5, 0);
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
     }
 
-    public static C0737b[] m360q(int i) {
+    public static BookMarkModel[] m360q(int i) {
         int i2 = 0;
-        m364m(false);
-        C0737b[] bVarArr = null;
+        makeTable(false);
+        BookMarkModel[] bVarArr = null;
         try {
-            SQLiteDatabase sQLiteDatabase = f2492b;
+            SQLiteDatabase sQLiteDatabase = database;
             String[] strArr = f2495e;
             Cursor query = sQLiteDatabase.query("sitemenu", strArr, "par=" + i, null, null, null, "id ASC");
             if (query.moveToFirst()) {
-                bVarArr = new C0737b[query.getCount()];
+                bVarArr = new BookMarkModel[query.getCount()];
                 while (true) {
                     int i3 = i2 + 1;
-                    bVarArr[i2] = C0737b.m347b(query);
+                    bVarArr[i2] = BookMarkModel.m347b(query);
                     if (!query.moveToNext()) {
                         break;
                     }
@@ -532,50 +532,50 @@ public class DataDB {
             query.close();
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
         return bVarArr;
     }
 
-    public static C0737b m359r(int i) {
-        m364m(false);
-        C0737b bVar = null;
+    public static BookMarkModel m359r(int i) {
+        makeTable(false);
+        BookMarkModel bVar = null;
         try {
-            SQLiteDatabase sQLiteDatabase = f2492b;
+            SQLiteDatabase sQLiteDatabase = database;
             String[] strArr = f2495e;
             Cursor query = sQLiteDatabase.query("sitemenu", strArr, "id=" + i, null, null, null, null);
             if (query.moveToFirst()) {
-                bVar = C0737b.m347b(query);
+                bVar = BookMarkModel.m347b(query);
             }
             query.close();
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
         return bVar;
     }
 
-    public static C0737b m358s(int i) {
-        m364m(false);
-        C0737b bVar = null;
+    public static BookMarkModel m358s(int i) {
+        makeTable(false);
+        BookMarkModel bVar = null;
         try {
-            SQLiteDatabase sQLiteDatabase = f2492b;
+            SQLiteDatabase sQLiteDatabase = database;
             String[] strArr = f2495e;
             Cursor query = sQLiteDatabase.query("sitemenu", strArr, "tid=" + i, null, null, null, null);
             if (query.moveToFirst()) {
-                bVar = C0737b.m347b(query);
+                bVar = BookMarkModel.m347b(query);
             }
             query.close();
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
         return bVar;
     }
 
-    public static void m357t(C0737b bVar) {
+    public static void createBookmarks(BookMarkModel bVar) {
         int i = 0;
-        m364m(false);
+        makeTable(false);
         try {
             ContentValues contentValues = new ContentValues();
             contentValues.put("id", Integer.valueOf(bVar.f2505a));
@@ -587,33 +587,33 @@ public class DataDB {
             }
             contentValues.put("hid", Integer.valueOf(i));
             contentValues.put("par", Integer.valueOf(bVar.f2510f));
-            f2492b.insertWithOnConflict("sitemenu", null, contentValues, 5);
+            database.insertWithOnConflict("sitemenu", null, contentValues, 5);
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
     }
 
     public static void m356u(String str) {
-        m364m(false);
+        makeTable(false);
         try {
             String lowerCase = str.toLowerCase();
             ContentValues contentValues = new ContentValues();
             contentValues.put("url", lowerCase);
             contentValues.put("sum", Integer.valueOf(lowerCase.hashCode()));
-            f2492b.insert("trackurls", null, contentValues);
+            database.insert("trackurls", null, contentValues);
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
     }
 
-    public static boolean m355v(String str) {
+    public static boolean containsTrackUrls(String str) {
         boolean z = false;
-        m364m(false);
+        makeTable(false);
         try {
             String lowerCase = str.toLowerCase();
-            Cursor query = f2492b.query("trackurls", new String[]{"url"}, "sum=" + lowerCase.hashCode(), null, null, null, null);
+            Cursor query = database.query("trackurls", new String[]{"url"}, "sum=" + lowerCase.hashCode(), null, null, null, null);
             if (query.moveToFirst()) {
                 while (true) {
                     if (!lowerCase.equals(query.getString(0))) {
@@ -629,40 +629,40 @@ public class DataDB {
             query.close();
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
         return z;
     }
 
-    public static void m354w() {
-        m364m(false);
+    public static void deleteTrackUrls() {
+        makeTable(false);
         try {
-            f2492b.delete("trackurls", "", null);
-            m362o(6, 0);
+            database.delete("trackurls", "", null);
+            makeProps(6, 0);
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
     }
 
-    public static void m353x() {
-        m364m(false);
+    public static void updateUnread() {
+        makeTable(false);
         try {
             ContentValues contentValues = new ContentValues();
             contentValues.put("cln", (Integer) 1);
-            f2492b.update("unread", contentValues, "", null);
+            database.update("unread", contentValues, "", null);
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
     }
 
     public static C0738c[] m352y() {
         int i = 0;
-        m364m(false);
+        makeTable(false);
         C0738c[] cVarArr = null;
         try {
-            Cursor query = f2492b.query("unread", f2493c, "cln=1", null, null, null, null);
+            Cursor query = database.query("unread", f2493c, "cln=1", null, null, null, null);
             if (query.moveToFirst()) {
                 cVarArr = new C0738c[query.getCount()];
                 while (true) {
@@ -677,18 +677,18 @@ public class DataDB {
             query.close();
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
         return cVarArr;
     }
 
-    public static void m351z() {
-        m364m(false);
+    public static void deleteUnread() {
+        makeTable(false);
         try {
-            f2492b.delete("unread", "", null);
+            database.delete("unread", "", null);
         } catch (Exception e) {
             //ACRA.getErrorReporter().handleSilentException(e);
-            m364m(true);
+            makeTable(true);
         }
     }
 

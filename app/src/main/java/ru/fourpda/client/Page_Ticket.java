@@ -75,7 +75,7 @@ public class Page_Ticket extends Page implements BBDisplay.IBBDisplayCallback {
 
         @Override
         public void onClick(View view) {
-            Prefs.f1161V = Math.min(100, Prefs.f1161V + 1);
+            Prefs.ticketPerPage = Math.min(100, Prefs.ticketPerPage + 1);
             Page_Ticket.this.m191d0(true, this.f2903a);
         }
     }
@@ -250,7 +250,7 @@ public class Page_Ticket extends Page implements BBDisplay.IBBDisplayCallback {
 
         @Override
         public void onClick(View view) {
-            Prefs.f1161V = Math.max(10, Prefs.f1161V - 1);
+            Prefs.ticketPerPage = Math.max(10, Prefs.ticketPerPage - 1);
             Page_Ticket.this.m191d0(true, this.f2918a);
         }
     }
@@ -375,10 +375,10 @@ public class Page_Ticket extends Page implements BBDisplay.IBBDisplayCallback {
         public void prepareResult(int status, Document uVar) {
             if (!Page_Ticket.this.isLoading) {
                 if (status == 0) {
-                    Dialog dialog = new Dialog(this.f2929i, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+                    Dialog dialog = new Dialog(this.f2929i, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
                     dialog.requestWindowFeature(1);
                     dialog.setContentView(R.layout.dlg_ticket_history);
-                    dialog.getWindow().setBackgroundDrawable(this.f2929i.skin.m736f(R.drawable.np_dialog));
+                    dialog.getWindow().setBackgroundDrawable(this.f2929i.skin.getSkinDrawable(R.drawable.np_dialog));
                     dialog.getWindow().setLayout(-1, -2);
                     dialog.setCanceledOnTouchOutside(true);
                     TableLayout tableLayout = (TableLayout) dialog.findViewById(R.id.ticket_history_table);
@@ -389,7 +389,7 @@ public class Page_Ticket extends Page implements BBDisplay.IBBDisplayCallback {
                         TableRow tableRow = new TableRow(this.f2929i);
                         tableRow.setLayoutParams(new TableRow.LayoutParams(-1, -2));
                         if (i2 < l.count() - 1) {
-                            tableRow.setBackgroundDrawable(this.f2929i.skin.m736f(R.drawable.border_bottom));
+                            tableRow.setBackgroundDrawable(this.f2929i.skin.getSkinDrawable(R.drawable.border_bottom));
                         }
                         TextView textView = new TextView(this.f2929i);
                         textView.setTextSize(14.0f);
@@ -405,7 +405,7 @@ public class Page_Ticket extends Page implements BBDisplay.IBBDisplayCallback {
                         TextView textView3 = new TextView(this.f2929i);
                         textView3.setTextSize(16.0f);
                         textView3.setText(Util.C0427h.UnEscapeString(l2.getString(3)));
-                        textView3.setTextColor(Skin.C0353a.f1384g0);
+                        textView3.setTextColor(Skin.SkinColorModel.linkColor);
                         textView3.setTag(l2.getInt(2));
                         textView3.setOnClickListener(new View$OnClickListenerC0865a(dialog));
                         textView3.setPadding(i3, i3, i3, i3);
@@ -516,11 +516,11 @@ public class Page_Ticket extends Page implements BBDisplay.IBBDisplayCallback {
         int i3 = 4;
         Object[] objArr = new Object[4];
         objArr[0] = Integer.valueOf(i);
-        objArr[1] = Integer.valueOf(Prefs.f1161V);
+        objArr[1] = Integer.valueOf(Prefs.ticketPerPage);
         if (!z) {
             i3 = 0;
         }
-        objArr[2] = Integer.valueOf((Prefs.f1160U ? 1 : 0) | i3);
+        objArr[2] = Integer.valueOf((Prefs.ticketForumSort ? 1 : 0) | i3);
         objArr[3] = new Document(Integer.valueOf(i2));
         return new Document(objArr);
     }
@@ -562,15 +562,15 @@ public class Page_Ticket extends Page implements BBDisplay.IBBDisplayCallback {
         this.ticketStatus[2] = resources.getString(R.string.ticket_status_processed);
         int[] iArr = new int[3];
         this.f2894M = iArr;
-        iArr[0] = this.mainActivity.skin.m738d(R.color.ticket_new);
-        this.f2894M[1] = this.mainActivity.skin.m738d(R.color.ticket_work);
-        this.f2894M[2] = this.mainActivity.skin.m738d(R.color.ticket_done);
+        iArr[0] = this.mainActivity.skin.getSkinColor(R.color.ticket_new);
+        this.f2894M[1] = this.mainActivity.skin.getSkinColor(R.color.ticket_work);
+        this.f2894M[2] = this.mainActivity.skin.getSkinColor(R.color.ticket_done);
         int[] iArr2 = new int[3];
         this.f2895N = iArr2;
-        iArr2[0] = this.mainActivity.skin.m738d(R.color.ticket_new_text);
-        this.f2895N[1] = this.mainActivity.skin.m738d(R.color.ticket_work_text);
-        this.f2895N[2] = this.mainActivity.skin.m738d(R.color.ticket_done_text);
-        this.f2892K = this.mainActivity.skin.m738d(R.color.ticket_count);
+        iArr2[0] = this.mainActivity.skin.getSkinColor(R.color.ticket_new_text);
+        this.f2895N[1] = this.mainActivity.skin.getSkinColor(R.color.ticket_work_text);
+        this.f2895N[2] = this.mainActivity.skin.getSkinColor(R.color.ticket_done_text);
+        this.f2892K = this.mainActivity.skin.getSkinColor(R.color.ticket_count);
     }
 
     @Override
@@ -682,8 +682,8 @@ public class Page_Ticket extends Page implements BBDisplay.IBBDisplayCallback {
         o1Var.addMenuItem(0, 0, 5, "Копировать ссылку");
         if (this.f2887F <= 0) {
             o1Var.addMenuItem(0, 0, 6, "Только мои", this.f2886E);
-            o1Var.addMenuItem(0, 0, 3, "Сортировка по форумам", Prefs.f1160U);
-            o1Var.addMenuItem(0, 0, 4, "Тикетов на странице: " + Prefs.f1161V);
+            o1Var.addMenuItem(0, 0, 3, "Сортировка по форумам", Prefs.ticketForumSort);
+            o1Var.addMenuItem(0, 0, 4, "Тикетов на странице: " + Prefs.ticketPerPage);
         }
         o1Var.show(view);
     }
@@ -698,17 +698,17 @@ public class Page_Ticket extends Page implements BBDisplay.IBBDisplayCallback {
 
     @Override
     int mo141P() {
-        return ((this.f2891J - 1) / Prefs.f1161V) + 1;
+        return ((this.f2891J - 1) / Prefs.ticketPerPage) + 1;
     }
 
     @Override
     int mo140Q() {
-        return (this.f2890I / Prefs.f1161V) + 1;
+        return (this.f2890I / Prefs.ticketPerPage) + 1;
     }
 
     @Override
     Page mo139R(int i) {
-        return new Page_Ticket(this.mainActivity, (i - 1) * Prefs.f1161V, this.f2888G, this.f2889H);
+        return new Page_Ticket(this.mainActivity, (i - 1) * Prefs.ticketPerPage, this.f2888G, this.f2889H);
     }
 
     @Override
@@ -736,16 +736,16 @@ public class Page_Ticket extends Page implements BBDisplay.IBBDisplayCallback {
     }
 
     void m191d0(boolean z, RelativeLayout relativeLayout) {
-        ((TextView) relativeLayout.findViewById(R.id.option_value)).setText(Integer.valueOf(Prefs.f1161V).toString());
+        ((TextView) relativeLayout.findViewById(R.id.option_value)).setText(Integer.valueOf(Prefs.ticketPerPage).toString());
         boolean z2 = true;
-        relativeLayout.findViewById(R.id.option_down).setEnabled(Prefs.f1161V > 10);
+        relativeLayout.findViewById(R.id.option_down).setEnabled(Prefs.ticketPerPage > 10);
         View findViewById = relativeLayout.findViewById(R.id.option_up);
-        if (Prefs.f1161V >= 100) {
+        if (Prefs.ticketPerPage >= 100) {
             z2 = false;
         }
         findViewById.setEnabled(z2);
         if (z) {
-            Prefs.saveInt(this.mainActivity, "ticket_per_page", Prefs.f1161V);
+            Prefs.saveInt(this.mainActivity, "ticket_per_page", Prefs.ticketPerPage);
         }
     }
 
@@ -907,12 +907,12 @@ public class Page_Ticket extends Page implements BBDisplay.IBBDisplayCallback {
             if (f0 == 1) {
                 View view2 = new View(this.mainActivity);
                 view2.setLayoutParams(new AbsListView.LayoutParams(-1, (int) (this.mainActivity.f731b * 16.0f)));
-                view2.setBackgroundDrawable(Skin.C0353a.f1388i0.getConstantState().newDrawable());
+                view2.setBackgroundDrawable(Skin.SkinColorModel.f1388i0.getConstantState().newDrawable());
                 bBDisplay = (BBDisplay) view2;
             } else if (f0 == 4) {
                 View view3 = new View(this.mainActivity);
                 view3.setLayoutParams(new AbsListView.LayoutParams(-1, (int) (this.mainActivity.f731b * 16.0f)));
-                view3.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.card_sep));
+                view3.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.card_sep));
                 bBDisplay = (BBDisplay) view3;
             } else if (f0 == 5) {
                 View inflate = this.mainActivity.getLayoutInflater().inflate(R.layout.ticket_button_sep, viewGroup, false);
@@ -932,7 +932,7 @@ public class Page_Ticket extends Page implements BBDisplay.IBBDisplayCallback {
                 bBDisplay = (BBDisplay) inflate2;
             } else if (f0 == 3) {
                 BBDisplay bBDisplay2 = new BBDisplay(this.mainActivity);
-                bBDisplay2.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.border_top));
+                bBDisplay2.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.border_top));
                 bBDisplay2.setCallback(this);
                 bBDisplay = bBDisplay2;
             }
@@ -957,7 +957,7 @@ public class Page_Ticket extends Page implements BBDisplay.IBBDisplayCallback {
                 TextView textView2 = (TextView) bBDisplay.findViewById(R.id.ticket_handler);
                 if (oVar.document.getInt(9) > 0) {
                     textView2.setText(oVar.document.getString(10));
-                    textView2.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.m736f(R.drawable.ic_user), (Drawable) null, (Drawable) null, (Drawable) null);
+                    textView2.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.getSkinDrawable(R.drawable.ic_user), (Drawable) null, (Drawable) null, (Drawable) null);
                 } else {
                     textView2.setText("новый");
                     textView2.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
@@ -1000,13 +1000,13 @@ public class Page_Ticket extends Page implements BBDisplay.IBBDisplayCallback {
             tabReload();
         } else if (i3 == 3) {
             MainActivity mainActivity2 = this.mainActivity;
-            boolean z2 = true ^ Prefs.f1160U;
-            Prefs.f1160U = z2;
+            boolean z2 = true ^ Prefs.ticketForumSort;
+            Prefs.ticketForumSort = z2;
             Prefs.saveBoolean(mainActivity2, "ticket_forum_sort", z2);
             this.rootDocument = m188g0(this.f2886E, this.f2890I, this.f2888G);
             tabReload();
         } else if (i3 == 4) {
-            Dialog dialog = new Dialog(this.mainActivity, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+            Dialog dialog = new Dialog(this.mainActivity, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
             RelativeLayout relativeLayout = (RelativeLayout) this.mainActivity.getLayoutInflater().inflate(R.layout.option_up_down, (ViewGroup) this.mainActivity.mainLayout, false);
             relativeLayout.findViewById(R.id.option_down).setOnClickListener(new View$OnClickListenerC0861j(relativeLayout));
             relativeLayout.findViewById(R.id.option_up).setOnClickListener(new View$OnClickListenerC0851b(relativeLayout));
@@ -1016,7 +1016,7 @@ public class Page_Ticket extends Page implements BBDisplay.IBBDisplayCallback {
             m191d0(false, relativeLayout);
             dialog.requestWindowFeature(1);
             dialog.setContentView(relativeLayout);
-            dialog.getWindow().setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.np_dialog));
+            dialog.getWindow().setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.np_dialog));
             dialog.getWindow().setLayout((this.mainActivity.getResources().getDisplayMetrics().widthPixels * 6) / 7, -2);
             dialog.setCanceledOnTouchOutside(true);
             dialog.show();

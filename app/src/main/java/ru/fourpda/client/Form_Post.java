@@ -180,7 +180,7 @@ public class Form_Post implements AttachDialog.AbstractC0559i {
     public Form_Post(MainActivity mainActivity, AbstractC0846i iVar) {
         this.mainActivity = mainActivity;
         this.f2859n = iVar;
-        ViewGroup viewGroup = (ViewGroup) mainActivity.getLayoutInflater().inflate(Prefs.f1176n ? R.layout.posteditor_tags_below : R.layout.posteditor, (ViewGroup) null);
+        ViewGroup viewGroup = (ViewGroup) mainActivity.getLayoutInflater().inflate(Prefs.postEditorTagsBelow ? R.layout.posteditor_tags_below : R.layout.posteditor, (ViewGroup) null);
         this.f2846a = viewGroup;
         viewGroup.findViewById(R.id.editorPanel).setOnClickListener(new View$OnClickListenerC0838a());
         Button button = (Button) this.f2846a.findViewById(R.id.editorSend);
@@ -195,7 +195,7 @@ public class Form_Post implements AttachDialog.AbstractC0559i {
                 findViewById.setScrollBarDefaultDelayBeforeFade(2000);
             }
             if (i >= 29) {
-                findViewById.setHorizontalScrollbarThumbDrawable(this.mainActivity.skin.m736f(R.drawable.scroll_horz_thumb));
+                findViewById.setHorizontalScrollbarThumbDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.scroll_horz_thumb));
             } else {
                 try {
                     Field declaredField = View.class.getDeclaredField("mScrollCache");
@@ -206,7 +206,7 @@ public class Form_Post implements AttachDialog.AbstractC0559i {
                     Object obj2 = declaredField2.get(obj);
                     Method declaredMethod = obj2.getClass().getDeclaredMethod("setHorizontalThumbDrawable", Drawable.class);
                     declaredMethod.setAccessible(true);
-                    declaredMethod.invoke(obj2, this.mainActivity.skin.m736f(R.drawable.scroll_horz_thumb));
+                    declaredMethod.invoke(obj2, this.mainActivity.skin.getSkinDrawable(R.drawable.scroll_horz_thumb));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -234,7 +234,7 @@ public class Form_Post implements AttachDialog.AbstractC0559i {
     public void m218A(BBString pVar, boolean z) {
         if (pVar != null) {
             if (z) {
-                this.mainActivity.mainLayout.m859w(null);
+                this.mainActivity.mainLayout.hideKeyboard(null);
             }
             m195z(false);
             this.f2852g.setChecked(true);
@@ -243,7 +243,7 @@ public class Form_Post implements AttachDialog.AbstractC0559i {
             return;
         }
         if (z) {
-            this.mainActivity.mainLayout.m859w(this.f2851f);
+            this.mainActivity.mainLayout.hideKeyboard(this.f2851f);
         }
         m195z(this.forumPostModel.f2882k);
         this.f2852g.setChecked(false);
@@ -384,13 +384,13 @@ public class Form_Post implements AttachDialog.AbstractC0559i {
     }
 
     public void m200u() {
-        this.mainActivity.mainLayout.m859w(null);
+        this.mainActivity.mainLayout.hideKeyboard(null);
         this.mainActivity.mainLayout.m868n(true);
     }
 
     public void m199v() {
         this.mainActivity.mainLayout.m868n(false);
-        this.mainActivity.mainLayout.m859w(this.f2851f);
+        this.mainActivity.mainLayout.hideKeyboard(this.f2851f);
     }
 
     public void m197x(int i, int i2) {
@@ -440,19 +440,19 @@ public class Form_Post implements AttachDialog.AbstractC0559i {
         boolean f2884m;
         boolean showMark;
 
-        public ForumPostModel(int i, String str, int i2, int i3, boolean z, boolean z2, boolean z3, boolean z4, boolean z5, String str2, String str3, SparseArray<String> sparseArray) {
-            this.status = i;
-            this.topicTitle = str;
-            this.topicId = i2;
-            this.postId = i3;
+        public ForumPostModel(int status, String topicTitle, int topicId, int postId, boolean z, boolean z2, boolean z3, boolean z4, boolean z5, String reason, String postMessage, SparseArray<String> attatshes) {
+            this.status = status;
+            this.topicTitle = topicTitle;
+            this.topicId = topicId;
+            this.postId = postId;
             this.f2876e = z;
             this.f2877f = z2;
             this.f2878g = z3;
             this.f2879h = z5;
-            this.reason = str2;
-            this.postMessage = str3;
+            this.reason = reason;
+            this.postMessage = postMessage;
             this.f2882k = z4;
-            this.attaches = sparseArray;
+            this.attaches = attatshes;
         }
 
         public int[] getPostAttaches() {

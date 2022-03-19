@@ -315,7 +315,7 @@ public class Page_Site_List extends Page implements BBDisplay.IBBDisplayCallback
                 articleLayout = m817S(viewGroup, true);
             } else if (itemViewType == 1) {
                 View view2 = new View(this.mainActivity);
-                view2.setBackgroundDrawable(Skin.C0353a.f1388i0.getConstantState().newDrawable());
+                view2.setBackgroundDrawable(Skin.SkinColorModel.f1388i0.getConstantState().newDrawable());
                 view2.setLayoutParams(new AbsListView.LayoutParams(-1, (int) (this.mainActivity.f731b * 16.0f)));
                 articleLayout = view2;
             } else if (itemViewType == 2) {
@@ -357,7 +357,7 @@ public class Page_Site_List extends Page implements BBDisplay.IBBDisplayCallback
                             textView = new TextView(this.mainActivity);
                             textView.setSingleLine(true);
                             textView.setTextAppearance(this.mainActivity, 0x1030046);
-                            textView.setTextColor(Skin.C0353a.f1386h0);
+                            textView.setTextColor(Skin.SkinColorModel.labelTextCsl);
                             textView.setGravity(16);
                             articleLayout3.f509h.addView(textView);
                             ((LinearLayout.LayoutParams) textView.getLayoutParams()).height = -1;
@@ -402,7 +402,7 @@ public class Page_Site_List extends Page implements BBDisplay.IBBDisplayCallback
         int i;
         int i2;
         int i3;
-        DataDB.C0737b s;
+        DataDB.BookMarkModel s;
         if (!isUnsucces()) {
             return null;
         }
@@ -417,7 +417,7 @@ public class Page_Site_List extends Page implements BBDisplay.IBBDisplayCallback
             i = i2;
         }
         while (i2 != 0 && i3 != 0) {
-            DataDB.C0737b r = DataDB.m359r(i3);
+            DataDB.BookMarkModel r = DataDB.m359r(i3);
             if (r == null) {
                 break;
             }

@@ -31,7 +31,7 @@ public class Page_Announcement extends Page implements BBDisplay.IBBDisplayCallb
                 Page_Announcement.this.f1134G = true;
                 Page_Announcement.this.mo129f(this.bbDisplay, this.bbString1, this.f1137c);
             } else if (i3 == 2) {
-                Urls2.m676g(Page_Announcement.this.mainActivity, this.bbString1.f2202I.get(this.f1137c.f543a).link);
+                Urls2.visitPage(Page_Announcement.this.mainActivity, this.bbString1.f2202I.get(this.f1137c.f543a).link);
             } else if (i3 == 3) {
                 BBDisplay.C0143c cVar = this.f1137c;
                 int i4 = cVar.f544b;
@@ -70,7 +70,7 @@ public class Page_Announcement extends Page implements BBDisplay.IBBDisplayCallb
                 DataDB.m365l(b0Var.title, b0Var.getLink());
             } else if (i3 == 1) {
                 MainActivity mainActivity = Page_Announcement.this.mainActivity;
-                Urls2.m676g(mainActivity, "https://4pda.ru/" + Page_Announcement.this.getLink());
+                Urls2.visitPage(mainActivity, "https://4pda.ru/" + Page_Announcement.this.getLink());
             } else if (i3 == 2) {
                 MainActivity mainActivity2 = Page_Announcement.this.mainActivity;
                 Util.copyToClipboard(mainActivity2, "https://4pda.ru/" + Page_Announcement.this.getLink(), "Ссылка скопирована");
@@ -168,7 +168,7 @@ public class Page_Announcement extends Page implements BBDisplay.IBBDisplayCallb
         int i = cVar.f543a;
         if (i >= 0) {
             BBString.C0681k kVar = pVar.f2202I.get(i);
-            o1Var.addMenuItem(0, 0, 0, Util.C0427h.m640d(kVar.link), true, false);
+            o1Var.addMenuItem(0, 0, 0, Util.C0427h.urlDecode(kVar.link), true, false);
             o1Var.addMenuItem(0, 0, 0, "Копировать ссылку");
             if (Urls2.is4pdaHost(kVar.link)) {
                 o1Var.addMenuItem(0, 0, 1, "Открыть в новой вкладке");

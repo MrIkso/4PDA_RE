@@ -172,11 +172,11 @@ public class BBString {
     public static class C0672c extends C0671b {
         public C0672c() {
             this.f2257a = "Код";
-            this.f2272p = Skin.C0353a.f1406v;
-            this.f2273q = Skin.C0353a.f1407w;
-            this.f2276t = Skin.C0353a.f1408x;
-            this.f2274r = Skin.C0353a.f1409y;
-            this.f2275s = Skin.C0353a.f1410z;
+            this.f2272p = Skin.SkinColorModel.f1406v;
+            this.f2273q = Skin.SkinColorModel.f1407w;
+            this.f2276t = Skin.SkinColorModel.f1408x;
+            this.f2274r = Skin.SkinColorModel.f1409y;
+            this.f2275s = Skin.SkinColorModel.f1410z;
         }
     }
 
@@ -185,9 +185,9 @@ public class BBString {
             float f = BBString.f2188u0;
             this.f2260d = (int) (3.4f * f);
             this.f2271o = (int) (f * 1.0f);
-            this.f2273q = Skin.C0353a.f1355K;
-            this.f2276t = Skin.C0353a.f1356L;
-            this.f2274r = Skin.C0353a.f1357M;
+            this.f2273q = Skin.SkinColorModel.f1355K;
+            this.f2276t = Skin.SkinColorModel.f1356L;
+            this.f2274r = Skin.SkinColorModel.f1357M;
         }
     }
 
@@ -199,7 +199,7 @@ public class BBString {
             this.f2264h = (float) ((int) (f * 16.0f));
             this.f2265i = (int) (f * 16.0f);
             this.f2266j = (int) (f * 16.0f);
-            this.f2273q = Skin.C0353a.f1393l;
+            this.f2273q = Skin.SkinColorModel.f1393l;
         }
 
         @Override
@@ -218,19 +218,19 @@ public class BBString {
             float f = BBString.f2188u0;
             this.f2260d = (int) (3.4f * f);
             this.f2271o = (int) (f * 1.4f);
-            this.f2273q = Skin.C0353a.f1349E;
-            this.f2276t = Skin.C0353a.f1350F;
-            this.f2274r = Skin.C0353a.f1351G;
+            this.f2273q = Skin.SkinColorModel.f1349E;
+            this.f2276t = Skin.SkinColorModel.f1350F;
+            this.f2274r = Skin.SkinColorModel.f1351G;
         }
     }
 
     public static class C0676g extends C0671b {
         public C0676g() {
             this.f2257a = "Скрытый текст";
-            this.f2272p = Skin.C0353a.f1345A;
-            this.f2273q = Skin.C0353a.f1346B;
-            this.f2276t = Skin.C0353a.f1347C;
-            this.f2274r = Skin.C0353a.f1348D;
+            this.f2272p = Skin.SkinColorModel.f1345A;
+            this.f2273q = Skin.SkinColorModel.f1346B;
+            this.f2276t = Skin.SkinColorModel.f1347C;
+            this.f2274r = Skin.SkinColorModel.f1348D;
         }
     }
 
@@ -549,9 +549,9 @@ public class BBString {
             float f = BBString.f2188u0;
             this.f2260d = (int) (3.4f * f);
             this.f2271o = (int) (f * 0.85f);
-            this.f2273q = Skin.C0353a.f1352H;
-            this.f2276t = Skin.C0353a.f1353I;
-            this.f2274r = Skin.C0353a.f1354J;
+            this.f2273q = Skin.SkinColorModel.f1352H;
+            this.f2276t = Skin.SkinColorModel.f1353I;
+            this.f2274r = Skin.SkinColorModel.f1354J;
         }
     }
 
@@ -752,10 +752,10 @@ public class BBString {
     public static class C0688q extends C0671b {
         public C0688q() {
             this.f2257a = "Цитата";
-            this.f2272p = Skin.C0353a.f1395m;
-            this.f2273q = Skin.C0353a.f1397n;
-            this.f2276t = Skin.C0353a.f1399o;
-            this.f2274r = Skin.C0353a.f1400p;
+            this.f2272p = Skin.SkinColorModel.f1395m;
+            this.f2273q = Skin.SkinColorModel.f1397n;
+            this.f2276t = Skin.SkinColorModel.f1399o;
+            this.f2274r = Skin.SkinColorModel.f1400p;
         }
     }
 
@@ -797,11 +797,11 @@ public class BBString {
     public static class C0692u extends C0671b {
         public C0692u() {
             this.f2257a = "Спойлер";
-            this.f2272p = Skin.C0353a.f1401q;
-            this.f2273q = Skin.C0353a.f1402r;
-            this.f2276t = Skin.C0353a.f1403s;
-            this.f2274r = Skin.C0353a.f1404t;
-            this.f2275s = Skin.C0353a.f1405u;
+            this.f2272p = Skin.SkinColorModel.f1401q;
+            this.f2273q = Skin.SkinColorModel.f1402r;
+            this.f2276t = Skin.SkinColorModel.f1403s;
+            this.f2274r = Skin.SkinColorModel.f1404t;
+            this.f2275s = Skin.SkinColorModel.f1405u;
         }
     }
 
@@ -841,22 +841,22 @@ public class BBString {
         f2166J0 = f3;
         f2167K0 = f3;
         f2187t0 = f2 * 0.0f;
-        f2182o0 = Skin.C0353a.f1371a;
-        f2183p0 = Skin.C0353a.f1375c;
-        f2184q0 = Skin.C0353a.f1377d;
-        f2185r0 = Skin.C0353a.f1379e;
-        f2186s0 = Skin.C0353a.f1381f;
-        int i = Skin.C0353a.f1383g;
-        BBOverlay.f550j = Skin.C0353a.f1387i;
-        BBOverlay.f549i = Skin.C0353a.f1385h;
-        int i2 = Skin.C0353a.f1391k;
+        f2182o0 = Skin.SkinColorModel.f1371a;
+        f2183p0 = Skin.SkinColorModel.f1375c;
+        f2184q0 = Skin.SkinColorModel.f1377d;
+        f2185r0 = Skin.SkinColorModel.f1379e;
+        f2186s0 = Skin.SkinColorModel.f1381f;
+        int i = Skin.SkinColorModel.f1383g;
+        BBOverlay.f550j = Skin.SkinColorModel.f1387i;
+        BBOverlay.f549i = Skin.SkinColorModel.f1385h;
+        int i2 = Skin.SkinColorModel.f1391k;
         if (i2 == 0) {
-            i2 = Skin.C0353a.f1387i;
+            i2 = Skin.SkinColorModel.f1387i;
         }
         BBOverlay.f552l = i2;
-        int i3 = Skin.C0353a.f1389j;
+        int i3 = Skin.SkinColorModel.f1389j;
         if (i3 == 0) {
-            i3 = Skin.C0353a.f1385h;
+            i3 = Skin.SkinColorModel.f1385h;
         }
         BBOverlay.f551k = i3;
     }
@@ -1551,7 +1551,7 @@ public class BBString {
                         this.f2229i = -1;
                         break;
                     } else {
-                        int i20 = Skin.C0353a.f1373b;
+                        int i20 = Skin.SkinColorModel.f1373b;
                         this.f2227g = i20;
                         this.f2242v.push(Integer.valueOf(i20));
                         this.f2229i = this.f2202I.size();
@@ -2742,8 +2742,8 @@ public class BBString {
                                 }
                                 mVar = Util.SmileClass.smilesList.get(i26);
                                 if (mVar.f1662i == c4 && mVar.f1663j == c5) {
-                                    i27 = mVar.f1654a.length();
-                                    str = mVar.f1654a;
+                                    i27 = mVar.code.length();
+                                    str = mVar.code;
                                     int i28 = i23 + i27;
                                     int i29 = i25 + 1;
                                     i8 = i6;
@@ -2819,7 +2819,7 @@ public class BBString {
                                         f2174g0[i34] = i33;
                                         m470s();
                                     }
-                                    if (TextUtils.isEmpty(mVar.f1658e) || !Prefs.f1147H) {
+                                    if (TextUtils.isEmpty(mVar.f1658e) || !Prefs.animSmiles) {
                                         i9 = m488a(null, mVar.f1656c, mVar.f1657d);
                                         this.f2208O[i9].f2280d = mVar.f1655b;
                                     } else {
@@ -2919,7 +2919,7 @@ public class BBString {
         iArr[i2] = this.f2226f;
         if (this.f2239s > 0) {
             i |= 4194304;
-            f2170c0[i2] = Skin.C0353a.f1358N;
+            f2170c0[i2] = Skin.SkinColorModel.f1358N;
         } else {
             f2170c0[i2] = this.f2227g;
         }
@@ -3048,7 +3048,7 @@ public class BBString {
                                     }
                                 }
                             } else {
-                                i10 = Util.C0427h.m642b(sb.toString());
+                                i10 = Util.C0427h.getHtmlCode(sb.toString());
                             }
                         }
                         if (i10 > 0) {

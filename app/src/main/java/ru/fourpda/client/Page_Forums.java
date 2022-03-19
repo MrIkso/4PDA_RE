@@ -39,7 +39,7 @@ public class Page_Forums extends Page {
                 Page_Forums h0Var = Page_Forums.this;
                 DataDB.m365l(h0Var.title, h0Var.getLink());
             } else if (3 == i3) {
-                API.ForumModifyRequest.m821p(-1, null, 21, 32, 0, Page_Forums.this, "отметка прочтения", "", new RunnableC0402a(this));
+                API.ForumModifyRequest.modifyForum(-1, null, 21, 32, 0, Page_Forums.this, "отметка прочтения", "", new RunnableC0402a(this));
             } else if (4 == i3) {
                 Page_Forums h0Var2 = Page_Forums.this;
                 h0Var2.tab.addPage(new Page_Announcement(h0Var2.mainActivity, 0));
@@ -108,12 +108,12 @@ public class Page_Forums extends Page {
                     if (z) {
                         i4 = 8;
                     }
-                    API.ForumModifyRequest.m821p(forumId, null, 21, 8, i4, Page_Forums.this, "обновление подписки", "", new RunnableC0405a(this, document, z));
+                    API.ForumModifyRequest.modifyForum(forumId, null, 21, 8, i4, Page_Forums.this, "обновление подписки", "", new RunnableC0405a(this, document, z));
                 } else if (i3 == 3) {
                     MainActivity mainActivity = Page_Forums.this.mainActivity;
                     Util.copyToClipboard(mainActivity, "https://4pda.ru/forum/index.php?showforum=" + forumId, "Ссылка скопирована");
                 } else if (i3 == 33) {
-                    API.ForumModifyRequest.m821p(forumId, null, 21, 32, 0, Page_Forums.this, "отметка прочтения", "", new RunnableC0406b(document));
+                    API.ForumModifyRequest.modifyForum(forumId, null, 21, 32, 0, Page_Forums.this, "отметка прочтения", "", new RunnableC0406b(document));
                 } else if (i3 == 4) {
                     DocumentManager.getResultRequest(new API.ForumGetTopicsRequest(document.getInt(0), Page_Forums.this.mainActivity));
                 } else {
@@ -307,10 +307,10 @@ public class Page_Forums extends Page {
             view.setOnLongClickListener(this.f1578F);
             TextView forumName = (TextView) ((ViewGroup) view).findViewById(R.id.forumName);
             forumName.setText(document.getString(1));
-            forumName.setCompoundDrawablesWithIntrinsicBounds((Drawable) null, (Drawable) null, (unreadTopic & 32) > 0 ? this.mainActivity.skin.m736f(R.drawable.ic_unread) : null, (Drawable) null);
+            forumName.setCompoundDrawablesWithIntrinsicBounds((Drawable) null, (Drawable) null, (unreadTopic & 32) > 0 ? this.mainActivity.skin.getSkinDrawable(R.drawable.ic_unread) : null, (Drawable) null);
             Document e02 = getCurrentDocument(i + 1);
             if (e02 == null || (e02.getInt(2) & 16) <= 0) {
-                forumName.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.border_bottom));
+                forumName.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.border_bottom));
                 float f = this.mainActivity.f731b;
                 forumName.setPadding(0, (int) (f * 12.0f), (int) (16.0f * f), (int) (f * 12.0f));
                 view.setPadding(0, 0, 0, 0);
@@ -326,7 +326,7 @@ public class Page_Forums extends Page {
             TextView textView2 = (TextView) view;
             textView2.setText(document.getString(1));
             view.setOnClickListener(this.f1578F);
-            textView2.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.m736f(z2 ? R.drawable.ic_expand_open : R.drawable.ic_expand_close), (Drawable) null, (Drawable) null, (Drawable) null);
+            textView2.setCompoundDrawablesWithIntrinsicBounds(this.mainActivity.skin.getSkinDrawable(z2 ? R.drawable.ic_expand_open : R.drawable.ic_expand_close), (Drawable) null, (Drawable) null, (Drawable) null);
         }
         return view;
     }

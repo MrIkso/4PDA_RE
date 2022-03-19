@@ -74,10 +74,10 @@ public class BootReceiver extends BroadcastReceiver {
                             } else {
                                 intent2 = new Intent("android.intent.action.VIEW_DOWNLOADS");
                             }
-                            Notify.m47b(context, (int) valueOf.longValue(), "4pda-download", false, true, string, "Загрузка завершена", intent2);
+                            Notify.createNotify(context, (int) valueOf.longValue(), "4pda-download", false, true, string, "Загрузка завершена", intent2);
                             f635a.remove(valueOf);
                         } else if (16 == i) {
-                            Notify.m47b(context, (int) valueOf.longValue(), "4pda-download", false, true, string, "Ошибка загрузки", new Intent("android.intent.action.VIEW_DOWNLOADS"));
+                            Notify.createNotify(context, (int) valueOf.longValue(), "4pda-download", false, true, string, "Ошибка загрузки", new Intent("android.intent.action.VIEW_DOWNLOADS"));
                             f635a.remove(valueOf);
                         }
                     }

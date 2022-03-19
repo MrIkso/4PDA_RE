@@ -40,9 +40,9 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
             @Override
             public void onClick(View view) {
-                int i = Prefs.f1178p;
+                int i = Prefs.textSize;
                 if (i > 10) {
-                    Prefs.f1178p = i - 1;
+                    Prefs.textSize = i - 1;
                     Page_Options.this.m628f0(true, this.f1721a);
                 }
             }
@@ -57,9 +57,9 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
             @Override
             public void onClick(View view) {
-                int i = Prefs.f1178p;
+                int i = Prefs.textSize;
                 if (i < 30) {
-                    Prefs.f1178p = i + 1;
+                    Prefs.textSize = i + 1;
                     Page_Options.this.m628f0(true, this.f1723a);
                 }
             }
@@ -80,14 +80,14 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
         @Override
         public void onClick(View view) {
-            Dialog dialog = new Dialog(Page_Options.this.mainActivity, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+            Dialog dialog = new Dialog(Page_Options.this.mainActivity, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
             RelativeLayout relativeLayout = (RelativeLayout) Page_Options.this.mainActivity.getLayoutInflater().inflate(R.layout.option_text_size, (ViewGroup) null);
             relativeLayout.findViewById(R.id.option_down).setOnClickListener(new View$OnClickListenerC0462a(relativeLayout));
             relativeLayout.findViewById(R.id.option_up).setOnClickListener(new View$OnClickListenerC0463b(relativeLayout));
             Page_Options.this.m628f0(false, relativeLayout);
             dialog.requestWindowFeature(1);
             dialog.setContentView(relativeLayout);
-            dialog.getWindow().setBackgroundDrawable(Page_Options.this.mainActivity.skin.m736f(R.drawable.np_dialog));
+            dialog.getWindow().setBackgroundDrawable(Page_Options.this.mainActivity.skin.getSkinDrawable(R.drawable.np_dialog));
             dialog.getWindow().setLayout((Page_Options.this.mainActivity.getResources().getDisplayMetrics().widthPixels * 6) / 7, -2);
             dialog.setCanceledOnTouchOutside(true);
             dialog.setOnDismissListener(new DialogInterface$OnDismissListenerC0464c());
@@ -104,7 +104,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         public void onClick(View view) {
             MainActivity mainActivity = Page_Options.this.mainActivity;
             boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-            Prefs.f1171i = checked;
+            Prefs.notificationVibration = checked;
             Prefs.saveBoolean(mainActivity, "notification_vibration", checked);
         }
     }
@@ -133,13 +133,13 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
                         i2 = 6;
                     }
                 }
-                if (i2 != Prefs.f1169g) {
+                if (i2 != Prefs.backgroundMode) {
                     MainActivity mainActivity = Page_Options.this.mainActivity;
-                    Prefs.f1169g = i2;
+                    Prefs.backgroundMode = i2;
                     Prefs.saveInt(mainActivity, "background_mode", i2);
-                    MainActivity.m900f(Page_Options.this.mainActivity);
+                    MainActivity.initNotify(Page_Options.this.mainActivity);
                     SharedPreferences.Editor edit = Page_Options.this.mainActivity.getSharedPreferences("background", 0).edit();
-                    edit.putInt("background_mode", Prefs.f1169g);
+                    edit.putInt("background_mode", Prefs.backgroundMode);
                     edit.commit();
                 }
             }
@@ -161,36 +161,36 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         @SuppressLint("WrongConstant")
         @Override
         public void onClick(View view) {
-            Dialog dialog = new Dialog(Page_Options.this.mainActivity, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+            Dialog dialog = new Dialog(Page_Options.this.mainActivity, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
             RelativeLayout relativeLayout = (RelativeLayout) Page_Options.this.mainActivity.getLayoutInflater().inflate(R.layout.option_radio, (ViewGroup) null);
             ((TextView) relativeLayout.findViewById(R.id.option_caption)).setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_BackgroundMode));
             ((TextView) relativeLayout.findViewById(R.id.option_label)).setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_BackgroundMode_sub));
             RadioButton radioButton = (RadioButton) relativeLayout.findViewById(R.id.option_radio_1);
             radioButton.setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_BackgroundMode_off));
             boolean z = false;
-            radioButton.setChecked(Prefs.f1169g == 0);
+            radioButton.setChecked(Prefs.backgroundMode == 0);
             RadioButton radioButton2 = (RadioButton) relativeLayout.findViewById(R.id.option_radio_2);
             radioButton2.setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_BackgroundMode_seldom));
-            radioButton2.setChecked(Prefs.f1169g == 1);
+            radioButton2.setChecked(Prefs.backgroundMode == 1);
             RadioButton radioButton3 = (RadioButton) relativeLayout.findViewById(R.id.option_radio_3);
             radioButton3.setVisibility(0);
             radioButton3.setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_BackgroundMode_progressively));
-            radioButton3.setChecked(Prefs.f1169g == 3);
+            radioButton3.setChecked(Prefs.backgroundMode == 3);
             RadioButton radioButton4 = (RadioButton) relativeLayout.findViewById(R.id.option_radio_4);
             radioButton4.setVisibility(0);
             radioButton4.setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_BackgroundMode_frequently));
-            radioButton4.setChecked(Prefs.f1169g == 2);
+            radioButton4.setChecked(Prefs.backgroundMode == 2);
             if (PicoFCM.m14u(Page_Options.this.mainActivity)) {
                 RadioButton radioButton5 = (RadioButton) relativeLayout.findViewById(R.id.option_radio_5);
                 radioButton5.setVisibility(0);
                 radioButton5.setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_BackgroundMode_fcm));
-                radioButton5.setChecked(Prefs.f1169g == 4);
+                radioButton5.setChecked(Prefs.backgroundMode == 4);
             }
             if (PicoHCM.m784s(Page_Options.this.mainActivity)) {
                 RadioButton radioButton6 = (RadioButton) relativeLayout.findViewById(R.id.option_radio_6);
                 radioButton6.setVisibility(0);
                 radioButton6.setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_BackgroundMode_hcm));
-                if (Prefs.f1169g == 5) {
+                if (Prefs.backgroundMode == 5) {
                     z = true;
                 }
                 radioButton6.setChecked(z);
@@ -198,7 +198,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
             ((RadioGroup) relativeLayout.findViewById(R.id.option_radio_group)).setOnCheckedChangeListener(new C0467a());
             dialog.requestWindowFeature(1);
             dialog.setContentView(relativeLayout);
-            dialog.getWindow().setBackgroundDrawable(Page_Options.this.mainActivity.skin.m736f(R.drawable.np_dialog));
+            dialog.getWindow().setBackgroundDrawable(Page_Options.this.mainActivity.skin.getSkinDrawable(R.drawable.np_dialog));
             dialog.getWindow().setLayout((Page_Options.this.mainActivity.getResources().getDisplayMetrics().widthPixels * 6) / 7, -2);
             dialog.setCanceledOnTouchOutside(true);
             dialog.setOnDismissListener(new DialogInterface$OnDismissListenerC0468b());
@@ -238,28 +238,28 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 if (i == R.id.option_radio_1) {
                     MainActivity mainActivity = Page_Options.this.mainActivity;
-                    Prefs.f1165c = false;
+                    Prefs.favNotify = false;
                     Prefs.saveBoolean(mainActivity, "fav_notify", false);
                     MainActivity mainActivity2 = Page_Options.this.mainActivity;
-                    Prefs.f1166d = false;
+                    Prefs.favImportantNotify = false;
                     Prefs.saveBoolean(mainActivity2, "fav_important_notify", false);
                 } else if (i == R.id.option_radio_2) {
                     MainActivity mainActivity3 = Page_Options.this.mainActivity;
-                    Prefs.f1165c = true;
+                    Prefs.favNotify = true;
                     Prefs.saveBoolean(mainActivity3, "fav_notify", true);
                     MainActivity mainActivity4 = Page_Options.this.mainActivity;
-                    Prefs.f1166d = true;
+                    Prefs.favImportantNotify = true;
                     Prefs.saveBoolean(mainActivity4, "fav_important_notify", true);
                 } else if (i == R.id.option_radio_3) {
                     MainActivity mainActivity5 = Page_Options.this.mainActivity;
-                    Prefs.f1165c = true;
+                    Prefs.favNotify = true;
                     Prefs.saveBoolean(mainActivity5, "fav_notify", true);
                     MainActivity mainActivity6 = Page_Options.this.mainActivity;
-                    Prefs.f1166d = false;
+                    Prefs.favImportantNotify = false;
                     Prefs.saveBoolean(mainActivity6, "fav_important_notify", false);
                 }
-                if (4 == Prefs.f1169g) {
-                    MainActivity.m900f(Page_Options.this.mainActivity);
+                if (4 == Prefs.backgroundMode) {
+                    MainActivity.initNotify(Page_Options.this.mainActivity);
                 }
             }
         }
@@ -279,28 +279,28 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
         @Override
         public void onClick(View view) {
-            Dialog dialog = new Dialog(Page_Options.this.mainActivity, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+            Dialog dialog = new Dialog(Page_Options.this.mainActivity, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
             RelativeLayout relativeLayout = (RelativeLayout) Page_Options.this.mainActivity.getLayoutInflater().inflate(R.layout.option_radio, (ViewGroup) null);
             ((TextView) relativeLayout.findViewById(R.id.option_caption)).setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_FavNotify));
             ((TextView) relativeLayout.findViewById(R.id.option_label)).setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_FavNotify_sub));
             RadioButton radioButton = (RadioButton) relativeLayout.findViewById(R.id.option_radio_1);
             radioButton.setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_FavNotify_off));
-            radioButton.setChecked(!Prefs.f1165c);
+            radioButton.setChecked(!Prefs.favNotify);
             RadioButton radioButton2 = (RadioButton) relativeLayout.findViewById(R.id.option_radio_2);
             radioButton2.setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_FavNotify_important));
             boolean z = false;
-            radioButton2.setChecked(Prefs.f1165c && Prefs.f1166d);
+            radioButton2.setChecked(Prefs.favNotify && Prefs.favImportantNotify);
             RadioButton radioButton3 = (RadioButton) relativeLayout.findViewById(R.id.option_radio_3);
             radioButton3.setVisibility(0);
             radioButton3.setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_FavNotify_all));
-            if (Prefs.f1165c && !Prefs.f1166d) {
+            if (Prefs.favNotify && !Prefs.favImportantNotify) {
                 z = true;
             }
             radioButton3.setChecked(z);
             ((RadioGroup) relativeLayout.findViewById(R.id.option_radio_group)).setOnCheckedChangeListener(new C0471a());
             dialog.requestWindowFeature(1);
             dialog.setContentView(relativeLayout);
-            dialog.getWindow().setBackgroundDrawable(Page_Options.this.mainActivity.skin.m736f(R.drawable.np_dialog));
+            dialog.getWindow().setBackgroundDrawable(Page_Options.this.mainActivity.skin.getSkinDrawable(R.drawable.np_dialog));
             dialog.getWindow().setLayout((Page_Options.this.mainActivity.getResources().getDisplayMetrics().widthPixels * 6) / 7, -2);
             dialog.setCanceledOnTouchOutside(true);
             dialog.setOnDismissListener(new DialogInterface$OnDismissListenerC0472b());
@@ -322,7 +322,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
                 Prefs.initPreference(Page_Options.this.mainActivity);
                 DocumentManager.isMemberValid();
                 Page_Options.this.mainActivity.m899g(null);
-                MainActivity.m900f(Page_Options.this.mainActivity);
+                MainActivity.initNotify(Page_Options.this.mainActivity);
             } else if (i3 == 22) {
                 Page_Options l0Var = Page_Options.this;
                 DataDB.m365l(l0Var.title, l0Var.getLink());
@@ -336,7 +336,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
             } else {
                 if (i4 < 23 || Page_Options.this.mainActivity.checkSelfPermission("android.permission.READ_EXTERNAL_STORAGE") == 0) {
                     Prefs.importSettings(Page_Options.this.mainActivity);
-                    MainActivity.m900f(Page_Options.this.mainActivity);
+                    MainActivity.initNotify(Page_Options.this.mainActivity);
                     Page_Options.this.mainActivity.m899g(null);
                     return;
                 }
@@ -355,7 +355,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
             public void onClick(View view) {
                 MainActivity mainActivity = Page_Options.this.mainActivity;
                 boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-                Prefs.f1141B = checked;
+                Prefs.autoRefresh = checked;
                 Prefs.saveBoolean(mainActivity, "auto_refresh", checked);
             }
         }
@@ -368,7 +368,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
             public void onClick(View view) {
                 MainActivity mainActivity = Page_Options.this.mainActivity;
                 boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-                Prefs.f1142C = checked;
+                Prefs.swipeRefreshTop = checked;
                 Prefs.saveBoolean(mainActivity, "swipe_refresh_top", checked);
             }
         }
@@ -381,7 +381,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
             public void onClick(View view) {
                 MainActivity mainActivity = Page_Options.this.mainActivity;
                 boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-                Prefs.f1143D = checked;
+                Prefs.swipeRefreshBottom = checked;
                 Prefs.saveBoolean(mainActivity, "swipe_refresh_bottom", checked);
             }
         }
@@ -414,21 +414,21 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
         @Override
         public void onClick(View view) {
-            Dialog dialog = new Dialog(Page_Options.this.mainActivity, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+            Dialog dialog = new Dialog(Page_Options.this.mainActivity, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
             RelativeLayout relativeLayout = (RelativeLayout) Page_Options.this.mainActivity.getLayoutInflater().inflate(R.layout.option_checkbox, (ViewGroup) null);
             ((TextView) relativeLayout.findViewById(R.id.option_caption)).setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_PageRefresh));
             ((TextView) relativeLayout.findViewById(R.id.option_label)).setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_PageRefresh_sub));
             Widgets$CheckboxTextView widgets$CheckboxTextView = (Widgets$CheckboxTextView) relativeLayout.findViewById(R.id.option_checkbox_1);
             widgets$CheckboxTextView.setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_PageRefresh_auto));
-            widgets$CheckboxTextView.setChecked(Prefs.f1141B);
+            widgets$CheckboxTextView.setChecked(Prefs.autoRefresh);
             widgets$CheckboxTextView.setOnClickListener(new View$OnClickListenerC0475a());
             Widgets$CheckboxTextView widgets$CheckboxTextView2 = (Widgets$CheckboxTextView) relativeLayout.findViewById(R.id.option_checkbox_2);
             widgets$CheckboxTextView2.setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_PageRefresh_swipe_top));
-            widgets$CheckboxTextView2.setChecked(Prefs.f1142C);
+            widgets$CheckboxTextView2.setChecked(Prefs.swipeRefreshTop);
             widgets$CheckboxTextView2.setOnClickListener(new View$OnClickListenerC0476b());
             Widgets$CheckboxTextView widgets$CheckboxTextView3 = (Widgets$CheckboxTextView) relativeLayout.findViewById(R.id.option_checkbox_3);
             widgets$CheckboxTextView3.setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_PageRefresh_swipe_bottom));
-            widgets$CheckboxTextView3.setChecked(Prefs.f1143D);
+            widgets$CheckboxTextView3.setChecked(Prefs.swipeRefreshBottom);
             widgets$CheckboxTextView3.setOnClickListener(new View$OnClickListenerC0477c());
             Widgets$CheckboxTextView widgets$CheckboxTextView4 = (Widgets$CheckboxTextView) relativeLayout.findViewById(R.id.option_checkbox_4);
             widgets$CheckboxTextView4.setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_PageRefresh_button));
@@ -436,7 +436,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
             widgets$CheckboxTextView4.setOnClickListener(new View$OnClickListenerC0478d());
             dialog.requestWindowFeature(1);
             dialog.setContentView(relativeLayout);
-            dialog.getWindow().setBackgroundDrawable(Page_Options.this.mainActivity.skin.m736f(R.drawable.np_dialog));
+            dialog.getWindow().setBackgroundDrawable(Page_Options.this.mainActivity.skin.getSkinDrawable(R.drawable.np_dialog));
             dialog.getWindow().setLayout((Page_Options.this.mainActivity.getResources().getDisplayMetrics().widthPixels * 6) / 7, -2);
             dialog.setCanceledOnTouchOutside(true);
             dialog.setOnDismissListener(new DialogInterface$OnDismissListenerC0479e());
@@ -456,8 +456,8 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
             @Override
             public void onClick(View view) {
-                Prefs.f1181s = Math.max(10, Prefs.f1181s - 1);
-                Prefs.f1182t = false;
+                Prefs.memberTopicsPerPage = Math.max(10, Prefs.memberTopicsPerPage - 1);
+                Prefs.forumTppServer = false;
                 Page_Options.this.m627g0(true, this.f1742a);
             }
         }
@@ -471,8 +471,8 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
             @Override
             public void onClick(View view) {
-                Prefs.f1181s = Math.min(100, Prefs.f1181s + 1);
-                Prefs.f1182t = false;
+                Prefs.memberTopicsPerPage = Math.min(100, Prefs.memberTopicsPerPage + 1);
+                Prefs.forumTppServer = false;
                 Page_Options.this.m627g0(true, this.f1744a);
             }
         }
@@ -497,8 +497,8 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
             @Override
             public void onClick(View view) {
-                if (!Prefs.f1182t) {
-                    Prefs.f1182t = true;
+                if (!Prefs.forumTppServer) {
+                    Prefs.forumTppServer = true;
                     Page_Options.this.m627g0(true, this.f1746a);
                     Page_Options.this.runnable = new RunnableC0484a();
                     if (DocumentManager.isMemberValid()) {
@@ -525,7 +525,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
         @Override
         public void onClick(View view) {
-            Dialog dialog = new Dialog(Page_Options.this.mainActivity, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+            Dialog dialog = new Dialog(Page_Options.this.mainActivity, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
             RelativeLayout relativeLayout = (RelativeLayout) Page_Options.this.mainActivity.getLayoutInflater().inflate(R.layout.option_up_down, (ViewGroup) null);
             relativeLayout.findViewById(R.id.option_down).setOnClickListener(new View$OnClickListenerC0481a(relativeLayout));
             relativeLayout.findViewById(R.id.option_up).setOnClickListener(new View$OnClickListenerC0482b(relativeLayout));
@@ -536,7 +536,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
             Page_Options.this.m627g0(false, relativeLayout);
             dialog.requestWindowFeature(1);
             dialog.setContentView(relativeLayout);
-            dialog.getWindow().setBackgroundDrawable(Page_Options.this.mainActivity.skin.m736f(R.drawable.np_dialog));
+            dialog.getWindow().setBackgroundDrawable(Page_Options.this.mainActivity.skin.getSkinDrawable(R.drawable.np_dialog));
             dialog.getWindow().setLayout((Page_Options.this.mainActivity.getResources().getDisplayMetrics().widthPixels * 6) / 7, -2);
             dialog.setCanceledOnTouchOutside(true);
             dialog.setOnDismissListener(new DialogInterface$OnDismissListenerC0485d());
@@ -560,7 +560,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
             intent.putExtra("android.intent.extra.ringtone.TITLE", Page_Options.this.mainActivity.getResources().getString(R.string.option_NotificationSound));
             intent.putExtra("android.intent.extra.ringtone.SHOW_DEFAULT", true);
             intent.putExtra("android.intent.extra.ringtone.SHOW_SILENT", true);
-            intent.putExtra("android.intent.extra.ringtone.EXISTING_URI", Uri.parse(Prefs.f1170h));
+            intent.putExtra("android.intent.extra.ringtone.EXISTING_URI", Uri.parse(Prefs.notificationSound));
             intent.putExtra("android.intent.extra.ringtone.DEFAULT_URI", RingtoneManager.getDefaultUri(2));
             Page_Options.this.mainActivity.m904b(intent);
         }
@@ -574,13 +574,13 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                int i2 = Prefs.f1187y;
+                int i2 = Prefs.topicAction;
                 if (i == R.id.option_radio_1) {
-                    Prefs.f1187y = 0;
+                    Prefs.topicAction = 0;
                 } else if (i == R.id.option_radio_2) {
-                    Prefs.f1187y = 1;
+                    Prefs.topicAction = 1;
                 }
-                int i3 = Prefs.f1187y;
+                int i3 = Prefs.topicAction;
                 if (i2 != i3) {
                     Prefs.saveInt(Page_Options.this.mainActivity, "topic_action", i3);
                 }
@@ -602,24 +602,24 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
         @Override
         public void onClick(View view) {
-            Dialog dialog = new Dialog(Page_Options.this.mainActivity, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+            Dialog dialog = new Dialog(Page_Options.this.mainActivity, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
             RelativeLayout relativeLayout = (RelativeLayout) Page_Options.this.mainActivity.getLayoutInflater().inflate(R.layout.option_radio, (ViewGroup) null);
             ((TextView) relativeLayout.findViewById(R.id.option_caption)).setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_Topic));
             ((TextView) relativeLayout.findViewById(R.id.option_label)).setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_Topic_sub));
             RadioButton radioButton = (RadioButton) relativeLayout.findViewById(R.id.option_radio_1);
             radioButton.setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_toBegin));
             boolean z = false;
-            radioButton.setChecked(Prefs.f1187y == 0);
+            radioButton.setChecked(Prefs.topicAction == 0);
             RadioButton radioButton2 = (RadioButton) relativeLayout.findViewById(R.id.option_radio_2);
             radioButton2.setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_toEnd));
-            if (Prefs.f1187y == 1) {
+            if (Prefs.topicAction == 1) {
                 z = true;
             }
             radioButton2.setChecked(z);
             ((RadioGroup) relativeLayout.findViewById(R.id.option_radio_group)).setOnCheckedChangeListener(new C0488a());
             dialog.requestWindowFeature(1);
             dialog.setContentView(relativeLayout);
-            dialog.getWindow().setBackgroundDrawable(Page_Options.this.mainActivity.skin.m736f(R.drawable.np_dialog));
+            dialog.getWindow().setBackgroundDrawable(Page_Options.this.mainActivity.skin.getSkinDrawable(R.drawable.np_dialog));
             dialog.getWindow().setLayout((Page_Options.this.mainActivity.getResources().getDisplayMetrics().widthPixels * 6) / 7, -2);
             dialog.setCanceledOnTouchOutside(true);
             dialog.setOnDismissListener(new DialogInterface$OnDismissListenerC0489b());
@@ -638,7 +638,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
             public void onClick(View view) {
                 MainActivity mainActivity = Page_Options.this.mainActivity;
                 boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-                Prefs.f1146G = checked;
+                Prefs.animAvatars = checked;
                 Prefs.saveBoolean(mainActivity, "anim_avatars", checked);
             }
         }
@@ -651,7 +651,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
             public void onClick(View view) {
                 MainActivity mainActivity = Page_Options.this.mainActivity;
                 boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-                Prefs.f1147H = checked;
+                Prefs.animSmiles = checked;
                 Prefs.saveBoolean(mainActivity, "anim_smiles", checked);
             }
         }
@@ -664,7 +664,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
             public void onClick(View view) {
                 MainActivity mainActivity = Page_Options.this.mainActivity;
                 boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-                Prefs.f1148I = checked;
+                Prefs.animImages = checked;
                 Prefs.saveBoolean(mainActivity, "anim_images", checked);
             }
         }
@@ -684,26 +684,26 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
         @Override
         public void onClick(View view) {
-            Dialog dialog = new Dialog(Page_Options.this.mainActivity, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+            Dialog dialog = new Dialog(Page_Options.this.mainActivity, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
             RelativeLayout relativeLayout = (RelativeLayout) Page_Options.this.mainActivity.getLayoutInflater().inflate(R.layout.option_checkbox, (ViewGroup) null);
             ((TextView) relativeLayout.findViewById(R.id.option_caption)).setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_AnimImages));
             ((TextView) relativeLayout.findViewById(R.id.option_label)).setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_AnimImages_sub));
             Widgets$CheckboxTextView widgets$CheckboxTextView = (Widgets$CheckboxTextView) relativeLayout.findViewById(R.id.option_checkbox_1);
             widgets$CheckboxTextView.setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_AnimImages_avas));
-            widgets$CheckboxTextView.setChecked(Prefs.f1146G);
+            widgets$CheckboxTextView.setChecked(Prefs.animAvatars);
             widgets$CheckboxTextView.setOnClickListener(new View$OnClickListenerC0491a());
             Widgets$CheckboxTextView widgets$CheckboxTextView2 = (Widgets$CheckboxTextView) relativeLayout.findViewById(R.id.option_checkbox_2);
             widgets$CheckboxTextView2.setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_AnimImages_emos));
-            widgets$CheckboxTextView2.setChecked(Prefs.f1147H);
+            widgets$CheckboxTextView2.setChecked(Prefs.animSmiles);
             widgets$CheckboxTextView2.setOnClickListener(new View$OnClickListenerC0492b());
             Widgets$CheckboxTextView widgets$CheckboxTextView3 = (Widgets$CheckboxTextView) relativeLayout.findViewById(R.id.option_checkbox_3);
             widgets$CheckboxTextView3.setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_AnimImages_pics));
-            widgets$CheckboxTextView3.setChecked(Prefs.f1148I);
+            widgets$CheckboxTextView3.setChecked(Prefs.animImages);
             widgets$CheckboxTextView3.setOnClickListener(new View$OnClickListenerC0493c());
             ((Widgets$CheckboxTextView) relativeLayout.findViewById(R.id.option_checkbox_4)).setVisibility(8);
             dialog.requestWindowFeature(1);
             dialog.setContentView(relativeLayout);
-            dialog.getWindow().setBackgroundDrawable(Page_Options.this.mainActivity.skin.m736f(R.drawable.np_dialog));
+            dialog.getWindow().setBackgroundDrawable(Page_Options.this.mainActivity.skin.getSkinDrawable(R.drawable.np_dialog));
             dialog.getWindow().setLayout((Page_Options.this.mainActivity.getResources().getDisplayMetrics().widthPixels * 6) / 7, -2);
             dialog.setCanceledOnTouchOutside(true);
             dialog.setOnDismissListener(new DialogInterface$OnDismissListenerC0494d());
@@ -733,10 +733,10 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         public void onClick(View view) {
             MainActivity mainActivity = Page_Options.this.mainActivity;
             boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-            Prefs.f1163a = checked;
+            Prefs.qmsNotify = checked;
             Prefs.saveBoolean(mainActivity, "qms_notify", checked);
-            if (4 == Prefs.f1169g) {
-                MainActivity.m900f(Page_Options.this.mainActivity);
+            if (4 == Prefs.backgroundMode) {
+                MainActivity.initNotify(Page_Options.this.mainActivity);
             }
         }
     }
@@ -760,10 +760,10 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         public void onClick(View view) {
             MainActivity mainActivity = Page_Options.this.mainActivity;
             boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-            Prefs.f1164b = checked;
+            Prefs.notifyQmsSystem = checked;
             Prefs.saveBoolean(mainActivity, "notify_qms_system", checked);
-            if (4 == Prefs.f1169g) {
-                MainActivity.m900f(Page_Options.this.mainActivity);
+            if (4 == Prefs.backgroundMode) {
+                MainActivity.initNotify(Page_Options.this.mainActivity);
             }
         }
     }
@@ -776,9 +776,9 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
             @Override
             public void mo49a(int i, int i2, int i3) {
-                if (Prefs.f1184v != i3) {
+                if (Prefs.nightMode != i3) {
                     MainActivity mainActivity = Page_Options.this.mainActivity;
-                    Prefs.f1184v = i3;
+                    Prefs.nightMode = i3;
                     Prefs.saveInt(mainActivity, "nightMode", i3);
                     Page_Options.this.mainActivity.m899g(null);
                 }
@@ -791,10 +791,10 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         @Override
         public void onClick(View view) {
             OptionPoupupMenuView o1Var = new OptionPoupupMenuView(Page_Options.this.mainActivity, new C0500a());
-            o1Var.addMenuItem(0, 0, 0, Page_Options.this.mainActivity.getResources().getString(R.string.option_Night_System), Prefs.f1184v == 0);
-            o1Var.addMenuItem(0, 0, 2, Page_Options.this.mainActivity.getResources().getString(R.string.option_Night_Off), Prefs.f1184v == 2);
-            o1Var.addMenuItem(0, 0, 3, Page_Options.this.mainActivity.getResources().getString(R.string.option_Night_On), Prefs.f1184v == 3);
-            if (1 != Prefs.f1184v) {
+            o1Var.addMenuItem(0, 0, 0, Page_Options.this.mainActivity.getResources().getString(R.string.option_Night_System), Prefs.nightMode == 0);
+            o1Var.addMenuItem(0, 0, 2, Page_Options.this.mainActivity.getResources().getString(R.string.option_Night_Off), Prefs.nightMode == 2);
+            o1Var.addMenuItem(0, 0, 3, Page_Options.this.mainActivity.getResources().getString(R.string.option_Night_On), Prefs.nightMode == 3);
+            if (1 != Prefs.nightMode) {
                 o1Var.show(null);
             }
         }
@@ -808,7 +808,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         public void onClick(View view) {
             MainActivity mainActivity = Page_Options.this.mainActivity;
             boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-            Prefs.f1173k = checked;
+            Prefs.topicHideHeader = checked;
             Prefs.saveBoolean(mainActivity, "topic_hide_header", checked);
         }
     }
@@ -820,8 +820,8 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         @Override
         public void onClick(View view) {
             MainActivity mainActivity = Page_Options.this.mainActivity;
-            boolean z = !Prefs.f1162W;
-            Prefs.f1162W = z;
+            boolean z = !Prefs.optionsExtended;
+            Prefs.optionsExtended = z;
             Prefs.saveBoolean(mainActivity, "options_extended", z);
             Page_Options.this.tabLoaded(true);
         }
@@ -835,7 +835,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         public void onClick(View view) {
             MainActivity mainActivity = Page_Options.this.mainActivity;
             boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-            Prefs.f1174l = checked;
+            Prefs.topicHidePoll = checked;
             Prefs.saveBoolean(mainActivity, "topic_hide_poll", checked);
         }
     }
@@ -848,7 +848,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         public void onClick(View view) {
             MainActivity mainActivity = Page_Options.this.mainActivity;
             boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-            Prefs.f1175m = checked;
+            Prefs.postShowSign = checked;
             Prefs.saveBoolean(mainActivity, "post_show_sign", checked);
         }
     }
@@ -864,9 +864,9 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
             @Override
             public void onClick(View view) {
-                int i = Prefs.f1150K;
+                int i = Prefs.cacheSize;
                 if (i > 128) {
-                    Prefs.f1150K = i - 128;
+                    Prefs.cacheSize = i - 128;
                     Page_Options.this.m630d0(true, this.f1770a);
                 }
             }
@@ -881,9 +881,9 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
             @Override
             public void onClick(View view) {
-                int i = Prefs.f1150K;
+                int i = Prefs.cacheSize;
                 if (i < 10240) {
-                    Prefs.f1150K = i + 128;
+                    Prefs.cacheSize = i + 128;
                     Page_Options.this.m630d0(true, this.f1772a);
                 }
             }
@@ -928,7 +928,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
         @Override
         public void onClick(View view) {
-            Dialog dialog = new Dialog(Page_Options.this.mainActivity, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+            Dialog dialog = new Dialog(Page_Options.this.mainActivity, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
             RelativeLayout relativeLayout = (RelativeLayout) Page_Options.this.mainActivity.getLayoutInflater().inflate(R.layout.option_up_down, (ViewGroup) null);
             relativeLayout.findViewById(R.id.option_down).setOnClickListener(new View$OnClickListenerC0506a(relativeLayout));
             relativeLayout.findViewById(R.id.option_up).setOnClickListener(new View$OnClickListenerC0507b(relativeLayout));
@@ -938,7 +938,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
             Page_Options.this.m630d0(false, relativeLayout);
             dialog.requestWindowFeature(1);
             dialog.setContentView(relativeLayout);
-            dialog.getWindow().setBackgroundDrawable(Page_Options.this.mainActivity.skin.m736f(R.drawable.np_dialog));
+            dialog.getWindow().setBackgroundDrawable(Page_Options.this.mainActivity.skin.getSkinDrawable(R.drawable.np_dialog));
             dialog.getWindow().setLayout((Page_Options.this.mainActivity.getResources().getDisplayMetrics().widthPixels * 6) / 7, -2);
             dialog.setCanceledOnTouchOutside(true);
             dialog.setOnDismissListener(new DialogInterface$OnDismissListenerC0510d());
@@ -955,7 +955,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         public void onClick(View view) {
             MainActivity mainActivity = Page_Options.this.mainActivity;
             boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-            Prefs.f1176n = checked;
+            Prefs.postEditorTagsBelow = checked;
             Prefs.saveBoolean(mainActivity, "post_editor_tags_below", checked);
         }
     }
@@ -968,7 +968,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         public void onClick(View view) {
             MainActivity mainActivity = Page_Options.this.mainActivity;
             boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-            Prefs.f1177o = checked;
+            Prefs.qmsHideTags = checked;
             Prefs.saveBoolean(mainActivity, "qms_hide_tags", !checked);
         }
     }
@@ -981,7 +981,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         public void onClick(View view) {
             MainActivity mainActivity = Page_Options.this.mainActivity;
             boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-            Prefs.f1145F = checked;
+            Prefs.loadImages = checked;
             Prefs.saveBoolean(mainActivity, "load_images", checked);
         }
     }
@@ -994,7 +994,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         public void onClick(View view) {
             MainActivity mainActivity = Page_Options.this.mainActivity;
             boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-            Prefs.f1149J = checked;
+            Prefs.scaleImages = checked;
             Prefs.saveBoolean(mainActivity, "scale_images", checked);
             Toast.makeText(Page_Options.this.mainActivity, "Необходимо обновить страницы", 0).show();
         }
@@ -1008,7 +1008,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         public void onClick(View view) {
             MainActivity mainActivity = Page_Options.this.mainActivity;
             boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-            Prefs.f1151L = checked;
+            Prefs.confirmAction = checked;
             Prefs.saveBoolean(mainActivity, "confirm_action", checked);
         }
     }
@@ -1021,7 +1021,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         public void onClick(View view) {
             MainActivity mainActivity = Page_Options.this.mainActivity;
             boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-            Prefs.f1152M = checked;
+            Prefs.attachChooser = checked;
             Prefs.saveBoolean(mainActivity, "attach_chooser", checked);
         }
     }
@@ -1034,7 +1034,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         public void onClick(View view) {
             MainActivity mainActivity = Page_Options.this.mainActivity;
             boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-            Prefs.f1153N = checked;
+            Prefs.uploadChooser = checked;
             Prefs.saveBoolean(mainActivity, "upload_chooser", checked);
         }
     }
@@ -1047,7 +1047,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         public void onClick(View view) {
             MainActivity mainActivity = Page_Options.this.mainActivity;
             boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-            Prefs.f1154O = checked;
+            Prefs.sendReport = checked;
            // Prefs.m764g(mainActivity, "send_report", checked);
             //ACRA.getErrorReporter().setEnabled(Prefs.f1154O);
         }
@@ -1061,15 +1061,15 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                int i2 = Prefs.f1185w;
+                int i2 = Prefs.scrollMode;
                 if (i == R.id.option_radio_1) {
-                    Prefs.f1185w = 0;
+                    Prefs.scrollMode = 0;
                 } else if (i == R.id.option_radio_2) {
-                    Prefs.f1185w = 1;
+                    Prefs.scrollMode = 1;
                 } else if (i == R.id.option_radio_3) {
-                    Prefs.f1185w = 2;
+                    Prefs.scrollMode = 2;
                 }
-                int i3 = Prefs.f1185w;
+                int i3 = Prefs.scrollMode;
                 if (i2 != i3) {
                     Prefs.saveInt(Page_Options.this.mainActivity, "scroll_mode", i3);
                 }
@@ -1091,28 +1091,28 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
         @Override
         public void onClick(View view) {
-            Dialog dialog = new Dialog(Page_Options.this.mainActivity, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+            Dialog dialog = new Dialog(Page_Options.this.mainActivity, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
             RelativeLayout relativeLayout = (RelativeLayout) Page_Options.this.mainActivity.getLayoutInflater().inflate(R.layout.option_radio, (ViewGroup) null);
             ((TextView) relativeLayout.findViewById(R.id.option_caption)).setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_Scroll));
             ((TextView) relativeLayout.findViewById(R.id.option_label)).setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_Scroll_sub));
             RadioButton radioButton = (RadioButton) relativeLayout.findViewById(R.id.option_radio_1);
             radioButton.setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_Scroll_Regular));
             boolean z = false;
-            radioButton.setChecked(Prefs.f1185w == 0);
+            radioButton.setChecked(Prefs.scrollMode == 0);
             RadioButton radioButton2 = (RadioButton) relativeLayout.findViewById(R.id.option_radio_2);
             radioButton2.setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_Scroll_Fling));
-            radioButton2.setChecked(Prefs.f1185w == 1);
+            radioButton2.setChecked(Prefs.scrollMode == 1);
             RadioButton radioButton3 = (RadioButton) relativeLayout.findViewById(R.id.option_radio_3);
             radioButton3.setVisibility(0);
             radioButton3.setText(Page_Options.this.mainActivity.getResources().getString(R.string.option_Scroll_Fast));
-            if (Prefs.f1185w == 2) {
+            if (Prefs.scrollMode == 2) {
                 z = true;
             }
             radioButton3.setChecked(z);
             ((RadioGroup) relativeLayout.findViewById(R.id.option_radio_group)).setOnCheckedChangeListener(new C0520a());
             dialog.requestWindowFeature(1);
             dialog.setContentView(relativeLayout);
-            dialog.getWindow().setBackgroundDrawable(Page_Options.this.mainActivity.skin.m736f(R.drawable.np_dialog));
+            dialog.getWindow().setBackgroundDrawable(Page_Options.this.mainActivity.skin.getSkinDrawable(R.drawable.np_dialog));
             dialog.getWindow().setLayout((Page_Options.this.mainActivity.getResources().getDisplayMetrics().widthPixels * 6) / 7, -2);
             dialog.setCanceledOnTouchOutside(true);
             dialog.setOnDismissListener(new DialogInterface$OnDismissListenerC0521b());
@@ -1129,7 +1129,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         public void onClick(View view) {
             MainActivity mainActivity = Page_Options.this.mainActivity;
             boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-            Prefs.f1186x = checked;
+            Prefs.backButton = checked;
             Prefs.saveBoolean(mainActivity, "back_button", checked);
         }
     }
@@ -1145,8 +1145,8 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
             @Override
             public void onClick(View view) {
-                Prefs.f1179q = Math.max(10, Prefs.f1179q - 1);
-                Prefs.f1180r = false;
+                Prefs.memberPostsPerPage = Math.max(10, Prefs.memberPostsPerPage - 1);
+                Prefs.topicPppServer = false;
                 Page_Options.this.m629e0(true, this.f1791a);
             }
         }
@@ -1160,8 +1160,8 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
             @Override
             public void onClick(View view) {
-                Prefs.f1179q = Math.min(100, Prefs.f1179q + 1);
-                Prefs.f1180r = false;
+                Prefs.memberPostsPerPage = Math.min(100, Prefs.memberPostsPerPage + 1);
+                Prefs.topicPppServer = false;
                 Page_Options.this.m629e0(true, this.f1793a);
             }
         }
@@ -1186,8 +1186,8 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
             @Override
             public void onClick(View view) {
-                if (!Prefs.f1180r) {
-                    Prefs.f1180r = true;
+                if (!Prefs.topicPppServer) {
+                    Prefs.topicPppServer = true;
                     Page_Options.this.m629e0(true, this.f1795a);
                     Page_Options.this.runnable = new RunnableC0527a();
                     if (DocumentManager.isMemberValid()) {
@@ -1214,7 +1214,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
         @Override
         public void onClick(View view) {
-            Dialog dialog = new Dialog(Page_Options.this.mainActivity, Skin.C0353a.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
+            Dialog dialog = new Dialog(Page_Options.this.mainActivity, Skin.SkinColorModel.f1392k0 ? R.style.Dialog_Light : R.style.Dialog_Dark);
             RelativeLayout relativeLayout = (RelativeLayout) Page_Options.this.mainActivity.getLayoutInflater().inflate(R.layout.option_up_down, (ViewGroup) null);
             relativeLayout.findViewById(R.id.option_down).setOnClickListener(new View$OnClickListenerC0524a(relativeLayout));
             relativeLayout.findViewById(R.id.option_up).setOnClickListener(new View$OnClickListenerC0525b(relativeLayout));
@@ -1225,7 +1225,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
             Page_Options.this.m629e0(false, relativeLayout);
             dialog.requestWindowFeature(1);
             dialog.setContentView(relativeLayout);
-            dialog.getWindow().setBackgroundDrawable(Page_Options.this.mainActivity.skin.m736f(R.drawable.np_dialog));
+            dialog.getWindow().setBackgroundDrawable(Page_Options.this.mainActivity.skin.getSkinDrawable(R.drawable.np_dialog));
             dialog.getWindow().setLayout((Page_Options.this.mainActivity.getResources().getDisplayMetrics().widthPixels * 6) / 7, -2);
             dialog.setCanceledOnTouchOutside(true);
             dialog.setOnDismissListener(new DialogInterface$OnDismissListenerC0528d());
@@ -1242,7 +1242,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         public void onClick(View view) {
             MainActivity mainActivity = Page_Options.this.mainActivity;
             boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-            Prefs.f1140A = checked;
+            Prefs.swipeNextprev = checked;
             Prefs.saveBoolean(mainActivity, "swipe_nextprev", checked);
         }
     }
@@ -1255,7 +1255,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         public void onClick(View view) {
             MainActivity mainActivity = Page_Options.this.mainActivity;
             boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-            Prefs.f1168f = checked;
+            Prefs.notifyGroup = checked;
             Prefs.saveBoolean(mainActivity, "notify_group", checked);
         }
     }
@@ -1268,10 +1268,10 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         public void onClick(View view) {
             MainActivity mainActivity = Page_Options.this.mainActivity;
             boolean checked = ((Widgets$CheckboxTextView) view).getChecked();
-            Prefs.f1167e = checked;
+            Prefs.menNotify = checked;
             Prefs.saveBoolean(mainActivity, "men_notify", checked);
-            if (4 == Prefs.f1169g) {
-                MainActivity.m900f(Page_Options.this.mainActivity);
+            if (4 == Prefs.backgroundMode) {
+                MainActivity.initNotify(Page_Options.this.mainActivity);
             }
         }
     }
@@ -1281,7 +1281,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         this.iconId = R.drawable.ic_nav_options;
         this.title = "Настройки";
         if (!DocumentManager.isLoggined()) {
-            Prefs.f1162W = false;
+            Prefs.optionsExtended = false;
         }
         this.memberInfoModel = DocumentManager.getMemberInfoModel();
     }
@@ -1338,16 +1338,16 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
     void m630d0(boolean z, RelativeLayout relativeLayout) {
         ((TextView) relativeLayout.findViewById(R.id.option_label)).setText("Используется: " + Util.formatFileSize(PicoImg.getCacheUsage()));
         boolean z2 = true;
-        relativeLayout.findViewById(R.id.option_down).setEnabled(Prefs.f1150K > 128);
+        relativeLayout.findViewById(R.id.option_down).setEnabled(Prefs.cacheSize > 128);
         View findViewById = relativeLayout.findViewById(R.id.option_up);
-        if (Prefs.f1150K >= 10240) {
+        if (Prefs.cacheSize >= 10240) {
             z2 = false;
         }
         findViewById.setEnabled(z2);
-        ((TextView) relativeLayout.findViewById(R.id.option_value)).setText(Integer.valueOf(Prefs.f1150K).toString());
+        ((TextView) relativeLayout.findViewById(R.id.option_value)).setText(Integer.valueOf(Prefs.cacheSize).toString());
         if (z) {
-            Prefs.saveInt(this.mainActivity, "cache_size", Prefs.f1150K);
-            PicoImg.setCacheSize(((long) Prefs.f1150K) * 1024 * 1024);
+            Prefs.saveInt(this.mainActivity, "cache_size", Prefs.cacheSize);
+            PicoImg.setCacheSize(((long) Prefs.cacheSize) * 1024 * 1024);
         }
     }
 
@@ -1356,39 +1356,39 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
     }
 
     void m629e0(boolean z, RelativeLayout relativeLayout) {
-        ((TextView) relativeLayout.findViewById(R.id.option_value)).setText(Integer.valueOf(Prefs.f1179q).toString());
+        ((TextView) relativeLayout.findViewById(R.id.option_value)).setText(Integer.valueOf(Prefs.memberPostsPerPage).toString());
         boolean z2 = true;
         int i = 0;
-        relativeLayout.findViewById(R.id.option_down).setEnabled(Prefs.f1179q > 10);
+        relativeLayout.findViewById(R.id.option_down).setEnabled(Prefs.memberPostsPerPage > 10);
         View findViewById = relativeLayout.findViewById(R.id.option_up);
-        if (Prefs.f1179q >= 100) {
+        if (Prefs.memberPostsPerPage >= 100) {
             z2 = false;
         }
         findViewById.setEnabled(z2);
         View findViewById2 = relativeLayout.findViewById(R.id.option_button);
-        if (Prefs.f1180r) {
+        if (Prefs.topicPppServer) {
             i = 8;
         }
         findViewById2.setVisibility(i);
         if (z) {
-            Prefs.saveInt(this.mainActivity, "topic_ppp", Prefs.f1179q);
-            Prefs.saveBoolean(this.mainActivity, "topic_ppp_server", Prefs.f1180r);
+            Prefs.saveInt(this.mainActivity, "topic_ppp", Prefs.memberPostsPerPage);
+            Prefs.saveBoolean(this.mainActivity, "topic_ppp_server", Prefs.topicPppServer);
         }
     }
 
     void m628f0(boolean z, RelativeLayout relativeLayout) {
-        ((TextView) relativeLayout.findViewById(R.id.option_example)).setTextSize((float) Prefs.f1178p);
-        ((TextView) relativeLayout.findViewById(R.id.option_value)).setText(Integer.valueOf(Prefs.f1178p).toString());
+        ((TextView) relativeLayout.findViewById(R.id.option_example)).setTextSize((float) Prefs.textSize);
+        ((TextView) relativeLayout.findViewById(R.id.option_value)).setText(Integer.valueOf(Prefs.textSize).toString());
         boolean z2 = true;
-        relativeLayout.findViewById(R.id.option_down).setEnabled(Prefs.f1178p > 10);
+        relativeLayout.findViewById(R.id.option_down).setEnabled(Prefs.textSize > 10);
         View findViewById = relativeLayout.findViewById(R.id.option_up);
-        if (Prefs.f1178p >= 30) {
+        if (Prefs.textSize >= 30) {
             z2 = false;
         }
         findViewById.setEnabled(z2);
         if (z) {
             this.mainActivity.m901e();
-            Prefs.saveInt(this.mainActivity, "text_size", Prefs.f1178p);
+            Prefs.saveInt(this.mainActivity, "text_size", Prefs.textSize);
         }
     }
 
@@ -1396,30 +1396,30 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
     public boolean mo423g(Intent intent) {
         Uri uri = (Uri) intent.getParcelableExtra("android.intent.extra.ringtone.PICKED_URI");
         String uri2 = uri != null ? uri.toString() : "";
-        Prefs.f1170h = uri2;
+        Prefs.notificationSound = uri2;
         Prefs.saveString(this.mainActivity, "notification_sound", uri2);
         tabLoaded(true);
         return true;
     }
 
     void m627g0(boolean z, RelativeLayout relativeLayout) {
-        ((TextView) relativeLayout.findViewById(R.id.option_value)).setText(Integer.valueOf(Prefs.f1181s).toString());
+        ((TextView) relativeLayout.findViewById(R.id.option_value)).setText(Integer.valueOf(Prefs.memberTopicsPerPage).toString());
         boolean z2 = true;
         int i = 0;
-        relativeLayout.findViewById(R.id.option_down).setEnabled(Prefs.f1181s > 10);
+        relativeLayout.findViewById(R.id.option_down).setEnabled(Prefs.memberTopicsPerPage > 10);
         View findViewById = relativeLayout.findViewById(R.id.option_up);
-        if (Prefs.f1181s >= 100) {
+        if (Prefs.memberTopicsPerPage >= 100) {
             z2 = false;
         }
         findViewById.setEnabled(z2);
         View findViewById2 = relativeLayout.findViewById(R.id.option_button);
-        if (Prefs.f1182t) {
+        if (Prefs.forumTppServer) {
             i = 8;
         }
         findViewById2.setVisibility(i);
         if (z) {
-            Prefs.saveInt(this.mainActivity, "forum_tpp", Prefs.f1181s);
-            Prefs.saveBoolean(this.mainActivity, "forum_tpp_server", Prefs.f1182t);
+            Prefs.saveInt(this.mainActivity, "forum_tpp", Prefs.memberTopicsPerPage);
+            Prefs.saveBoolean(this.mainActivity, "forum_tpp_server", Prefs.forumTppServer);
         }
     }
 
@@ -1428,7 +1428,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         if (!isUnsucces()) {
             return 0;
         }
-        if (Prefs.f1162W) {
+        if (Prefs.optionsExtended) {
             return 38;
         }
         return DocumentManager.isLoggined() ? 7 : 14;
@@ -1441,7 +1441,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
 
     @Override
     public int getItemViewType(int i) {
-        if (Prefs.f1162W) {
+        if (Prefs.optionsExtended) {
             if (i == 0 || i == 9 || i == 20 || i == 27 || i == 32) {
                 return 2;
             }
@@ -1487,7 +1487,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         int i2 = i;
         int itemViewType = getItemViewType(i);
         float f = this.mainActivity.f731b;
-        if (!Prefs.f1162W) {
+        if (!Prefs.optionsExtended) {
             if (DocumentManager.isLoggined()) {
                 if (i2 == 0) {
                     i2 = 1;
@@ -1556,16 +1556,16 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
             Widgets$CheckboxTextView widgets$CheckboxTextView3 = new Widgets$CheckboxTextView(this.mainActivity);
             widgets$CheckboxTextView3.setBoxAlign(2);
             widgets$CheckboxTextView3.setTextSize(18.0f);
-            widgets$CheckboxTextView3.setTextColor(Skin.C0353a.f1365U);
+            widgets$CheckboxTextView3.setTextColor(Skin.SkinColorModel.mainTextColor);
             widgets$CheckboxTextView3.setGravity(16);
             widgets$CheckboxTextView = widgets$CheckboxTextView3;
         } else if (itemViewType == 3) {
             Widgets$CheckboxTextView widgets$CheckboxTextView4 = new Widgets$CheckboxTextView(this.mainActivity);
             widgets$CheckboxTextView4.setBoxAlign(2);
             widgets$CheckboxTextView4.setTextSize(18.0f);
-            widgets$CheckboxTextView4.setTextColor(Skin.C0353a.f1365U);
+            widgets$CheckboxTextView4.setTextColor(Skin.SkinColorModel.mainTextColor);
             widgets$CheckboxTextView4.setGravity(16);
-            widgets$CheckboxTextView4.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.button_bg_solid));
+            widgets$CheckboxTextView4.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.button_bg_solid));
             int i3 = (int) (f * 16.0f);
             int i4 = (int) (f * 8.0f);
             widgets$CheckboxTextView4.setPadding(i3, i4, i3, i4);
@@ -1579,19 +1579,19 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
                 Widgets$CheckboxTextView widgets$CheckboxTextView5 = new Widgets$CheckboxTextView(this.mainActivity);
                 widgets$CheckboxTextView5.setBoxAlign(1);
                 widgets$CheckboxTextView5.setTextSize(18.0f);
-                widgets$CheckboxTextView5.setTextColor(Skin.C0353a.f1365U);
+                widgets$CheckboxTextView5.setTextColor(Skin.SkinColorModel.mainTextColor);
                 widgets$CheckboxTextView5.setGravity(16);
-                widgets$CheckboxTextView5.setBackgroundDrawable(this.mainActivity.skin.m736f(R.drawable.option_checkbox));
+                widgets$CheckboxTextView5.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(R.drawable.option_checkbox));
                 widgets$CheckboxTextView2 = widgets$CheckboxTextView5;
             }
             widgets$CheckboxTextView = widgets$CheckboxTextView2;
         }
         if (itemViewType == 2) {
-            widgets$CheckboxTextView.setBackgroundDrawable(this.mainActivity.skin.m736f(i2 != 0 ? R.drawable.card_sep : R.color.cardlist_bg));
+            widgets$CheckboxTextView.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(i2 != 0 ? R.drawable.card_sep : R.color.cardlist_bg));
             int i5 = (int) (f * 16.0f);
             widgets$CheckboxTextView.setPadding(i5, i5, i5, (int) (f * 8.0f));
         } else if (itemViewType == 1) {
-            widgets$CheckboxTextView.setBackgroundDrawable(this.mainActivity.skin.m736f(getItemViewType(i2 + 1) == 2 ? R.drawable.button_bg : R.drawable.button_bg_border));
+            widgets$CheckboxTextView.setBackgroundDrawable(this.mainActivity.skin.getSkinDrawable(getItemViewType(i2 + 1) == 2 ? R.drawable.button_bg : R.drawable.button_bg_border));
             int i6 = (int) (f * 16.0f);
             int i7 = (int) (f * 8.0f);
             widgets$CheckboxTextView.setPadding(i6, i7, i6, i7);
@@ -1609,22 +1609,22 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         } else if (i2 == 15) {
             Widgets$CheckboxTextView widgets$CheckboxTextView6 = (Widgets$CheckboxTextView) widgets$CheckboxTextView;
             widgets$CheckboxTextView6.setText(this.mainActivity.getResources().getString(R.string.option_TextSize));
-            widgets$CheckboxTextView6.setSubText(this.mainActivity.getResources().getString(R.string.option_TextSize_sub) + "\nРавен: " + Integer.valueOf(Prefs.f1178p).toString());
+            widgets$CheckboxTextView6.setSubText(this.mainActivity.getResources().getString(R.string.option_TextSize_sub) + "\nРавен: " + Integer.valueOf(Prefs.textSize).toString());
             widgets$CheckboxTextView6.setOnClickListener(new View$OnClickListenerC0461a());
         } else if (i2 == 31) {
             Widgets$CheckboxTextView widgets$CheckboxTextView7 = (Widgets$CheckboxTextView) widgets$CheckboxTextView;
             widgets$CheckboxTextView7.setText(this.mainActivity.getResources().getString(R.string.option_CacheSize));
-            widgets$CheckboxTextView7.setSubText("Используется " + Util.formatFileSize(PicoImg.getCacheUsage()) + " из " + Prefs.f1150K + " МБ");
+            widgets$CheckboxTextView7.setSubText("Используется " + Util.formatFileSize(PicoImg.getCacheUsage()) + " из " + Prefs.cacheSize + " МБ");
             widgets$CheckboxTextView7.setOnClickListener(new View$OnClickListenerC0505l());
         } else if (i2 == 16) {
             Widgets$CheckboxTextView widgets$CheckboxTextView8 = (Widgets$CheckboxTextView) widgets$CheckboxTextView;
             widgets$CheckboxTextView8.setText(this.mainActivity.getResources().getString(R.string.option_PostsPerPage));
-            widgets$CheckboxTextView8.setSubText(this.mainActivity.getResources().getString(R.string.option_PostsPerPage_sub) + "\nКоличество: " + Integer.valueOf(Prefs.f1179q).toString());
+            widgets$CheckboxTextView8.setSubText(this.mainActivity.getResources().getString(R.string.option_PostsPerPage_sub) + "\nКоличество: " + Integer.valueOf(Prefs.memberPostsPerPage).toString());
             widgets$CheckboxTextView8.setOnClickListener(new View$OnClickListenerC0523w());
         } else if (i2 == 17) {
             Widgets$CheckboxTextView widgets$CheckboxTextView9 = (Widgets$CheckboxTextView) widgets$CheckboxTextView;
             widgets$CheckboxTextView9.setText(this.mainActivity.getResources().getString(R.string.option_TopicsPerPage));
-            widgets$CheckboxTextView9.setSubText(this.mainActivity.getResources().getString(R.string.option_TopicsPerPage_sub) + "\nКоличество: " + Integer.valueOf(Prefs.f1181s).toString());
+            widgets$CheckboxTextView9.setSubText(this.mainActivity.getResources().getString(R.string.option_TopicsPerPage_sub) + "\nКоличество: " + Integer.valueOf(Prefs.memberTopicsPerPage).toString());
             widgets$CheckboxTextView9.setOnClickListener(new View$OnClickListenerC0480d0());
         } else if (i2 == 23) {
             Widgets$CheckboxTextView widgets$CheckboxTextView10 = (Widgets$CheckboxTextView) widgets$CheckboxTextView;
@@ -1632,7 +1632,7 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
             StringBuilder sb = new StringBuilder();
             sb.append(this.mainActivity.getResources().getString(R.string.option_Topic_sub));
             sb.append("\nДействие: ");
-            sb.append(this.mainActivity.getResources().getString(Prefs.f1187y == 0 ? R.string.option_toBegin : R.string.option_toEnd));
+            sb.append(this.mainActivity.getResources().getString(Prefs.topicAction == 0 ? R.string.option_toBegin : R.string.option_toEnd));
             widgets$CheckboxTextView10.setSubText(sb.toString());
             widgets$CheckboxTextView10.setOnClickListener(new View$OnClickListenerC0487e0());
         } else if (i2 == 24 && itemViewType == 0) {
@@ -1644,12 +1644,12 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
         } else if (i2 == 18) {
             Widgets$CheckboxTextView widgets$CheckboxTextView12 = (Widgets$CheckboxTextView) widgets$CheckboxTextView;
             widgets$CheckboxTextView12.setText(this.mainActivity.getResources().getString(R.string.option_Skin));
-            widgets$CheckboxTextView12.setSubText((TextUtils.isEmpty(Prefs.f1183u) || TextUtils.isEmpty(this.mainActivity.skin.m735g())) ? "оригинальный" : this.mainActivity.skin.m735g());
+            widgets$CheckboxTextView12.setSubText((TextUtils.isEmpty(Prefs.skinId) || TextUtils.isEmpty(this.mainActivity.skin.m735g())) ? "оригинальный" : this.mainActivity.skin.m735g());
             widgets$CheckboxTextView12.setOnClickListener(new View$OnClickListenerC0497g0());
         } else if (i2 == 19) {
             Widgets$CheckboxTextView widgets$CheckboxTextView13 = (Widgets$CheckboxTextView) widgets$CheckboxTextView;
             widgets$CheckboxTextView13.setText(this.mainActivity.getResources().getString(R.string.option_Night_Title));
-            int i8 = Prefs.f1184v;
+            int i8 = Prefs.nightMode;
             if (1 == i8) {
                 widgets$CheckboxTextView13.setSubText(this.mainActivity.getResources().getString(R.string.option_Night_Unavail));
             } else if (i8 == 0) {
@@ -1662,14 +1662,14 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
             widgets$CheckboxTextView13.setOnClickListener(new View$OnClickListenerC0499h0());
         } else if (i2 == 37) {
             Widgets$CheckboxTextView widgets$CheckboxTextView14 = (Widgets$CheckboxTextView) widgets$CheckboxTextView;
-            widgets$CheckboxTextView14.setText(this.mainActivity.getResources().getString(Prefs.f1162W ? R.string.option_Simple : R.string.option_Extended));
-            widgets$CheckboxTextView14.setSubText(this.mainActivity.getResources().getString(Prefs.f1162W ? R.string.option_Simple_sub : R.string.option_Extended_sub));
+            widgets$CheckboxTextView14.setText(this.mainActivity.getResources().getString(Prefs.optionsExtended ? R.string.option_Simple : R.string.option_Extended));
+            widgets$CheckboxTextView14.setSubText(this.mainActivity.getResources().getString(Prefs.optionsExtended ? R.string.option_Simple_sub : R.string.option_Extended_sub));
             widgets$CheckboxTextView14.setOnClickListener(new View$OnClickListenerC0502i0());
         } else if (i2 == 6) {
             Widgets$CheckboxTextView widgets$CheckboxTextView15 = (Widgets$CheckboxTextView) widgets$CheckboxTextView;
             widgets$CheckboxTextView15.setText(this.mainActivity.getResources().getString(R.string.option_BackgroundMode));
             String str2 = this.mainActivity.getResources().getString(R.string.option_BackgroundMode_sub) + "\nУстановлено: ";
-            int i9 = Prefs.f1169g;
+            int i9 = Prefs.backgroundMode;
             if (i9 == 0) {
                 str2 = str2 + this.mainActivity.getResources().getString(R.string.option_BackgroundMode_off);
             } else if (i9 == 1) {
@@ -1691,9 +1691,9 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
             Widgets$CheckboxTextView widgets$CheckboxTextView16 = (Widgets$CheckboxTextView) widgets$CheckboxTextView;
             widgets$CheckboxTextView16.setText(this.mainActivity.getResources().getString(R.string.option_FavNotify));
             String str3 = this.mainActivity.getResources().getString(R.string.option_FavNotify_sub) + "\nУстановлено: ";
-            if (Prefs.f1165c && Prefs.f1166d) {
+            if (Prefs.favNotify && Prefs.favImportantNotify) {
                 str = str3 + this.mainActivity.getResources().getString(R.string.option_FavNotify_important);
-            } else if (Prefs.f1165c) {
+            } else if (Prefs.favNotify) {
                 str = str3 + this.mainActivity.getResources().getString(R.string.option_FavNotify_all);
             } else {
                 str = str3 + this.mainActivity.getResources().getString(R.string.option_FavNotify_off);
@@ -1710,13 +1710,13 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
             widgets$CheckboxTextView18.setText(this.mainActivity.getResources().getString(R.string.option_NotificationSound));
             if (Build.VERSION.SDK_INT >= 26) {
                 widgets$CheckboxTextView18.setSubText(this.mainActivity.getResources().getString(R.string.option_NotificationSound_select));
-            } else if (TextUtils.isEmpty(Prefs.f1170h)) {
+            } else if (TextUtils.isEmpty(Prefs.notificationSound)) {
                 widgets$CheckboxTextView18.setSubText(this.mainActivity.getResources().getString(R.string.option_NotificationSound_none));
-            } else if (Prefs.f1170h.equals("default")) {
+            } else if (Prefs.notificationSound.equals("default")) {
                 widgets$CheckboxTextView18.setSubText(this.mainActivity.getResources().getString(R.string.option_NotificationSound_default));
             } else {
                 try {
-                    Ringtone ringtone = RingtoneManager.getRingtone(this.mainActivity, Uri.parse(Prefs.f1170h));
+                    Ringtone ringtone = RingtoneManager.getRingtone(this.mainActivity, Uri.parse(Prefs.notificationSound));
                     widgets$CheckboxTextView18.setSubText(ringtone != null ? ringtone.getTitle(this.mainActivity) : this.mainActivity.getResources().getString(R.string.option_NotificationSound_none));
                 } catch (Exception e) {
                     //ACRA.getErrorReporter().handleSilentException(e);
@@ -1733,67 +1733,67 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
             if (i2 == 1) {
                 widgets$CheckboxTextView20.setText(this.mainActivity.getResources().getString(R.string.option_QmsNotify));
                 widgets$CheckboxTextView20.setSubText(this.mainActivity.getResources().getString(R.string.option_QmsNotify_sub));
-                widgets$CheckboxTextView20.setChecked(Prefs.f1163a);
+                widgets$CheckboxTextView20.setChecked(Prefs.qmsNotify);
                 widgets$CheckboxTextView20.setOnClickListener(new View$OnClickListenerC0496g());
             } else if (i2 == 2) {
                 widgets$CheckboxTextView20.setText(this.mainActivity.getResources().getString(R.string.option_QmsSystemNotify));
                 widgets$CheckboxTextView20.setSubText(this.mainActivity.getResources().getString(R.string.option_QmsSystemNotify_sub));
-                widgets$CheckboxTextView20.setChecked(Prefs.f1164b);
+                widgets$CheckboxTextView20.setChecked(Prefs.notifyQmsSystem);
                 widgets$CheckboxTextView20.setOnClickListener(new View$OnClickListenerC0498h());
             } else if (i2 == 10) {
                 widgets$CheckboxTextView20.setText(this.mainActivity.getResources().getString(R.string.option_TopicHeader));
                 widgets$CheckboxTextView20.setSubText(this.mainActivity.getResources().getString(R.string.option_TopicHeader_sub));
-                widgets$CheckboxTextView20.setChecked(Prefs.f1173k);
+                widgets$CheckboxTextView20.setChecked(Prefs.topicHideHeader);
                 widgets$CheckboxTextView20.setOnClickListener(new View$OnClickListenerC0501i());
             } else if (i2 == 11) {
                 widgets$CheckboxTextView20.setText(this.mainActivity.getResources().getString(R.string.option_TopicPoll));
                 widgets$CheckboxTextView20.setSubText(this.mainActivity.getResources().getString(R.string.option_TopicPoll_sub));
-                widgets$CheckboxTextView20.setChecked(Prefs.f1174l);
+                widgets$CheckboxTextView20.setChecked(Prefs.topicHidePoll);
                 widgets$CheckboxTextView20.setOnClickListener(new View$OnClickListenerC0503j());
             } else if (i2 == 12) {
                 widgets$CheckboxTextView20.setText(this.mainActivity.getResources().getString(R.string.option_Signature));
                 widgets$CheckboxTextView20.setSubText(this.mainActivity.getResources().getString(R.string.option_Signature_sub));
-                widgets$CheckboxTextView20.setChecked(Prefs.f1175m);
+                widgets$CheckboxTextView20.setChecked(Prefs.postShowSign);
                 widgets$CheckboxTextView20.setOnClickListener(new View$OnClickListenerC0504k());
             } else if (i2 == 13) {
                 widgets$CheckboxTextView20.setText(this.mainActivity.getResources().getString(R.string.option_TagsPosition));
                 widgets$CheckboxTextView20.setSubText(this.mainActivity.getResources().getString(R.string.option_TagsPosition_sub));
-                widgets$CheckboxTextView20.setChecked(Prefs.f1176n);
+                widgets$CheckboxTextView20.setChecked(Prefs.postEditorTagsBelow);
                 widgets$CheckboxTextView20.setOnClickListener(new View$OnClickListenerC0511m());
             } else if (i2 == 14) {
                 widgets$CheckboxTextView20.setText(this.mainActivity.getResources().getString(R.string.option_QmsTags));
                 widgets$CheckboxTextView20.setSubText(this.mainActivity.getResources().getString(R.string.option_QmsTags_sub));
-                widgets$CheckboxTextView20.setChecked(Prefs.f1177o);
+                widgets$CheckboxTextView20.setChecked(Prefs.qmsHideTags);
                 widgets$CheckboxTextView20.setOnClickListener(new View$OnClickListenerC0512n());
             } else if (i2 == 28) {
                 widgets$CheckboxTextView20.setText(this.mainActivity.getResources().getString(R.string.option_LoadImages));
                 widgets$CheckboxTextView20.setSubText(this.mainActivity.getResources().getString(R.string.option_LoadImages_sub));
-                widgets$CheckboxTextView20.setChecked(Prefs.f1145F);
+                widgets$CheckboxTextView20.setChecked(Prefs.loadImages);
                 widgets$CheckboxTextView20.setOnClickListener(new View$OnClickListenerC0513o());
             } else if (i2 == 30) {
                 widgets$CheckboxTextView20.setText(this.mainActivity.getResources().getString(R.string.option_ScaleImages));
                 widgets$CheckboxTextView20.setSubText(this.mainActivity.getResources().getString(R.string.option_ScaleImages_sub));
-                widgets$CheckboxTextView20.setChecked(Prefs.f1149J);
+                widgets$CheckboxTextView20.setChecked(Prefs.scaleImages);
                 widgets$CheckboxTextView20.setOnClickListener(new View$OnClickListenerC0514p());
             } else if (i2 == 33) {
                 widgets$CheckboxTextView20.setText(this.mainActivity.getResources().getString(R.string.option_Confirm));
                 widgets$CheckboxTextView20.setSubText(this.mainActivity.getResources().getString(R.string.option_Confirm_sub));
-                widgets$CheckboxTextView20.setChecked(Prefs.f1151L);
+                widgets$CheckboxTextView20.setChecked(Prefs.confirmAction);
                 widgets$CheckboxTextView20.setOnClickListener(new View$OnClickListenerC0515q());
             } else if (i2 == 34) {
                 widgets$CheckboxTextView20.setText(this.mainActivity.getResources().getString(R.string.option_Chooser));
                 widgets$CheckboxTextView20.setSubText(this.mainActivity.getResources().getString(R.string.option_Chooser_sub));
-                widgets$CheckboxTextView20.setChecked(Prefs.f1152M);
+                widgets$CheckboxTextView20.setChecked(Prefs.attachChooser);
                 widgets$CheckboxTextView20.setOnClickListener(new View$OnClickListenerC0516r());
             } else if (i2 == 35) {
                 widgets$CheckboxTextView20.setText(this.mainActivity.getResources().getString(R.string.option_UploadChooser));
                 widgets$CheckboxTextView20.setSubText(this.mainActivity.getResources().getString(R.string.option_UploadChooser_sub));
-                widgets$CheckboxTextView20.setChecked(Prefs.f1153N);
+                widgets$CheckboxTextView20.setChecked(Prefs.uploadChooser);
                 widgets$CheckboxTextView20.setOnClickListener(new View$OnClickListenerC0517s());
             } else if (i2 == 36) {
                 widgets$CheckboxTextView20.setText(this.mainActivity.getResources().getString(R.string.option_SendReport));
                 widgets$CheckboxTextView20.setSubText(this.mainActivity.getResources().getString(R.string.option_SendReport_sub));
-                widgets$CheckboxTextView20.setChecked(Prefs.f1154O);
+                widgets$CheckboxTextView20.setChecked(Prefs.sendReport);
                 widgets$CheckboxTextView20.setOnClickListener(new View$OnClickListenerC0518t());
             } else if (i2 == 21) {
                 widgets$CheckboxTextView20.setText(this.mainActivity.getResources().getString(R.string.option_Scroll));
@@ -1801,34 +1801,34 @@ public class Page_Options extends Page implements MainActivity.AbstractC0193g0 {
                 sb2.append(this.mainActivity.getResources().getString(R.string.option_Scroll_sub));
                 sb2.append("\nВыбран: ");
                 Resources resources = this.mainActivity.getResources();
-                int i10 = Prefs.f1185w;
+                int i10 = Prefs.scrollMode;
                 sb2.append(resources.getString(i10 == 2 ? R.string.option_Scroll_Fast : i10 == 1 ? R.string.option_Scroll_Fling : R.string.option_Scroll_Regular));
                 widgets$CheckboxTextView20.setSubText(sb2.toString());
                 widgets$CheckboxTextView20.setOnClickListener(new View$OnClickListenerC0519u());
             } else if (i2 == 22) {
                 widgets$CheckboxTextView20.setText(this.mainActivity.getResources().getString(R.string.option_Back));
                 widgets$CheckboxTextView20.setSubText(this.mainActivity.getResources().getString(R.string.option_Back_sub));
-                widgets$CheckboxTextView20.setChecked(Prefs.f1186x);
+                widgets$CheckboxTextView20.setChecked(Prefs.backButton);
                 widgets$CheckboxTextView20.setOnClickListener(new View$OnClickListenerC0522v());
             } else if (i2 == 25) {
                 widgets$CheckboxTextView20.setText(this.mainActivity.getResources().getString(R.string.option_SwipeNextPrev));
                 widgets$CheckboxTextView20.setSubText(this.mainActivity.getResources().getString(R.string.option_SwipeNextPrev_sub));
-                widgets$CheckboxTextView20.setChecked(Prefs.f1140A);
+                widgets$CheckboxTextView20.setChecked(Prefs.swipeNextprev);
                 widgets$CheckboxTextView20.setOnClickListener(new View$OnClickListenerC0529x());
             } else if (i2 == 5) {
                 widgets$CheckboxTextView20.setText(this.mainActivity.getResources().getString(R.string.option_GroupNotify));
                 widgets$CheckboxTextView20.setSubText(this.mainActivity.getResources().getString(R.string.option_GroupNotify_sub));
-                widgets$CheckboxTextView20.setChecked(Prefs.f1168f);
+                widgets$CheckboxTextView20.setChecked(Prefs.notifyGroup);
                 widgets$CheckboxTextView20.setOnClickListener(new View$OnClickListenerC0530y());
             } else if (i2 == 4) {
                 widgets$CheckboxTextView20.setText(this.mainActivity.getResources().getString(R.string.option_MenNotify));
                 widgets$CheckboxTextView20.setSubText(this.mainActivity.getResources().getString(R.string.option_MenNotify_sub));
-                widgets$CheckboxTextView20.setChecked(Prefs.f1167e);
+                widgets$CheckboxTextView20.setChecked(Prefs.menNotify);
                 widgets$CheckboxTextView20.setOnClickListener(new View$OnClickListenerC0531z());
             } else if (i2 == 7) {
                 widgets$CheckboxTextView20.setText(this.mainActivity.getResources().getString(R.string.option_NotificationVirbation));
                 widgets$CheckboxTextView20.setSubText(this.mainActivity.getResources().getString(R.string.option_NotificationVirbation_sub));
-                widgets$CheckboxTextView20.setChecked(Prefs.f1171i);
+                widgets$CheckboxTextView20.setChecked(Prefs.notificationVibration);
                 widgets$CheckboxTextView20.setOnClickListener(new View$OnClickListenerC0465a0());
             }
         }

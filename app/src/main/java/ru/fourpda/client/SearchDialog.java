@@ -39,7 +39,7 @@ public class SearchDialog extends CustomDialog {
 
         @Override
         public void afterTextChanged(Editable editable) {
-            SearchDialog.this.m625a(editable.length() > 0 || (SearchDialog.this.f1294k.getVisibility() == 0 && SearchDialog.this.f1295l.m844b() != null));
+            SearchDialog.this.m625a(editable.length() > 0 || (SearchDialog.this.f1294k.getVisibility() == 0 && SearchDialog.this.f1295l.getMemberId() != null));
         }
 
         @Override
@@ -205,7 +205,7 @@ public class SearchDialog extends CustomDialog {
                 i = i2 | 2;
             }
             Page a0Var = null;
-            Integer b = z ? SearchDialog.this.f1295l.m844b() : null;
+            Integer b = z ? SearchDialog.this.f1295l.getMemberId() : null;
             if (b == null) {
                 b = 0;
             }
@@ -291,7 +291,7 @@ public class SearchDialog extends CustomDialog {
         this.f1294k = findViewById;
         Widgets$MemberView widgets$MemberView = (Widgets$MemberView) findViewById.findViewById(R.id.memberEdit);
         this.f1295l = widgets$MemberView;
-        widgets$MemberView.m842d();
+        widgets$MemberView.resetData();
         this.f1295l.f903c = new C0339c();
         TextView textView = (TextView) this.rootView.findViewById(R.id.dlg_search_where);
         this.f1296m = textView;
@@ -480,7 +480,7 @@ public class SearchDialog extends CustomDialog {
     public void m749g() {
         boolean z = true;
         super.show(true, true, true);
-        if (TextUtils.isEmpty(this.f1293j.getText().toString()) && (this.f1294k.getVisibility() != 0 || this.f1295l.m844b() == null)) {
+        if (TextUtils.isEmpty(this.f1293j.getText().toString()) && (this.f1294k.getVisibility() != 0 || this.f1295l.getMemberId() == null)) {
             z = false;
         }
         m625a(z);
